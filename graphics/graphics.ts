@@ -1,5 +1,3 @@
-/// <reference path="references.ts" />
-
 var config = {
     type: Phaser.AUTO,
     width: 800,
