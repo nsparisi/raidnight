@@ -1,5 +1,10 @@
 # raidnight
 
+
+# Install phaser
+npm install phaser@3.16.2
+
+
 # Compile code
 install VSCode
 
