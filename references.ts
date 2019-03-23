@@ -6,3 +6,8 @@
 /// <reference path="code/action.ts" />
 /// <reference path="code/skill.ts" />
 /// <reference path="code/game.ts" />
+
+/// <reference path="graphics/graphics.ts"/>
+
+/// <reference path="code/main.ts" />
+

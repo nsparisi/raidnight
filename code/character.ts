@@ -15,7 +15,7 @@ class Character
     actionList: Action[];
     actionIndex: integer;
     
-    constructor(name: string, maxHealth: integer, maxMana: integer)
+    constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
     {
         this.name = name;
         this.maxHealth = maxHealth;
@@ -23,8 +23,8 @@ class Character
         this.health = maxHealth;
         this.mana = maxMana;
         this.actionIndex = 0;
-        this.x = 0;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
     }
 
     runAI = () =>
