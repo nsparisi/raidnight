@@ -1,36 +1,39 @@
-enum ActionType { Skill, Move }
-
-class Action 
+module RaidNight.Engine
 {
-    type: ActionType;
-    x: integer;
-    y: integer;
-    skill: string;
-    target: string;
+    export enum ActionType { Skill, Move }
 
-    constructor(type: ActionType)
+    export class Action 
     {
-        this.type = type;
-    }
-}
+        type: ActionType;
+        x: integer;
+        y: integer;
+        skill: string;
+        target: string;
 
-class action_Move extends Action
-{
-    constructor(x: integer, y: integer)
+        constructor(type: ActionType)
+        {
+            this.type = type;
+        }
+    }
+
+    export class action_Move extends Action
     {
-        super(ActionType.Move);
-        this.x = x;
-        this.y = y;
+        constructor(x: integer, y: integer)
+        {
+            super(ActionType.Move);
+            this.x = x;
+            this.y = y;
+        }
     }
-}
 
-class action_Skill extends Action
-{
-    constructor(skill: string, target: string)
+    export class action_Skill extends Action
     {
-        super(ActionType.Skill);
-        this.skill = skill;
-        this.target = target;
+        constructor(skill: string, target: string)
+        {
+            super(ActionType.Skill);
+            this.skill = skill;
+            this.target = target;
+        }
     }
-}
 
+}

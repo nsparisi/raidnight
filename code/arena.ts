@@ -1,91 +1,94 @@
 
-enum ArenaState { Win, Lose, InProgress, NotStarted }
-
-class Arena 
+module RaidNight.Engine
 {
-    enemies: Character[];
-    allies: Character[];
-    board: Board;
+    export enum ArenaState { Win, Lose, InProgress, NotStarted }
 
-    turn: integer = 0;
-    maxTurns: integer = 1000;
-    state: ArenaState = ArenaState.NotStarted;
-
-    setup = () =>
+    export class Arena 
     {
-        this.state = ArenaState.InProgress;
-    }
+        enemies: Character[];
+        allies: Character[];
+        board: Board;
 
-    executeTurn = () =>
-    {
-        this.turn++;
-        console.log(`Executing turn ${this.turn}`);
+        turn: integer = 0;
+        maxTurns: integer = 1000;
+        state: ArenaState = ArenaState.NotStarted;
 
-        if (this.state != ArenaState.InProgress)
+        setup = () =>
         {
-            console.log(`Game is not running, cannot execute turn. '${this.state}'`);
+            this.state = ArenaState.InProgress;
         }
 
-        let i = 0;
-        for( i = 0; i < this.allies.length; i++)
+        executeTurn = () =>
         {
-            this.allies[i].runAI();
-        }
+            this.turn++;
+            console.log(`Executing turn ${this.turn}`);
 
-        for (i = 0; i < this.enemies.length; i++)
-        {
-            this.enemies[i].runAI();
-        }
-
-        this.checkWinCondition();
-        this.checkLoseCondition();
-    }
-
-    checkWinCondition = () =>
-    {
-        let isWon = true;
-        let i = 0;
-        for (i = 0; i < this.enemies.length; i++)
-        {
-            if(this.enemies[i].health > 0)
+            if (this.state != ArenaState.InProgress)
             {
-                isWon = false;
-                break;
+                console.log(`Game is not running, cannot execute turn. '${this.state}'`);
+            }
+
+            let i = 0;
+            for( i = 0; i < this.allies.length; i++)
+            {
+                this.allies[i].runAI();
+            }
+
+            for (i = 0; i < this.enemies.length; i++)
+            {
+                this.enemies[i].runAI();
+            }
+
+            this.checkWinCondition();
+            this.checkLoseCondition();
+        }
+
+        checkWinCondition = () =>
+        {
+            let isWon = true;
+            let i = 0;
+            for (i = 0; i < this.enemies.length; i++)
+            {
+                if(this.enemies[i].health > 0)
+                {
+                    isWon = false;
+                    break;
+                }
+            }
+
+            if (isWon)
+            {
+                console.log(`WON! Enemies are dead.`);
+                this.state = ArenaState.Win;
+            }
+        }
+        
+        checkLoseCondition = () =>
+        {
+            if(this.turn >= this.maxTurns)
+            {
+                console.log(`LOSE! Took too long.`);
+                this.state = ArenaState.Lose;
+                return;
+            }
+
+            let isLose = false;
+            let i = 0;
+            for(i = 0; i < this.allies.length; i++)
+            {
+                if(this.allies[i].health <= 0)
+                {
+                    console.log(`LOSE! ${this.allies[i].name} has died!`);
+                    isLose = true;
+                    break;
+                }
+            }
+
+            if (isLose)
+            {
+                this.state = ArenaState.Lose;
             }
         }
 
-        if (isWon)
-        {
-            console.log(`WON! Enemies are dead.`);
-            this.state = ArenaState.Win;
-        }
     }
-    
-    checkLoseCondition = () =>
-    {
-        if(this.turn >= this.maxTurns)
-        {
-            console.log(`LOSE! Took too long.`);
-            this.state = ArenaState.Lose;
-            return;
-        }
-
-        let isLose = false;
-        let i = 0;
-        for(i = 0; i < this.allies.length; i++)
-        {
-            if(this.allies[i].health <= 0)
-            {
-                console.log(`LOSE! ${this.allies[i].name} has died!`);
-                isLose = true;
-                break;
-            }
-        }
-
-        if (isLose)
-        {
-            this.state = ArenaState.Lose;
-        }
-    }
-
 }

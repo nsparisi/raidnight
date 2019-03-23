@@ -1,11 +1,14 @@
-class Board 
+module RaidNight.Engine
 {
-    width: integer;
-    height: integer;
-
-    constructor(width: integer, height: integer)
+    export class Board 
     {
-        this.width = width;
-        this.height = height;
+        width: integer;
+        height: integer;
+
+        constructor(width: integer, height: integer)
+        {
+            this.width = width;
+            this.height = height;
+        }
     }
 }

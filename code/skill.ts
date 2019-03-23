@@ -1,19 +1,22 @@
-class Skill 
+module RaidNight.Engine
 {
-    power: integer;
-    cost: integer;
-    castTime: integer;
-    name: string;
-}
-
-class skill_Fireball extends Skill
-{
-    constructor()
+    export class Skill 
     {
-        super();
-        this.power = 25;
-        this.cost = 1;
-        this.castTime = 1;
-        this.name = "Fireball";
+        power: integer;
+        cost: integer;
+        castTime: integer;
+        name: string;
+    }
+
+    export class skill_Fireball extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.power = 25;
+            this.cost = 1;
+            this.castTime = 1;
+            this.name = "Fireball";
+        }
     }
 }

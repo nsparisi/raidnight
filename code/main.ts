@@ -53,10 +53,10 @@ class Main {
 
 var GLOBAL_deltaTimeMs = 0;
 
-const GLOBAL_GAME = new Game();
+const GLOBAL_GAME = new RaidNight.Engine.Game();
 GLOBAL_GAME.setup();
 GLOBAL_GAME.run();
 
 Main.Instance.begin();
 
-const GLOBAL_GAME_PHASER = new Game_RaidNight();
+const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
