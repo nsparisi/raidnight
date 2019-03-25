@@ -90,5 +90,27 @@ module RaidNight.Engine
             }
         }
 
+        lookupTarget = (targetName: string) =>
+        {
+            let i = 0;
+            for(i = 0; i < this.enemies.length; i++)
+            {
+                if (this.enemies[i].name.toUpperCase() == targetName.toUpperCase())
+                {
+                    return this.enemies[i];
+                }
+            }
+
+            for(i = 0; i < this.allies.length; i++)
+            {
+                if (this.allies[i].name.toUpperCase() == targetName.toUpperCase())
+                {
+                    return this.allies[i];
+                }
+            }
+
+            console.log(`ERROR: Lookup target failed ${targetName}`);
+            return null;
+        }
     }
 }

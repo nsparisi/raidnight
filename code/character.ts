@@ -16,6 +16,12 @@ module RaidNight.Engine
 
         actionList: Action[];
         actionIndex: integer;
+
+        currentAction: Action;
+
+        castTimeRemaining: integer;
+        isCasting: boolean;
+
         
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         {
@@ -31,45 +37,94 @@ module RaidNight.Engine
 
         runAI = () =>
         {
-            let action = this.actionList[this.actionIndex];
-            this.actionIndex = (this.actionIndex + 1) % this.actionList.length;
-            if (action.type == ActionType.Move)
+            this.castTimeRemaining--;
+
+            // check current action
+            if (this.isCasting && this.castTimeRemaining > 0)
             {
-                this.doMove(action.x, action.y);
+                return;
             }
-            else if(action.type == ActionType.Skill)
+            
+            // prepare new action
+            else if (!this.isCasting)
             {
-                this.doSkill(this.lookupSkill(action.skill), this.lookupTarget(action.target));
+                this.grabNewAction();
+
+                if (this.currentAction.type == ActionType.Move)
+                {
+                    this.doMove();
+                }
+                else if (this.currentAction.type == ActionType.Skill)
+                {
+                    this.startSkill();
+                }
             }
-            else 
+
+            // finalize action
+            if (this.isCasting && this.castTimeRemaining == 0)
             {
-                console.log(`ERROR: action type not recognized.`);
+                this.finishSkill();
             }
         }
-        
-        doMove = (x: integer, y: integer) =>
+
+        grabNewAction = () =>
         {
+            this.currentAction = this.actionList[this.actionIndex];
+            this.actionIndex = (this.actionIndex + 1) % this.actionList.length;
+        }
+        
+        doMove = () =>
+        {
+            let x = this.currentAction.x
+            let y = this.currentAction.y
+
             this.x = Math.min(GLOBAL_GAME.arena.board.width, this.x + x);
             this.y = Math.min(GLOBAL_GAME.arena.board.height, this.y + y);
 
             this.x = Math.max(0, this.x);
             this.y = Math.max(0, this.y);
 
+            this.castTimeRemaining = 0;
+            this.isCasting = false;
+
             console.log(`${this.name} moved to ${this.x},${this.y}`);
         }
 
-        doSkill = (skill: Skill, target: Character) =>
+        startSkill = () =>
         {
-            if(this.mana < skill.cost)
+            let skill = this.lookupSkill(this.currentAction.skill);
+            let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
+
+            if (this.mana < skill.cost)
             {
                 console.log(`${this.name} has not enough mana to cast ${skill.name}`);
+                return;
+            }
+
+            this.castTimeRemaining = skill.castTime - 1;
+            this.isCasting = true;
+
+            console.log(`${this.name} started cast of ${skill.name} on ${target.name}`);
+        }
+
+        finishSkill = () =>
+        {
+            let skill = this.lookupSkill(this.currentAction.skill);
+            let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
+
+            if (this.mana < skill.cost)
+            {
+                console.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
                 return;
             }
 
             target.health = Math.max(0, target.health - skill.power);
             this.mana = Math.max(0, this.mana - skill.cost);
             
-            console.log(`${this.name} cast ${skill.name} on ${target.name}`);
+            this.castTimeRemaining = 0;
+            this.isCasting = false;
+
+            console.log(`${this.name} finished cast of ${skill.name} on ${target.name}`);
         }
         
         lookupSkill = (skillName: string) =>
@@ -84,29 +139,6 @@ module RaidNight.Engine
             }
 
             console.log(`ERROR: Lookup skill failed ${skillName}`);
-            return null;
-        }
-
-        lookupTarget = (targetName: string) =>
-        {
-            let i = 0;
-            for(i = 0; i < GLOBAL_GAME.arena.enemies.length; i++)
-            {
-                if (GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == targetName.toUpperCase())
-                {
-                    return GLOBAL_GAME.arena.enemies[i];
-                }
-            }
-
-            for(i = 0; i < GLOBAL_GAME.arena.allies.length; i++)
-            {
-                if (GLOBAL_GAME.arena.allies[i].name.toUpperCase() == targetName.toUpperCase())
-                {
-                    return GLOBAL_GAME.arena.allies[i];
-                }
-            }
-
-            console.log(`ERROR: Lookup target failed ${targetName}`);
             return null;
         }
     }

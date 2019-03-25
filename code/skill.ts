@@ -15,7 +15,7 @@ module RaidNight.Engine
             super();
             this.power = 25;
             this.cost = 1;
-            this.castTime = 1;
+            this.castTime = 3;
             this.name = "Fireball";
         }
     }
