@@ -21,6 +21,7 @@ module RaidNight.Engine
         executeTurn = () =>
         {
             this.turn++;
+            let i = 0;
             console.log(`Executing turn ${this.turn}`);
 
             if (this.state != ArenaState.InProgress)
@@ -28,8 +29,19 @@ module RaidNight.Engine
                 console.log(`Game is not running, cannot execute turn. '${this.state}'`);
             }
 
-            let i = 0;
-            for( i = 0; i < this.allies.length; i++)
+            // resolve statuses
+            for(i = 0; i < this.allies.length; i++)
+            {
+                this.allies[i].resolveStatus();
+            }
+
+            for (i = 0; i < this.enemies.length; i++)
+            {
+                this.enemies[i].resolveStatus();
+            }
+
+            // resolve actions
+            for(i = 0; i < this.allies.length; i++)
             {
                 this.allies[i].runAI();
             }

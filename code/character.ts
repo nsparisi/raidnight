@@ -22,6 +22,7 @@ module RaidNight.Engine
         castTimeRemaining: integer;
         isCasting: boolean;
 
+        statuses: Status[];
         
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         {
@@ -33,6 +34,25 @@ module RaidNight.Engine
             this.actionIndex = 0;
             this.x = x;
             this.y = y;
+            this.statuses = [];
+        }
+
+        resolveStatus = () =>
+        {
+            let i = 0;
+            for(i = 0; i < this.statuses.length; i++)
+            {
+                this.statuses[i].duration--;
+                this.addHealth(this.statuses[i].healthPerTurn);
+
+                console.log(`Status ${this.statuses[i].name} has been processed on ${this.name}`);
+                if (this.statuses[i].duration <= 0)
+                {
+                    console.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
+                    this.statuses.splice(i, 1);
+                    i--;
+                }
+            }
         }
 
         runAI = () =>
@@ -92,7 +112,7 @@ module RaidNight.Engine
 
         startSkill = () =>
         {
-            let skill = this.lookupSkill(this.currentAction.skill);
+            let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
             let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
 
             if (this.mana < skill.cost)
@@ -109,37 +129,76 @@ module RaidNight.Engine
 
         finishSkill = () =>
         {
-            let skill = this.lookupSkill(this.currentAction.skill);
+            // pre-skill validation
+            let i = 0;
+            let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
             let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
-
             if (this.mana < skill.cost)
             {
                 console.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
                 return;
             }
 
-            target.health = Math.max(0, target.health - skill.power);
-            this.mana = Math.max(0, this.mana - skill.cost);
+            // core skill logic
+            target.addHealth(-1 * skill.power)
+            this.addMana(-1 * skill.cost);
+
+            for (i = 0; i < skill.targetStatuses.length; i++)
+            {
+                console.log(`${this.name} applied status ${skill.targetStatuses[i]} to ${target.name}`);
+                target.addStatus(skill.targetStatuses[i]);
+            }
+
+            for (i = 0; i < skill.selfStatuses.length; i++)
+            {
+                console.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
+                this.addStatus(skill.selfStatuses[i]);
+            }
             
+            // post-skill wrap up
             this.castTimeRemaining = 0;
             this.isCasting = false;
-
             console.log(`${this.name} finished cast of ${skill.name} on ${target.name}`);
         }
-        
-        lookupSkill = (skillName: string) =>
+
+        addHealth = (healthToAdd: integer) =>
         {
-            let i = 0;
-            for(i = 0; i < this.skillset.length; i++)
+            this.health = Math.max(0, this.health + healthToAdd);
+            this.health = Math.min(this.maxHealth, this.health);
+        }
+
+        addMana = (manaToAdd: integer) =>
+        {
+            this.mana = Math.max(0, this.mana + manaToAdd);
+            this.mana = Math.min(this.maxMana, this.mana);
+        }
+
+        addStatus = (statusToAdd: string) =>
+        {
+            let status = GLOBAL_GAME.library.instantiateStatus(statusToAdd);
+            if(status == null)
             {
-                if (this.skillset[i].name.toUpperCase() == skillName.toUpperCase())
+                return;
+            }
+
+            // refresh existing status
+            let i = 0;
+            let alreadyApplied = false;
+            for(i = 0; i < this.statuses.length; i++)
+            {
+                if (this.statuses[i].name.toUpperCase() == status.name.toUpperCase())
                 {
-                    return this.skillset[i];
+                    this.statuses[i] = status;
+                    alreadyApplied = true;
+                    console.log(`Refreshing status ${status.name} on ${this.name}`);
                 }
             }
 
-            console.log(`ERROR: Lookup skill failed ${skillName}`);
-            return null;
+            // apply as a new status
+            if(!alreadyApplied)
+            {
+                this.statuses.push(status);
+            }
         }
     }
 }
