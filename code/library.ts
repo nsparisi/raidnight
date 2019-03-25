@@ -5,6 +5,8 @@ module RaidNight.Engine
         skillCatalogue = {
             "FIREBALL": new skill_Fireball(),
             "IGNITE": new skill_Ignite(),
+            
+            "HEAL": new skill_Heal(),
 
             "DRAGON BREATH": new skill_DragonBreath()
         }

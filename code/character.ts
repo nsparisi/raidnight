@@ -140,7 +140,7 @@ module RaidNight.Engine
             }
 
             // core skill logic
-            target.addHealth(-1 * skill.power)
+            target.addHealth(skill.health);
             this.addMana(-1 * skill.cost);
 
             for (i = 0; i < skill.targetStatuses.length; i++)

@@ -30,7 +30,9 @@ module RaidNight.Engine
 
             let priest = new Character("Priest", 100, 200, 12, 6);
             priest.actionList = [];
+            priest.actionList.push(new action_Skill("heal", "warrior"));
             priest.actionList.push(new action_Move(1, 0));
+            priest.actionList.push(new action_Skill("heal", "warrior"));
             priest.actionList.push(new action_Move(-1, 0));
 
             let wizard = new Character("Wizard", 100, 200, 12, 10);
@@ -81,7 +83,7 @@ module RaidNight.Engine
         }
 
         elapsedTimeMs: number = 0;
-        frameLengthMs: integer = 1000;
+        frameLengthMs: integer = 500;
         update = () =>
         {
             if (this.arena.state != ArenaState.InProgress)
