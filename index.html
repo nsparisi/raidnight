@@ -4,7 +4,11 @@
     <script src="./node_modules/phaser/dist/phaser.min.js"></script>
 </head>
 <body>
-
+    <div id="Game"></div>
     <script src="./out/raidnight.js"></script>
+    Wizard: <textarea rows="4" cols="70" id="wizard_input">ignite:dragon, fireball:dragon, fireball:dragon</textarea><br/>
+    Priest: <textarea rows="4" cols="70" id="priest_input">heal:warrior, move:left, heal:warrior, move:right</textarea><br/>
+    Warrior: <textarea rows="4" cols="70" id="warrior_input">move:up, move:down</textarea><br/>
+    <button onclick="NewGameAction();">Play</button>
 </body>
 </html>

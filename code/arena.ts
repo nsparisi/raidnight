@@ -13,9 +13,15 @@ module RaidNight.Engine
         maxTurns: integer = 1000;
         state: ArenaState = ArenaState.NotStarted;
 
-        setup = () =>
+        start = () =>
         {
             this.state = ArenaState.InProgress;
+            this.turn = 0;
+        }
+
+        stop = () =>
+        {
+            this.state = ArenaState.NotStarted;
         }
 
         executeTurn = () =>

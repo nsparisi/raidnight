@@ -8,7 +8,8 @@ module RaidNight.Graphics
                 type: Phaser.AUTO,
                 width: 800,
                 height: 600,
-                scene: Scene_Arena
+                scene: Scene_Arena, 
+                parent: "Game"
             });
         }
     }
@@ -55,6 +56,40 @@ module RaidNight.Graphics
 
         create ()
         {
+
+            this.add.image(0, 0, 'assets/bg_dungeon.png').setOrigin(0, 0);
+
+            this.newGame();
+
+            this.gfx_upperHealthBox = this.add.graphics();
+            this.gfx_upperHealthBox.fillStyle(0x000000, 0.7);
+            this.gfx_upperHealthBox.fillRoundedRect(35, 40, 254, 70);
+            
+            this.gfx_lowerHealthBox = this.add.graphics();
+            this.gfx_lowerHealthBox.fillStyle(0x000000, 0.7);
+            this.gfx_lowerHealthBox.fillRect(36, 527, 250, 25);
+
+            let nameStyle = {fontSize: "20px", fill: "#FFF", align: "left"};
+            let healthStyle = {fontSize: "20px", fill: "#FFF", align: "right"};
+            this.add.text(45,45, "WIZARD:", nameStyle);
+            this.add.text(45,65, "WARRIOR:", nameStyle);
+            this.add.text(45,85, "PRIEST:", nameStyle);
+            this.add.text(45,530, "DRAGON:", nameStyle);
+            this.text_wizardHealth =  this.add.text(280,45, "", healthStyle).setOrigin(1, 0);
+            this.text_warriorHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0);
+            this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0);
+            this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0);
+
+            this.lastKnownTurn = -1;
+        }
+
+        newGame = () =>
+        {
+            if(this.wizard){this.wizard.destroy();}
+            if(this.warrior){this.warrior.destroy();}
+            if(this.priest){this.priest.destroy();}
+            if(this.dragon){this.dragon.destroy();}
+
             let char_priest: RaidNight.Engine.Character = null;
             let char_warrior: RaidNight.Engine.Character = null;
             let char_wizard: RaidNight.Engine.Character = null;
@@ -85,42 +120,31 @@ module RaidNight.Graphics
                 }
             }
 
-            this.add.image(0, 0, 'assets/bg_dungeon.png').setOrigin(0, 0);
             this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'));
             this.warrior = new Character(this, char_warrior, this.add.sprite(600, 300, 'assets/warrior.png'));
             this.priest = new Character(this, char_priest, this.add.sprite(600, 500, 'assets/priest.png'));
             this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'));
             this.dragon.sprite.setFlipX(true);
-
-            this.gfx_upperHealthBox = this.add.graphics();
-            this.gfx_upperHealthBox.fillStyle(0x000000, 0.7);
-            this.gfx_upperHealthBox.fillRoundedRect(35, 40, 254, 70);
-            
-            this.gfx_lowerHealthBox = this.add.graphics();
-            this.gfx_lowerHealthBox.fillStyle(0x000000, 0.7);
-            this.gfx_lowerHealthBox.fillRect(36, 527, 250, 25);
-
-            let nameStyle = {fontSize: "20px", fill: "#FFF", align: "left"};
-            let healthStyle = {fontSize: "20px", fill: "#FFF", align: "right"};
-            this.add.text(45,45, "WIZARD:", nameStyle);
-            this.add.text(45,65, "WARRIOR:", nameStyle);
-            this.add.text(45,85, "PRIEST:", nameStyle);
-            this.add.text(45,530, "DRAGON:", nameStyle);
-            this.text_wizardHealth =  this.add.text(280,45, "", healthStyle).setOrigin(1, 0);
-            this.text_warriorHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0);
-            this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0);
-            this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0);
-
-            this.lastKnownTurn = -1;
         }
 
         update ()
         {
+            if(GLOBAL_GAME.arena.state == RaidNight.Engine.ArenaState.NotStarted)
+            {
+                return;
+            }
+
             let isNewTurn = false;
-            if (GLOBAL_GAME.arena.turn > this.lastKnownTurn)
+            if (GLOBAL_GAME.arena.turn != this.lastKnownTurn)
             {
                 this.lastKnownTurn = GLOBAL_GAME.arena.turn;
                 isNewTurn = true;
+            }
+
+            if (this.lastKnownTurn == 0 && isNewTurn)
+            {
+                console.log("NewGame");
+                this.newGame();
             }
 
             //console.log(this.time.now);
@@ -229,8 +253,6 @@ module RaidNight.Graphics
             this.scene = scene;
             this.character = char_reference;
             this.sprite = sprite;
-
-            this.scene.add.graphics();
             
             this.gfx_healthBlack = this.scene.add.graphics();
             this.gfx_healthRed = this.scene.add.graphics();
@@ -238,6 +260,14 @@ module RaidNight.Graphics
 
 
             this.gfx_healthBlack.fillRoundedRect(35, 40, 254, 70);
+        }
+
+        destroy = () =>
+        {
+            this.gfx_healthBlack.destroy();
+            this.gfx_healthRed.destroy();
+            this.gfx_healthGreen.destroy();
+            this.sprite.destroy();
         }
 
         draw = (newTurn: boolean) => 

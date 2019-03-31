@@ -35,6 +35,7 @@ module RaidNight.Engine
             this.x = x;
             this.y = y;
             this.statuses = [];
+            this.actionList = [];
         }
 
         resolveStatus = () =>

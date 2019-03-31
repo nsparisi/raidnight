@@ -53,10 +53,19 @@ class Main {
 
 var GLOBAL_deltaTimeMs = 0;
 
+const GLOBAL_INPUT_HELPER = new RaidNight.Engine.Input();
 const GLOBAL_GAME = new RaidNight.Engine.Game();
 GLOBAL_GAME.setup();
-GLOBAL_GAME.run();
 
 Main.Instance.begin();
 
 const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
+
+var NewGameAction = function (){
+    let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam();
+    if (team)
+    {
+        GLOBAL_GAME.newGame(team);
+        GLOBAL_GAME.start();
+    }
+}
