@@ -33,12 +33,14 @@ module RaidNight.Engine
             let wizard = new Character("Wizard", 100, 200, 12, 10);
 
             let inputs = document.getElementsByTagName("textarea");
+            let isValid = true;
+
             for (let i = 0; i < inputs.length; i++)
             {
                 switch(inputs[i].id.toUpperCase())
                 {
                     case "WIZARD_INPUT": {
-                        let result = this.parseRawInput(inputs[i].value);
+                        let result = this.parseRawInput("WIZARD", inputs[i].value);
                         if(!result.hasError)
                         {
                             wizard.actionList = result.actions;
@@ -46,12 +48,13 @@ module RaidNight.Engine
                         else 
                         {
                             console.log(`Wizard Error: ${result.errorMessage}`);
+                            isValid = false;
                         }
                         break
                     }
                     
                     case "PRIEST_INPUT": {
-                        let result = this.parseRawInput(inputs[i].value);
+                        let result = this.parseRawInput("PRIEST", inputs[i].value);
                         if(!result.hasError)
                         {
                             priest.actionList = result.actions;
@@ -59,12 +62,13 @@ module RaidNight.Engine
                         else 
                         {
                             console.log(`Priest Error: ${result.errorMessage}`);
+                            isValid = false;
                         }
                         break
                     }
                     
                     case "WARRIOR_INPUT": {
-                        let result = this.parseRawInput(inputs[i].value);
+                        let result = this.parseRawInput("WARRIOR", inputs[i].value);
                         if(!result.hasError)
                         {
                             warrior.actionList = result.actions;
@@ -72,13 +76,14 @@ module RaidNight.Engine
                         else 
                         {
                             console.log(`Warrior Error: ${result.errorMessage}`);
+                            isValid = false;
                         }
                         break
                     }
                 }
             }
 
-            if (warrior.actionList && priest.actionList && wizard.actionList)
+            if (isValid)
             {
                 return [warrior, priest, wizard];
             }
@@ -88,7 +93,7 @@ module RaidNight.Engine
             }
         }
 
-        parseRawInput = (raw: string): InputResult =>
+        parseRawInput = (className: string, raw: string): InputResult =>
         {
             // "Flare:Dragon,Fireball:Dragon,Move:Up,Fireball:Dragon";
             let actions: Action[] = [];
@@ -136,7 +141,7 @@ module RaidNight.Engine
 
                     continue;
                 }
-                else if (GLOBAL_GAME.library.lookupSkill(action) != null)
+                else if (GLOBAL_GAME.library.lookupSkillForClass(className, action))
                 {
                     if (!validTargets.includes(target.toUpperCase()))
                     {

@@ -3,18 +3,6 @@
  */
 class Main {   
 
-    // singleton implementation
-    static Instance = new Main();
-    constructor()
-    {
-        if(Main.Instance)
-        {
-            throw new Error("An instance of Main already exists.");
-        }
-        
-        Main.Instance = this;
-    }
-
     private isInitialized = false;
 
     public begin = () =>
@@ -57,11 +45,13 @@ const GLOBAL_INPUT_HELPER = new RaidNight.Engine.Input();
 const GLOBAL_GAME = new RaidNight.Engine.Game();
 GLOBAL_GAME.setup();
 
-Main.Instance.begin();
+const GLOBAL_MAIN = new Main();
+GLOBAL_MAIN.begin();
 
 const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
 
 var NewGameAction = function (){
+    GLOBAL_GAME.stop();
     let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam();
     if (team)
     {

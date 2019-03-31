@@ -44,7 +44,7 @@ module RaidNight.Engine
             this.health = -20;
             this.cost = 0;
             this.castTime = 1;
-            this.name = "Dragon Breath";
+            this.name = "DragonBreath";
         }
     }
 

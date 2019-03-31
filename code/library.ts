@@ -8,11 +8,25 @@ module RaidNight.Engine
             
             "HEAL": new skill_Heal(),
 
-            "DRAGON BREATH": new skill_DragonBreath()
+            "DRAGONBREATH": new skill_DragonBreath()
         }
 
         statusCatalogue = {
             "IGNITE": () => {return new status_Ignite();}
+        }
+
+
+        classSkillLookup = {
+            "WIZARD": ["FIREBALL", "IGNITE"],
+            "PRIEST": ["HEAL"],
+            "WARRIOR": [],
+            "DRAGON": ["DRAGONBREATH"],
+        }
+
+        lookupSkillForClass = (className: string, skillName: string) =>
+        {
+            return this.classSkillLookup[className] != null 
+                && this.classSkillLookup[className].includes(skillName.toUpperCase());
         }
 
         lookupSkill = (name: string) =>
