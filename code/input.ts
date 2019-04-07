@@ -148,7 +148,7 @@ module RaidNight.Engine
                         return this.generateErrorResult(`Invalid target ${target}`);
                     }
 
-                    actions.push(new action_Skill(action, target));
+                    actions.push(new action_Skill(action, [target]));
                     continue;
                 } 
                 else 

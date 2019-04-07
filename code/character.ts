@@ -142,10 +142,8 @@ module RaidNight.Engine
             let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
             if (skill.selfOnly)
             {
-                this.currentAction.target = this.name;
+                this.currentAction.targets = [this.name];
             }
-
-            let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
 
             if (this.mana + skill.mana < 0)
             {
@@ -156,32 +154,37 @@ module RaidNight.Engine
             this.castTimeRemaining = skill.castTime - 1;
             this.isCasting = true;
 
-            console.log(`${this.name} started cast of ${skill.name} on ${target.name}`);
+            console.log(`${this.name} started cast of ${skill.name} on ${this.currentAction.targets}`);
         }
 
         protected finishSkill()
         {
             // pre-skill validation
-            let i = 0;
             let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
-            let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
             if (this.mana + skill.mana < 0)
             {
                 console.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
                 return;
             }
 
-            // core skill logic
-            target.addHealth(skill.health);
+            // spend mana
             this.addMana(skill.mana);
 
-            for (i = 0; i < skill.targetStatuses.length; i++)
+            // cast on multiple targets
+            for(let j = 0; j < this.currentAction.targets.length; j++)
             {
-                console.log(`${this.name} applied status ${skill.targetStatuses[i]} to ${target.name}`);
-                target.addStatus(skill.targetStatuses[i]);
+                let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.targets[j]);
+
+                target.addHealth(skill.health);
+                for (let i = 0; i < skill.targetStatuses.length; i++)
+                {
+                    console.log(`${this.name} applied status ${skill.targetStatuses[i]} to ${target.name}`);
+                    target.addStatus(skill.targetStatuses[i]);
+                }
             }
 
-            for (i = 0; i < skill.selfStatuses.length; i++)
+            // apply statues to self
+            for (let i = 0; i < skill.selfStatuses.length; i++)
             {
                 console.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
                 this.addStatus(skill.selfStatuses[i]);
@@ -190,7 +193,7 @@ module RaidNight.Engine
             // post-skill wrap up
             this.castTimeRemaining = 0;
             this.isCasting = false;
-            console.log(`${this.name} finished cast of ${skill.name} on ${target.name}`);
+            console.log(`${this.name} finished cast of ${skill.name} on ${this.currentAction.targets}`);
         }
 
         protected addHealth(healthToAdd: integer)
@@ -281,13 +284,17 @@ module RaidNight.Engine
         {
             super.grabNewAction();
             
-            if(this.isTaunted)
+            // for single-target actions, attack the taunted target.
+            if (this.currentAction.targets.length == 1)
             {
-                this.currentAction.target = this.getNextTarget(this.tauntOrder).name;
-            } 
-            else 
-            {
-                this.currentAction.target = this.getNextTarget(this.untauntOrder).name;
+                if (this.isTaunted)
+                {
+                    this.currentAction.targets = [this.getNextTarget(this.tauntOrder).name];
+                } 
+                else 
+                {
+                    this.currentAction.targets = [this.getNextTarget(this.untauntOrder).name];
+                }
             }
         }
 

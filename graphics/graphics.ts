@@ -347,13 +347,16 @@ module RaidNight.Graphics
                 {
                     let start = new Phaser.Math.Vector2(centerX, centerY);
 
-                    let target = GLOBAL_GAME.arena.lookupTarget(this.character.currentAction.target);
-                    let targetX = target.x * this.scene.tileWidth + this.sprite.width / 2;
-                    let targetY = target.y * this.scene.tileHeight + this.sprite.height / 2;
-                    let end = new Phaser.Math.Vector2(targetX, targetY);
+                    for(let i = 0; i < this.character.currentAction.targets.length; i++)
+                    {
+                        let target = GLOBAL_GAME.arena.lookupTarget(this.character.currentAction.targets[i]);
+                        let targetX = target.x * this.scene.tileWidth + this.sprite.width / 2;
+                        let targetY = target.y * this.scene.tileHeight + this.sprite.height / 2;
+                        let end = new Phaser.Math.Vector2(targetX, targetY);
 
-                    let fb = new SpellEffect_Fireball().create(this.scene, start, end);
-                    this.scene.addSkillEffect(fb);
+                        let fb = new SpellEffect_Fireball().create(this.scene, start, end);
+                        this.scene.addSkillEffect(fb);
+                    }
                 }
             }
         }

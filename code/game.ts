@@ -16,7 +16,7 @@ module RaidNight.Engine
             let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.skillset = [new skill_DragonBreath()];
             boss.actionList = [];
-            boss.actionList.push(new action_Skill("DragonBreath", "warrior"));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
 
             this.arena.enemies = [boss];
             this.arena.allies = allies;

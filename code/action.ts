@@ -8,7 +8,7 @@ module RaidNight.Engine
         x: integer;
         y: integer;
         skill: string;
-        target: string;
+        targets: string[];
 
         constructor(type: ActionType)
         {
@@ -28,11 +28,11 @@ module RaidNight.Engine
 
     export class action_Skill extends Action
     {
-        constructor(skill: string, target: string)
+        constructor(skill: string, targets: string[])
         {
             super(ActionType.Skill);
             this.skill = skill;
-            this.target = target;
+            this.targets = targets;
         }
     }
 
