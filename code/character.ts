@@ -8,6 +8,7 @@ module RaidNight.Engine
         maxMana: integer;
         health: integer;
         mana: integer;
+        defense: integer;
 
         x: integer;
         y: integer;
@@ -31,20 +32,27 @@ module RaidNight.Engine
             this.maxMana = maxMana;
             this.health = maxHealth;
             this.mana = maxMana;
-            this.actionIndex = 0;
             this.x = x;
             this.y = y;
-            this.statuses = [];
             this.actionList = [];
+            this.resetState();
         }
 
-        resolveStatus = () =>
+        public resolveStatus()
         {
+            if (this.isDead())
+            {
+                return;
+            }
+
+            this.resetDefense();
+
             let i = 0;
             for(i = 0; i < this.statuses.length; i++)
             {
                 this.statuses[i].duration--;
                 this.addHealth(this.statuses[i].healthPerTurn);
+                this.addDefense(this.statuses[i].defense);
 
                 console.log(`Status ${this.statuses[i].name} has been processed on ${this.name}`);
                 if (this.statuses[i].duration <= 0)
@@ -56,8 +64,13 @@ module RaidNight.Engine
             }
         }
 
-        runAI = () =>
+        public runAI()
         {
+            if (this.isDead())
+            {
+                return;
+            }
+
             this.castTimeRemaining--;
 
             // check current action
@@ -88,13 +101,26 @@ module RaidNight.Engine
             }
         }
 
-        grabNewAction = () =>
+        public isDead()
+        {
+            return this.health <= 0;
+        }
+
+        protected resetState()
+        {
+            this.castTimeRemaining = 0;
+            this.isCasting = false;
+            this.actionIndex = 0;
+            this.statuses = [];
+        }
+
+        protected grabNewAction()
         {
             this.currentAction = this.actionList[this.actionIndex];
             this.actionIndex = (this.actionIndex + 1) % this.actionList.length;
         }
         
-        doMove = () =>
+        protected doMove()
         {
             let x = this.currentAction.x
             let y = this.currentAction.y
@@ -111,12 +137,17 @@ module RaidNight.Engine
             console.log(`${this.name} moved to ${this.x},${this.y}`);
         }
 
-        startSkill = () =>
+        protected startSkill()
         {
             let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
+            if (skill.selfOnly)
+            {
+                this.currentAction.target = this.name;
+            }
+
             let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
 
-            if (this.mana < skill.cost)
+            if (this.mana + skill.mana < 0)
             {
                 console.log(`${this.name} has not enough mana to cast ${skill.name}`);
                 return;
@@ -128,13 +159,13 @@ module RaidNight.Engine
             console.log(`${this.name} started cast of ${skill.name} on ${target.name}`);
         }
 
-        finishSkill = () =>
+        protected finishSkill()
         {
             // pre-skill validation
             let i = 0;
             let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
             let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.target);
-            if (this.mana < skill.cost)
+            if (this.mana + skill.mana < 0)
             {
                 console.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
                 return;
@@ -142,7 +173,7 @@ module RaidNight.Engine
 
             // core skill logic
             target.addHealth(skill.health);
-            this.addMana(-1 * skill.cost);
+            this.addMana(skill.mana);
 
             for (i = 0; i < skill.targetStatuses.length; i++)
             {
@@ -162,19 +193,49 @@ module RaidNight.Engine
             console.log(`${this.name} finished cast of ${skill.name} on ${target.name}`);
         }
 
-        addHealth = (healthToAdd: integer) =>
+        protected addHealth(healthToAdd: integer)
         {
+            if (this.isDead())
+            {
+                return;
+            }
+
+            if (healthToAdd < 0)
+            {
+                healthToAdd += this.defense;
+            }
+
             this.health = Math.max(0, this.health + healthToAdd);
             this.health = Math.min(this.maxHealth, this.health);
+
+            if (this.isDead())
+            {
+                this.resetState();
+            }
         }
 
-        addMana = (manaToAdd: integer) =>
+        protected addMana(manaToAdd: integer)
         {
+            if (this.isDead())
+            {
+                return;
+            }
+
             this.mana = Math.max(0, this.mana + manaToAdd);
             this.mana = Math.min(this.maxMana, this.mana);
         }
 
-        addStatus = (statusToAdd: string) =>
+        protected resetDefense()
+        {
+            this.defense = 0;
+        }
+
+        protected addDefense(defense: integer)
+        {
+            this.defense += defense
+        }
+
+        protected addStatus(statusToAdd: string)
         {
             let status = GLOBAL_GAME.library.instantiateStatus(statusToAdd);
             if(status == null)
@@ -200,6 +261,75 @@ module RaidNight.Engine
             {
                 this.statuses.push(status);
             }
+        }
+    }
+
+    export class Boss extends Character
+    {
+        isTaunted: boolean = false;
+        tauntOrder = ["Warrior", "Priest", "Wizard"];
+        untauntOrder = ["Priest", "Wizard", "Warrior"];
+
+        constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
+        { 
+            super(name, maxHealth, maxMana, x, y); 
+
+            this.addStatus("ST_TAUNT");
+        }
+
+        grabNewAction ()
+        {
+            super.grabNewAction();
+            
+            if(this.isTaunted)
+            {
+                this.currentAction.target = this.getNextTarget(this.tauntOrder).name;
+            } 
+            else 
+            {
+                this.currentAction.target = this.getNextTarget(this.untauntOrder).name;
+            }
+        }
+
+        getNextTarget(order: Array<string>)
+        {
+            for(let i = 0; i < order.length; i++)
+            {
+                let target = GLOBAL_GAME.arena.lookupTarget(order[i]);
+                if (!target.isDead())
+                {
+                    return target;
+                }
+            }
+
+            // default to warrior
+            return GLOBAL_GAME.arena.lookupTarget("Warrior");
+        }
+
+        resolveStatus = () =>
+        { 
+            this.resetTauntStatus();
+
+            for(let i = 0; i < this.statuses.length; i++)
+            {
+                if (this.statuses[i].taunt)
+                {
+                    this.addTauntStatus();
+                }
+            }
+
+            // must come last, as effects are processed first then spliced out.
+            super.resolveStatus();
+        }
+        
+        addTauntStatus()
+        {
+            this.isTaunted = true;
+        }
+
+        resetTauntStatus()
+        {
+            this.isTaunted = false;
         }
     }
 }

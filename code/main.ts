@@ -50,7 +50,7 @@ GLOBAL_MAIN.begin();
 
 const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
 
-var NewGameAction = function (){
+var GameAction_New = function (){
     GLOBAL_GAME.stop();
     let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam();
     if (team)
@@ -58,4 +58,12 @@ var NewGameAction = function (){
         GLOBAL_GAME.newGame(team);
         GLOBAL_GAME.start();
     }
+}
+
+var GameAction_Step = function (){
+    GLOBAL_GAME.step();
+}
+
+var GameAction_Resume = function (){
+    GLOBAL_GAME.resume();
 }

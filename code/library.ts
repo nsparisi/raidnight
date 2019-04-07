@@ -5,21 +5,28 @@ module RaidNight.Engine
         skillCatalogue = {
             "FIREBALL": new skill_Fireball(),
             "IGNITE": new skill_Ignite(),
+            "MEDITATE": new skill_Meditate(),
             
             "HEAL": new skill_Heal(),
+
+            "STRIKE": new skill_Strike(),
+            "FORTIFY": new skill_Fortify(),
+            "TAUNT":new skill_Taunt(),
 
             "DRAGONBREATH": new skill_DragonBreath()
         }
 
         statusCatalogue = {
-            "IGNITE": () => {return new status_Ignite();}
+            "ST_IGNITE": () => {return new status_Ignite();},
+            "ST_FORTIFY": () => {return new status_Fortify();},
+            "ST_TAUNT": () => {return new status_Taunt();}
         }
 
 
         classSkillLookup = {
             "WIZARD": ["FIREBALL", "IGNITE"],
             "PRIEST": ["HEAL"],
-            "WARRIOR": [],
+            "WARRIOR": ["STRIKE", "FORTIFY", "TAUNT"],
             "DRAGON": ["DRAGONBREATH"],
         }
 

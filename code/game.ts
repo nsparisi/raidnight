@@ -8,10 +8,12 @@ module RaidNight.Engine
         frameLengthMs: integer = 500;
         private elapsedTimeMs: number = 0;
         private isInitialized = false;
+        private stepMode = false;
+        private stepPending = false;
 
         newGame = (allies: Character[]) =>
         {
-            let boss = new Character("Dragon", 10000, 100, 3, 8);
+            let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.skillset = [new skill_DragonBreath()];
             boss.actionList = [];
             boss.actionList.push(new action_Skill("DragonBreath", "warrior"));
@@ -55,6 +57,18 @@ module RaidNight.Engine
             this.arena.stop();
         }
 
+        resume = () =>
+        {
+            this.stepMode = false;
+            this.elapsedTimeMs = this.frameLengthMs;
+        }
+
+        step = () =>
+        {
+            this.stepMode = true;
+            this.stepPending = true;
+        }
+
         update = () =>
         {
             if (this.arena == null || this.arena.state != ArenaState.InProgress)
@@ -62,12 +76,25 @@ module RaidNight.Engine
                 return;
             }
 
-            this.elapsedTimeMs += GLOBAL_deltaTimeMs;
-            if(this.elapsedTimeMs >= this.frameLengthMs)
+            if (this.stepMode)
             {
-                this.elapsedTimeMs -= this.frameLengthMs;
+                if (!this.stepPending)
+                {
+                    return;
+                }
 
+                this.stepPending = false;
                 this.arena.executeTurn();
+            }
+            else 
+            {
+                this.elapsedTimeMs += GLOBAL_deltaTimeMs;
+                if(this.elapsedTimeMs >= this.frameLengthMs)
+                {
+                    this.elapsedTimeMs -= this.frameLengthMs;
+
+                    this.arena.executeTurn();
+                }
             }
         }
     }

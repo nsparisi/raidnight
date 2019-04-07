@@ -35,21 +35,21 @@ module RaidNight.Engine
                 console.log(`Game is not running, cannot execute turn. '${this.state}'`);
             }
 
-            // resolve statuses
+            // resolve allies status + action
             for(i = 0; i < this.allies.length; i++)
             {
                 this.allies[i].resolveStatus();
             }
 
+            for (i = 0; i < this.allies.length; i++)
+            {
+                this.allies[i].runAI();
+            }
+
+            // resolve boss status + action
             for (i = 0; i < this.enemies.length; i++)
             {
                 this.enemies[i].resolveStatus();
-            }
-
-            // resolve actions
-            for(i = 0; i < this.allies.length; i++)
-            {
-                this.allies[i].runAI();
             }
 
             for (i = 0; i < this.enemies.length; i++)
@@ -90,20 +90,20 @@ module RaidNight.Engine
                 return;
             }
 
-            let isLose = false;
+            let isLose = true;
             let i = 0;
-            for(i = 0; i < this.allies.length; i++)
+            for (i = 0; i < this.allies.length; i++)
             {
-                if(this.allies[i].health <= 0)
+                if (!this.allies[i].isDead())
                 {
-                    console.log(`LOSE! ${this.allies[i].name} has died!`);
-                    isLose = true;
+                    isLose = false;
                     break;
                 }
             }
 
             if (isLose)
             {
+                console.log(`LOSE! All allies are dead!`);
                 this.state = ArenaState.Lose;
             }
         }
@@ -111,7 +111,7 @@ module RaidNight.Engine
         lookupTarget = (targetName: string) =>
         {
             let i = 0;
-            for(i = 0; i < this.enemies.length; i++)
+            for (i = 0; i < this.enemies.length; i++)
             {
                 if (this.enemies[i].name.toUpperCase() == targetName.toUpperCase())
                 {
@@ -119,7 +119,7 @@ module RaidNight.Engine
                 }
             }
 
-            for(i = 0; i < this.allies.length; i++)
+            for (i = 0; i < this.allies.length; i++)
             {
                 if (this.allies[i].name.toUpperCase() == targetName.toUpperCase())
                 {

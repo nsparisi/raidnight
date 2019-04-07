@@ -141,11 +141,10 @@ module RaidNight.Graphics
                 isNewTurn = true;
             }
 
-            if (this.lastKnownTurn == 0 && isNewTurn)
+            if (isNewTurn && this.lastKnownTurn == 1)
             {
-                console.log("NewGame");
                 this.newGame();
-            }
+            } 
 
             //console.log(this.time.now);
             this.wizard.draw(isNewTurn);
@@ -247,6 +246,9 @@ module RaidNight.Graphics
         gfx_healthBlack: Phaser.GameObjects.Graphics;
         gfx_healthRed: Phaser.GameObjects.Graphics;
         gfx_healthGreen: Phaser.GameObjects.Graphics;
+        
+        gfx_manaBlack: Phaser.GameObjects.Graphics;
+        gfx_manaBlue: Phaser.GameObjects.Graphics;
 
         constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, sprite: Phaser.GameObjects.Sprite)
         {
@@ -257,9 +259,12 @@ module RaidNight.Graphics
             this.gfx_healthBlack = this.scene.add.graphics();
             this.gfx_healthRed = this.scene.add.graphics();
             this.gfx_healthGreen = this.scene.add.graphics();
-
+            
+            this.gfx_manaBlack = this.scene.add.graphics();
+            this.gfx_manaBlue = this.scene.add.graphics();
 
             this.gfx_healthBlack.fillRoundedRect(35, 40, 254, 70);
+            this.gfx_manaBlue.fillRoundedRect(35, 40, 254, 70);
         }
 
         destroy = () =>
@@ -267,6 +272,8 @@ module RaidNight.Graphics
             this.gfx_healthBlack.destroy();
             this.gfx_healthRed.destroy();
             this.gfx_healthGreen.destroy();
+            this.gfx_manaBlack.destroy();
+            this.gfx_manaBlue.destroy();
             this.sprite.destroy();
         }
 
@@ -282,19 +289,55 @@ module RaidNight.Graphics
             let blackPadding = 2;
             let redWidth = 40;
             let greenWidth = redWidth * (this.character.health / this.character.maxHealth);
+            let blueWidth = redWidth * (this.character.mana / this.character.maxMana);
             let colorHeight = 7;
+            let yOffset = 25;
+            let manaYOffset = 37;
 
             this.gfx_healthBlack.clear();
-            this.gfx_healthBlack.fillStyle(0x000000, 0.4);
-            this.gfx_healthBlack.fillRect(centerX - (redWidth / 2) - blackPadding, centerY + 25 - blackPadding, redWidth + (blackPadding*2), colorHeight + (blackPadding*2));
+            this.gfx_healthBlack.fillStyle(0x000000, 0.6);
+            this.gfx_healthBlack.fillRect(
+                centerX - (redWidth / 2) - blackPadding, 
+                centerY + yOffset - blackPadding, 
+                redWidth + (blackPadding*2), 
+                colorHeight + (blackPadding*2));
 
             this.gfx_healthRed.clear();
             this.gfx_healthRed.fillStyle(0xFF2255, 1.0);
-            this.gfx_healthRed.fillRect(centerX - (redWidth / 2), centerY + 25, redWidth, colorHeight);
+            this.gfx_healthRed.fillRect(
+                centerX - (redWidth / 2), 
+                centerY + yOffset, 
+                redWidth, 
+                colorHeight);
 
             this.gfx_healthGreen.clear();
             this.gfx_healthGreen.fillStyle(0x22CC88, 1.0);
-            this.gfx_healthGreen.fillRect(centerX - (redWidth / 2), centerY + 25, greenWidth, colorHeight);
+            this.gfx_healthGreen.fillRect(
+                centerX - (redWidth / 2), 
+                centerY + yOffset, 
+                greenWidth, 
+                colorHeight);
+
+            this.gfx_manaBlack.clear();
+            this.gfx_manaBlack.fillStyle(0x000000, 0.6);
+            this.gfx_manaBlack.fillRect(
+                centerX - (redWidth / 2) - blackPadding, 
+                centerY + manaYOffset - blackPadding, 
+                redWidth + (blackPadding*2), 
+                colorHeight + (blackPadding*2));
+
+            this.gfx_manaBlue.clear();
+            this.gfx_manaBlue.fillStyle(0x2255CC, 1.0);
+            this.gfx_manaBlue.fillRect(
+                centerX - (redWidth / 2), 
+                centerY + manaYOffset, 
+                blueWidth, 
+                colorHeight);
+
+            if (this.character.isDead())
+            {
+                return;
+            }
 
             if (newTurn)
             {
