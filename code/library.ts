@@ -13,13 +13,15 @@ module RaidNight.Engine
             "FORTIFY": new skill_Fortify(),
             "TAUNT":new skill_Taunt(),
 
-            "DRAGONBREATH": new skill_DragonBreath()
+            "DRAGONBREATH": new skill_DragonBreath(),
+            "HEATWAVE": new skill_HeatWave()
         }
 
         statusCatalogue = {
             "ST_IGNITE": () => {return new status_Ignite();},
             "ST_FORTIFY": () => {return new status_Fortify();},
-            "ST_TAUNT": () => {return new status_Taunt();}
+            "ST_TAUNT": () => {return new status_Taunt();},
+            "ST_HEATWAVE": () => {return new status_HeatWave();}
         }
 
 
@@ -27,7 +29,7 @@ module RaidNight.Engine
             "WIZARD": ["FIREBALL", "IGNITE"],
             "PRIEST": ["HEAL"],
             "WARRIOR": ["STRIKE", "FORTIFY", "TAUNT"],
-            "DRAGON": ["DRAGONBREATH"],
+            "DRAGON": ["DRAGONBREATH", "HEATWAVE"],
         }
 
         lookupSkillForClass = (className: string, skillName: string) =>

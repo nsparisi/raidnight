@@ -68,6 +68,7 @@ module RaidNight.Engine
         {
             if (this.isDead())
             {
+                this.resetState();
                 return;
             }
 
@@ -210,11 +211,6 @@ module RaidNight.Engine
 
             this.health = Math.max(0, this.health + healthToAdd);
             this.health = Math.min(this.maxHealth, this.health);
-
-            if (this.isDead())
-            {
-                this.resetState();
-            }
         }
 
         protected addMana(manaToAdd: integer)

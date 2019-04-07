@@ -52,4 +52,17 @@ module RaidNight.Engine
             this.taunt = true;
         }
     }
+
+    export class status_HeatWave extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_HEATWAVE";
+            this.duration = 3;
+            this.healthPerTurn = -15;
+        }
+    }
 }

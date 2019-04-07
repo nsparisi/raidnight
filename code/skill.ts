@@ -102,6 +102,19 @@ module RaidNight.Engine
         }
     }
 
+    export class skill_HeatWave extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -5;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "HeatWave";
+            this.targetStatuses = ["ST_HEATWAVE"];
+        }
+    }
+
     export class skill_Heal extends Skill
     {
         constructor()

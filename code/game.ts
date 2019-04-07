@@ -17,6 +17,15 @@ module RaidNight.Engine
             boss.skillset = [new skill_DragonBreath()];
             boss.actionList = [];
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("HeatWave", ["warrior", "priest", "wizard"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
 
             this.arena.enemies = [boss];
             this.arena.allies = allies;
