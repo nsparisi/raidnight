@@ -6,14 +6,23 @@
 <body>
     <button onclick="GameAction_New();">New Game</button>
     <button onclick="GameAction_Step();">Step</button>
-    <button onclick="GameAction_Resume();">Resume</button> <br />
+    <button onclick="GameAction_Resume();">Resume</button>
+    Turn Length in milliseconds <input type="text" id="turn_length_ms" value="500"> <br />
     <div id="Game"></div>
     <script src="./out/raidnight.js"></script>
     Wizard: <textarea rows="4" cols="70" id="wizard_input">ignite:dragon, fireball:dragon</textarea><br/>
-    Priest: <textarea rows="4" cols="70" id="priest_input">heal:warrior, move:left, move:up, move:right, move:down</textarea><br/>
+    Priest: <textarea rows="4" cols="70" id="priest_input">regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, heal:warrior</textarea><br/>
     Warrior: <textarea rows="4" cols="70" id="warrior_input">taunt:dragon, strike:dragon, fortify:warrior</textarea><br/>
     <button onclick="GameAction_New();">New Game</button>
     <button onclick="GameAction_Step();">Step</button>
     <button onclick="GameAction_Resume();">Resume</button>
 </body>
 </html>
+
+
+
+   <!--
+    Wizard: <textarea rows="4" cols="70" id="wizard_input">ignite:dragon, fireball:dragon</textarea><br/>
+    Priest: <textarea rows="4" cols="70" id="priest_input">heal:warrior, move:left, move:up, move:right, move:down</textarea><br/>
+    Warrior: <textarea rows="4" cols="70" id="warrior_input">taunt:dragon, strike:dragon, fortify:warrior</textarea><br/>
+    -->

@@ -100,11 +100,26 @@ module RaidNight.Engine
                 this.elapsedTimeMs += GLOBAL_deltaTimeMs;
                 if(this.elapsedTimeMs >= this.frameLengthMs)
                 {
-                    this.elapsedTimeMs -= this.frameLengthMs;
+                    this.elapsedTimeMs = 0;
+                    this.calculateNewFrameLength();
 
                     this.arena.executeTurn();
                 }
             }
+        }
+
+        calculateNewFrameLength = () =>
+        {
+            let element = <HTMLInputElement>document.getElementById("turn_length_ms");
+            let valueMs = parseInt(element.value);
+
+            console.log(`valueMs: ${valueMs}`);
+
+            valueMs = valueMs ? valueMs : 500;
+            valueMs = Math.max(100, valueMs);
+            valueMs = Math.min(10000, valueMs);
+
+            this.frameLengthMs = valueMs;
         }
     }
 }

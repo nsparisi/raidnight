@@ -62,7 +62,20 @@ module RaidNight.Engine
             this.type = StatusType.Bad;
             this.name = "ST_HEATWAVE";
             this.duration = 3;
-            this.healthPerTurn = -15;
+            this.healthPerTurn = -16;
+        }
+    }
+
+    export class status_Regen extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Good;
+            this.name = "ST_REGEN";
+            this.duration = 10;
+            this.healthPerTurn = 5;
         }
     }
 }

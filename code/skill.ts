@@ -126,4 +126,17 @@ module RaidNight.Engine
             this.name = "Heal";
         }
     }
+
+    export class skill_Regen extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = -1;
+            this.castTime = 1;
+            this.name = "Regen";
+            this.targetStatuses = ["ST_REGEN"];
+        }
+    }
 }

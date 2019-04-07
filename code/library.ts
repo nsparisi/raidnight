@@ -8,6 +8,7 @@ module RaidNight.Engine
             "MEDITATE": new skill_Meditate(),
             
             "HEAL": new skill_Heal(),
+            "REGEN": new skill_Regen(),
 
             "STRIKE": new skill_Strike(),
             "FORTIFY": new skill_Fortify(),
@@ -21,13 +22,14 @@ module RaidNight.Engine
             "ST_IGNITE": () => {return new status_Ignite();},
             "ST_FORTIFY": () => {return new status_Fortify();},
             "ST_TAUNT": () => {return new status_Taunt();},
-            "ST_HEATWAVE": () => {return new status_HeatWave();}
+            "ST_HEATWAVE": () => {return new status_HeatWave();},
+            "ST_REGEN": () => {return new status_Regen();}
         }
 
 
         classSkillLookup = {
             "WIZARD": ["FIREBALL", "IGNITE"],
-            "PRIEST": ["HEAL"],
+            "PRIEST": ["HEAL", "REGEN"],
             "WARRIOR": ["STRIKE", "FORTIFY", "TAUNT"],
             "DRAGON": ["DRAGONBREATH", "HEATWAVE"],
         }
