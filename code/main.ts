@@ -67,3 +67,9 @@ var GameAction_Step = function (){
 var GameAction_Resume = function (){
     GLOBAL_GAME.resume();
 }
+
+var GameAction_Debug = function (){
+    let element = <HTMLInputElement>document.getElementById("debug_checkbox");
+    RaidNight.Debug.DebugEnabled = element.checked;
+}
+GameAction_Debug();

@@ -27,6 +27,9 @@ module RaidNight.Graphics
         dragon: Character;
         room: Room;
 
+        text_TurnCount: Phaser.GameObjects.Text;
+        gfx_TurnBox: Phaser.GameObjects.Graphics;
+
         text_priestHealth: Phaser.GameObjects.Text;
         text_warriorHealth: Phaser.GameObjects.Text;
         text_wizardHealth: Phaser.GameObjects.Text;
@@ -82,6 +85,14 @@ module RaidNight.Graphics
             this.text_warriorHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0);
             this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0);
             this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0);
+
+            // upper-right turn box
+            this.gfx_TurnBox = this.add.graphics();
+            this.gfx_TurnBox.fillStyle(0x000000, 0.7);
+            this.gfx_TurnBox.fillRect(645, 7, 140, 25);
+
+            this.add.text(650, 10, "TURN:", nameStyle);
+            this.text_TurnCount = this.add.text(780, 10, "123", healthStyle).setOrigin(1, 0);
 
             this.lastKnownTurn = -1;
         }
@@ -164,24 +175,38 @@ module RaidNight.Graphics
             this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth}`);
             this.text_dragonHealth.setText(`${this.dragon.character.health} / ${this.dragon.character.maxHealth}`);
 
+            this.text_TurnCount.setText(`${GLOBAL_GAME.arena.turn}`);
+
             // do new stuff
-            let i = 0;
-            for (i = 0; i < this.allSkillEffects.length; i++)
+            for (let i = 0; i < this.allSkillEffects.length; i++)
             {
                 this.allSkillEffects[i].update();
 
-                if (this.allSkillEffects[i].totalProgress() >= 1)
+                if (this.allSkillEffects[i].isFinished())
                 {
                     this.allSkillEffects[i].destroy();
                     this.allSkillEffects.splice(i,1);
                     i--;
                 }
             }
+
+            if (Debug.DebugEnabled)
+            {
+                this.debug();
+            }
         }
 
         addSkillEffect = (effect: SpellEffect) =>
         {
             this.allSkillEffects.push(effect);
+        }
+
+        debug()
+        {
+            for (let i = 0; i < this.allSkillEffects.length; i++)
+            {
+                this.allSkillEffects[i].debug();
+            }
         }
     }
 

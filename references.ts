@@ -1,5 +1,6 @@
 /// <reference path="phaser/phaser.d.ts" />
 
+/// <reference path="code/debug.ts" />
 /// <reference path="code/arena.ts" />
 /// <reference path="code/action.ts" />
 /// <reference path="code/character.ts" />

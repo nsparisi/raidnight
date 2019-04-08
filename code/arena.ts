@@ -10,7 +10,7 @@ module RaidNight.Engine
         room: Room;
 
         turn: integer = 0;
-        maxTurns: integer = 1000;
+        maxTurns: integer = 10000;
         state: ArenaState = ArenaState.NotStarted;
 
         start = () =>
