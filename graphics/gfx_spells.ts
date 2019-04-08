@@ -28,6 +28,66 @@ module RaidNight.Graphics
         {
             
         }
+        
+
+        calculateDuration(targetDuration: number)
+        {
+            return targetDuration * Phaser.Math.Clamp(GLOBAL_GAME.frameLengthMs / 1000, 300/1000, 1);
+        }
+    }
+    
+
+    export class SpellEffect_HeatWave extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(start.x, start.y, "assets/heatwave.jpg", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite.setBlendMode(Phaser.BlendModes.ADD);
+            this.sprite.setRotation(Math.random() * Math.PI * 2);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 40,
+                to: 8000,
+                duration: this.calculateDuration(1500),
+                ease: "Quart.easeIn"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tween.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setDisplaySize(this.tween.getValue(),this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+        }
     }
 
     export class SpellEffect_Fireball extends SpellEffect
@@ -58,7 +118,7 @@ module RaidNight.Graphics
             this.tween = this.scene.tweens.addCounter({
                 from: 0,
                 to: 1,
-                duration: GLOBAL_GAME.frameLengthMs * 0.6,
+                duration: this.calculateDuration(600),
                 ease: "Cubic.easeInOut"
             });
 
@@ -133,21 +193,21 @@ module RaidNight.Graphics
             this.tween1 = this.scene.tweens.addCounter({
                 from: 0,
                 to: 1,
-                duration: GLOBAL_GAME.frameLengthMs * 0.2,
+                duration: this.calculateDuration(200),
                 ease: "Quint.easeIn"
             });
             
             this.tween2 = this.scene.tweens.addCounter({
                 from: 0,
                 to: 1,
-                duration: GLOBAL_GAME.frameLengthMs * 0.6,
+                duration: this.calculateDuration(600),
                 ease: "Quint.easeIn"
             });
             
             this.tween3 = this.scene.tweens.addCounter({
                 from: 0,
                 to: 1,
-                duration: GLOBAL_GAME.frameLengthMs * 1.0,
+                duration: this.calculateDuration(1000),
                 ease: "Linear"
             });
 

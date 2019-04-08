@@ -67,7 +67,8 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_ignite.png', 'assets/status/st_ignite.png');
             this.load.image('assets/status/st_regen.png', 'assets/status/st_regen.png');
             this.load.image('assets/status/st_taunt.png', 'assets/status/st_taunt.png');
-            
+
+            this.load.image('assets/heatwave.jpg', 'assets/heatwave.jpg');
             this.load.image('assets/spike.png', 'assets/spike.png');
             this.load.spritesheet('assets/ss_fire.png', 'assets/ss_fire.png', {frameWidth:39, frameHeight: 40});
 
@@ -170,12 +171,12 @@ module RaidNight.Graphics
             {
                 this.lastKnownTurn = GLOBAL_GAME.arena.turn;
                 isNewTurn = true;
-            }
 
-            if (isNewTurn && this.lastKnownTurn == 1)
-            {
-                this.newGame();
-            } 
+                if (GLOBAL_GAME.arena.turn == 1)
+                {
+                    this.newGame();
+                }
+            }
 
             //console.log(this.time.now);
             this.wizard.update(isNewTurn);

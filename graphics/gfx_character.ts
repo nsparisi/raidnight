@@ -121,8 +121,16 @@ module RaidNight.Graphics
                         let targetY = target.y * this.scene.tileHeight + this.sprite.height / 2;
                         let end = new Phaser.Math.Vector2(targetX, targetY);
 
-                        let fb = new SpellEffect_Fireball(this.scene, start, end);
-                        this.scene.addSkillEffect(fb);
+                        if (this.character.currentAction.skill.toUpperCase() == "HEATWAVE")
+                        {
+                            let hw = new SpellEffect_HeatWave(this.scene, start);
+                            this.scene.addSkillEffect(hw);
+                        }
+                        else 
+                        {
+                            let fb = new SpellEffect_Fireball(this.scene, start, end);
+                            this.scene.addSkillEffect(fb);
+                        }
                     }
                 }
             }
