@@ -46,7 +46,7 @@ module RaidNight.Graphics
             let xNormal = end.x > start.x ? 1 : -1;
             let yNormal = Math.random() * 2 - 1;
 
-            this.sprite = this.scene.add.sprite(start.x, start.y, "assets/ss_fire.png", 0);
+            this.sprite = this.scene.add.sprite(start.x, start.y, "assets/ss_fire.png", 0).setDepth(DepthLayer.Med_Priority);
             this.sprite.setBlendMode(Phaser.BlendModes.ADD);
             this.path = new Phaser.Curves.Path(start.x, start.y);
             this.path.cubicBezierTo(
@@ -62,7 +62,7 @@ module RaidNight.Graphics
                 ease: "Cubic.easeInOut"
             });
 
-            this.gfx = this.scene.add.graphics();
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
         }
 
         isFinished()
@@ -123,7 +123,7 @@ module RaidNight.Graphics
                             i + scene.tileWidth * 0.5, 
                             j + scene.tileHeight * 0.5, 
                             "assets/spike.png", 
-                            0));
+                            0).setDepth(DepthLayer.Med_Priority));
 
                     this.sprites[this.sprites.length-1].setScale(1.5,1.5);
                 }
@@ -151,7 +151,7 @@ module RaidNight.Graphics
                 ease: "Linear"
             });
 
-            this.gfx = this.scene.add.graphics();
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
         }
 
         update()

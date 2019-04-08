@@ -14,6 +14,15 @@ module RaidNight.Graphics
         }
     }
 
+    export enum DepthLayer 
+    {
+        Background = -10,
+        Low_Priority = -1,
+        Med_Priority = 0,
+        High_Priority = 1,
+        HUD = 10
+    }
+
     export class Scene_Arena extends Phaser.Scene
     {
         constructor()
@@ -67,32 +76,32 @@ module RaidNight.Graphics
 
             this.newGame();
 
-            this.gfx_upperHealthBox = this.add.graphics();
+            this.gfx_upperHealthBox = this.add.graphics().setDepth(DepthLayer.HUD);
             this.gfx_upperHealthBox.fillStyle(0x000000, 0.7);
             this.gfx_upperHealthBox.fillRoundedRect(35, 40, 254, 70);
             
-            this.gfx_lowerHealthBox = this.add.graphics();
+            this.gfx_lowerHealthBox = this.add.graphics().setDepth(DepthLayer.HUD);
             this.gfx_lowerHealthBox.fillStyle(0x000000, 0.7);
             this.gfx_lowerHealthBox.fillRect(36, 527, 250, 25);
 
             let nameStyle = {fontSize: "20px", fill: "#FFF", align: "left"};
             let healthStyle = {fontSize: "20px", fill: "#FFF", align: "right"};
-            this.add.text(45,45, "WIZARD:", nameStyle);
-            this.add.text(45,65, "WARRIOR:", nameStyle);
-            this.add.text(45,85, "PRIEST:", nameStyle);
-            this.add.text(45,530, "DRAGON:", nameStyle);
-            this.text_wizardHealth =  this.add.text(280,45, "", healthStyle).setOrigin(1, 0);
-            this.text_warriorHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0);
-            this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0);
-            this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0);
+            this.add.text(45,45, "WIZARD:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,65, "WARRIOR:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,85, "PRIEST:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,530, "DRAGON:", nameStyle).setDepth(DepthLayer.HUD);
+            this.text_wizardHealth =  this.add.text(280,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_warriorHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
 
             // upper-right turn box
-            this.gfx_TurnBox = this.add.graphics();
+            this.gfx_TurnBox = this.add.graphics().setDepth(DepthLayer.HUD);
             this.gfx_TurnBox.fillStyle(0x000000, 0.7);
             this.gfx_TurnBox.fillRect(645, 7, 140, 25);
 
-            this.add.text(650, 10, "TURN:", nameStyle);
-            this.text_TurnCount = this.add.text(780, 10, "123", healthStyle).setOrigin(1, 0);
+            this.add.text(650, 10, "TURN:", nameStyle).setDepth(DepthLayer.HUD);
+            this.text_TurnCount = this.add.text(780, 10, "123", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
 
             this.lastKnownTurn = -1;
         }
@@ -229,12 +238,12 @@ module RaidNight.Graphics
             this.character = char_reference;
             this.sprite = sprite;
             
-            this.gfx_healthBlack = this.scene.add.graphics();
-            this.gfx_healthRed = this.scene.add.graphics();
-            this.gfx_healthGreen = this.scene.add.graphics();
+            this.gfx_healthBlack = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
+            this.gfx_healthRed = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
+            this.gfx_healthGreen = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
             
-            this.gfx_manaBlack = this.scene.add.graphics();
-            this.gfx_manaBlue = this.scene.add.graphics();
+            this.gfx_manaBlack = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
+            this.gfx_manaBlue = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
 
             this.gfx_healthBlack.fillRoundedRect(35, 40, 254, 70);
             this.gfx_manaBlue.fillRoundedRect(35, 40, 254, 70);
