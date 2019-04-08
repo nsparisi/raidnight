@@ -2,32 +2,39 @@
 <html>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser-arcade-physics.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <button onclick="GameAction_New();">New Game</button>
-    <button onclick="GameAction_Step();">Step</button>
-    <button onclick="GameAction_Resume();">Resume</button>
-    Turn Length in milliseconds <input type="text" id="turn_length_ms" value="1000"> <br />
-    Debug: <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();"><br />
-    <div id="Game"></div>
+    <div id="Game" class="game"></div>
+    <div class="controls">
+        <button onclick="GameAction_New();">New Game</button>
+        <button onclick="GameAction_Step();">Step</button>
+        <button onclick="GameAction_Resume();">Resume</button><br />
+        Turn ms <input type="text" id="turn_length_ms" value="1000"> <br />
+        Debug: <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();"><br />
+        Wizard: <textarea rows="6" cols="70" id="wizard_input">
+ignite:dragon, fireball:dragon, fireball:dragon, fireball:dragon, move:left,
+ignite:dragon, fireball:dragon, fireball:dragon, move:right
+        </textarea><br/>
+        Priest: <textarea rows="6" cols="70" id="priest_input">
+regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, heal:warrior,
+regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, regen:warrior, move:down,
+regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, heal:warrior,
+regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, regen:warrior, move:up
+        </textarea><br/>
+        Warrior: <textarea rows="6" cols="70" id="warrior_input">
+taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, fortify:warrior, taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, move:down, 
+taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, fortify:warrior, taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, move:up 
+        </textarea><br/>
+
+    <div class="spellbook">
+        <h3>SpellBook</h3>
+        Wizard: Ignite, Fireball<br />
+        Priest: Heal, Regen<br />
+        Warrior: Taunt, Fortify, Strike<br />
+    </div>
+    </div>  
     <script src="./out/raidnight.js"></script>
-    Wizard: <textarea rows="4" cols="70" id="wizard_input">
-        ignite:dragon, fireball:dragon, fireball:dragon, fireball:dragon, move:left,
-        ignite:dragon, fireball:dragon, fireball:dragon, move:right
-    </textarea><br/>
-    Priest: <textarea rows="4" cols="70" id="priest_input">
-        regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, heal:warrior,
-        regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, regen:warrior, move:down,
-        regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, heal:warrior,
-        regen:warrior, regen:priest, regen:wizard, heal:warrior, heal:warrior, regen:warrior, move:up
-    </textarea><br/>
-    Warrior: <textarea rows="4" cols="70" id="warrior_input">
-        taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, fortify:warrior, taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, move:down, 
-        taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, fortify:warrior, taunt:dragon, strike:dragon, fortify:warrior, strike:dragon, move:up 
-    </textarea><br/>
-    <button onclick="GameAction_New();">New Game</button>
-    <button onclick="GameAction_Step();">Step</button>
-    <button onclick="GameAction_Resume();">Resume</button>
 </body>
 </html>
 

@@ -1,0 +1,24 @@
+.game {
+    float:left;
+    margin-right: 5px;
+}
+
+.controls {
+    float:left;
+    font-family: "Arial", Helvetica, sans-serif;
+    line-height: 30px;
+}
+
+.spellbook {
+    margin-top: 10px;
+    line-height: 20px;
+    background-color: rgb(164, 219, 207);
+    width: 400px;
+}
+
+.spellbook h3 {
+    margin-bottom: 5px;
+    line-height: 20px;
+    background-color: rgb(169, 216, 238)
+}
+
