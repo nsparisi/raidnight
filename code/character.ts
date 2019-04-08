@@ -13,8 +13,6 @@ module RaidNight.Engine
         x: integer;
         y: integer;
 
-        skillset: Array<Skill>;
-
         actionList: Action[];
         actionIndex: integer;
 
@@ -107,6 +105,50 @@ module RaidNight.Engine
             return this.health <= 0;
         }
 
+        public addHealth(healthToAdd: integer)
+        {
+            if (this.isDead())
+            {
+                return;
+            }
+
+            if (healthToAdd < 0)
+            {
+                healthToAdd += this.defense;
+            }
+
+            this.health = Math.max(0, this.health + healthToAdd);
+            this.health = Math.min(this.maxHealth, this.health);
+        }
+
+        public addStatus(statusToAdd: string)
+        {
+            let status = GLOBAL_GAME.library.instantiateStatus(statusToAdd);
+            if(status == null)
+            {
+                return;
+            }
+
+            // refresh existing status
+            let i = 0;
+            let alreadyApplied = false;
+            for(i = 0; i < this.statuses.length; i++)
+            {
+                if (this.statuses[i].name.toUpperCase() == status.name.toUpperCase())
+                {
+                    this.statuses[i] = status;
+                    alreadyApplied = true;
+                    console.log(`Refreshing status ${status.name} on ${this.name}`);
+                }
+            }
+
+            // apply as a new status
+            if(!alreadyApplied)
+            {
+                this.statuses.push(status);
+            }
+        }
+
         protected resetState()
         {
             this.castTimeRemaining = 0;
@@ -126,8 +168,8 @@ module RaidNight.Engine
             let x = this.currentAction.x
             let y = this.currentAction.y
 
-            this.x = Math.min(GLOBAL_GAME.arena.board.width, this.x + x);
-            this.y = Math.min(GLOBAL_GAME.arena.board.height, this.y + y);
+            this.x = Math.min(GLOBAL_GAME.arena.room.width - 1, this.x + x);
+            this.y = Math.min(GLOBAL_GAME.arena.room.height - 1, this.y + y);
 
             this.x = Math.max(0, this.x);
             this.y = Math.max(0, this.y);
@@ -171,16 +213,33 @@ module RaidNight.Engine
             // spend mana
             this.addMana(skill.mana);
 
-            // cast on multiple targets
-            for(let j = 0; j < this.currentAction.targets.length; j++)
+            // calculate targets
+            let targets = new Array<Character>();
+            if (this.currentAction.targetType == TargetType.Area)
             {
-                let target = GLOBAL_GAME.arena.lookupTarget(this.currentAction.targets[j]);
-
-                target.addHealth(skill.health);
-                for (let i = 0; i < skill.targetStatuses.length; i++)
+                // caution:: only allies can get hit by AOE at this time
+                targets = GLOBAL_GAME.arena.findAlliesInArea(this.currentAction.area);
+            }
+            else if (this.currentAction.targetType == TargetType.Character)
+            {
+                for (let i = 0; i < this.currentAction.targets.length; i++)
                 {
-                    console.log(`${this.name} applied status ${skill.targetStatuses[i]} to ${target.name}`);
-                    target.addStatus(skill.targetStatuses[i]);
+                    targets.push(GLOBAL_GAME.arena.lookupTarget(this.currentAction.targets[i]));
+                }
+            }
+
+            // cast on multiple targets
+            for(let i = 0; i < targets.length; i++)
+            {
+                let target = targets[i];
+
+                console.log(`${this.name} used ${skill.name} on ${target.name}`);
+                target.addHealth(skill.health);
+
+                for (let j = 0; j < skill.targetStatuses.length; j++)
+                {
+                    console.log(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
+                    target.addStatus(skill.targetStatuses[j]);
                 }
             }
 
@@ -194,23 +253,7 @@ module RaidNight.Engine
             // post-skill wrap up
             this.castTimeRemaining = 0;
             this.isCasting = false;
-            console.log(`${this.name} finished cast of ${skill.name} on ${this.currentAction.targets}`);
-        }
-
-        protected addHealth(healthToAdd: integer)
-        {
-            if (this.isDead())
-            {
-                return;
-            }
-
-            if (healthToAdd < 0)
-            {
-                healthToAdd += this.defense;
-            }
-
-            this.health = Math.max(0, this.health + healthToAdd);
-            this.health = Math.min(this.maxHealth, this.health);
+            console.log(`${this.name} finished cast of ${skill.name}.`);
         }
 
         protected addMana(manaToAdd: integer)
@@ -232,34 +275,6 @@ module RaidNight.Engine
         protected addDefense(defense: integer)
         {
             this.defense += defense
-        }
-
-        protected addStatus(statusToAdd: string)
-        {
-            let status = GLOBAL_GAME.library.instantiateStatus(statusToAdd);
-            if(status == null)
-            {
-                return;
-            }
-
-            // refresh existing status
-            let i = 0;
-            let alreadyApplied = false;
-            for(i = 0; i < this.statuses.length; i++)
-            {
-                if (this.statuses[i].name.toUpperCase() == status.name.toUpperCase())
-                {
-                    this.statuses[i] = status;
-                    alreadyApplied = true;
-                    console.log(`Refreshing status ${status.name} on ${this.name}`);
-                }
-            }
-
-            // apply as a new status
-            if(!alreadyApplied)
-            {
-                this.statuses.push(status);
-            }
         }
     }
 

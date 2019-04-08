@@ -2,6 +2,24 @@ module RaidNight.Engine
 {
     export enum ActionType { Skill, Move }
 
+    export enum TargetType { Character, Area }
+
+    export class Area
+    {
+        ul_x: integer;
+        ul_y: integer;
+        br_x: integer;
+        br_y: integer;
+
+        constructor(ul_x: integer, ul_y: integer, br_x: integer, br_y: integer)
+        {
+            this.ul_x = ul_x;
+            this.ul_y = ul_y;
+            this.br_x = br_x;
+            this.br_y = br_y;
+        }
+    }
+
     export class Action 
     {
         type: ActionType;
@@ -9,6 +27,8 @@ module RaidNight.Engine
         y: integer;
         skill: string;
         targets: string[];
+        area: Area;
+        targetType: TargetType;
 
         constructor(type: ActionType)
         {
@@ -33,6 +53,18 @@ module RaidNight.Engine
             super(ActionType.Skill);
             this.skill = skill;
             this.targets = targets;
+            this.targetType = TargetType.Character;
+        }
+    }
+
+    export class action_AreaSkill extends Action
+    {
+        constructor(skill: string, area: Area)
+        {
+            super(ActionType.Skill);
+            this.skill = skill;
+            this.area = area;
+            this.targetType = TargetType.Area;
         }
     }
 

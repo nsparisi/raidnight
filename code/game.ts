@@ -14,7 +14,6 @@ module RaidNight.Engine
         newGame = (allies: Character[]) =>
         {
             let boss = new Boss("Dragon", 10000, 100, 3, 8);
-            boss.skillset = [new skill_DragonBreath()];
             boss.actionList = [];
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
             boss.actionList.push(new action_Skill("HeatWave", ["warrior", "priest", "wizard"]));
@@ -27,6 +26,14 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
 
+            let room = new Room(20, 15);
+            room.actionList = [];
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 9,  7)));
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 0, 19, 7)));
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 8, 19, 14)));
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  8, 9,  14)));
+
+            this.arena.room = room;
             this.arena.enemies = [boss];
             this.arena.allies = allies;
         }
@@ -35,11 +42,9 @@ module RaidNight.Engine
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.board = new Board(20, 20);
-            
+            this.arena.room = new Room(20, 20);
             
             let boss = new Character("Dragon", 10000, 100, 3, 8);
-            boss.skillset = [new skill_DragonBreath()];
             boss.actionList = [];
 
             let warrior = new Character("Warrior", 200, 100, 10, 8);
@@ -49,7 +54,6 @@ module RaidNight.Engine
             priest.actionList = [];
 
             let wizard = new Character("Wizard", 100, 200, 12, 10);
-            wizard.skillset = [new skill_Fireball()];
             wizard.actionList = [];
 
             this.arena.allies = [warrior, priest, wizard];

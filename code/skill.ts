@@ -139,4 +139,16 @@ module RaidNight.Engine
             this.targetStatuses = ["ST_REGEN"];
         }
     }
+
+    export class skill_SpikeTrap extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -50;
+            this.mana = 0;
+            this.castTime = 10;
+            this.name = "SpikeTrap";
+        }
+    }
 }

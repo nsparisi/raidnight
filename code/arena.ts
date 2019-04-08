@@ -7,7 +7,7 @@ module RaidNight.Engine
     {
         enemies: Character[];
         allies: Character[];
-        board: Board;
+        room: Room;
 
         turn: integer = 0;
         maxTurns: integer = 1000;
@@ -56,6 +56,9 @@ module RaidNight.Engine
             {
                 this.enemies[i].runAI();
             }
+
+            // resolve room actions
+            this.room.runAI();
 
             this.checkWinCondition();
             this.checkLoseCondition();
@@ -129,6 +132,35 @@ module RaidNight.Engine
 
             console.log(`ERROR: Lookup target failed ${targetName}`);
             return null;
+        }
+        
+        
+        findAlliesInArea(area: Area)
+        {
+            let targets = new Array<Character>();
+
+            for (let i = 0; i < this.allies.length; i++)
+            {
+                let ally = this.allies[i];
+               
+                console.log(`characterIsInArea: ${ally.x},${ally.y} :: ${area.ul_x},${area.ul_y} - ${area.br_x},${area.br_y} :: ${this.characterIsInArea(ally, area)}`);
+                
+                if (this.characterIsInArea(ally, area))
+                {
+                    console.log(`ROOM found a valid target in area: ${ally.name}.`);
+                    targets.push(ally);
+                }
+            }
+
+            return targets;
+        }
+
+        characterIsInArea(character: Character, area: Area)
+        {
+            return character.x >= area.ul_x &&
+                character.x <= area.br_x  &&
+                character.y >= area.ul_y &&
+                character.y <= area.br_y;
         }
     }
 }

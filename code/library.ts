@@ -15,7 +15,9 @@ module RaidNight.Engine
             "TAUNT":new skill_Taunt(),
 
             "DRAGONBREATH": new skill_DragonBreath(),
-            "HEATWAVE": new skill_HeatWave()
+            "HEATWAVE": new skill_HeatWave(),
+
+            "SPIKETRAP": new skill_SpikeTrap()
         }
 
         statusCatalogue = {
@@ -32,6 +34,7 @@ module RaidNight.Engine
             "PRIEST": ["HEAL", "REGEN"],
             "WARRIOR": ["STRIKE", "FORTIFY", "TAUNT"],
             "DRAGON": ["DRAGONBREATH", "HEATWAVE"],
+            "ROOM": ["SPIKETRAP"]
         }
 
         lookupSkillForClass = (className: string, skillName: string) =>
