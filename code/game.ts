@@ -16,6 +16,7 @@ module RaidNight.Engine
             let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
+            boss.actionList.push(new action_Wait());
             boss.actionList.push(new action_Skill("HeatWave", ["warrior", "priest", "wizard"]));
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));
             boss.actionList.push(new action_Skill("DragonBreath", ["warrior"]));

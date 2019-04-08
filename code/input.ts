@@ -106,6 +106,13 @@ module RaidNight.Engine
             for (i = 0; i < actionTokens.length; i++)
             {
                 let components = actionTokens[i].split(":")
+
+                if (components.length > 0 && components[0].trim().toUpperCase()=="WAIT")
+                {
+                    actions.push(new action_Wait());
+                    continue;
+                }
+
                 if (components.length != 2)
                 {
                     return this.generateErrorResult("Input not in correct format.");

@@ -1,6 +1,6 @@
 module RaidNight.Engine
 {
-    export enum ActionType { Skill, Move }
+    export enum ActionType { Skill, Move, Wait }
 
     export enum TargetType { Character, Area }
 
@@ -33,6 +33,14 @@ module RaidNight.Engine
         constructor(type: ActionType)
         {
             this.type = type;
+            this.targets = [];
+        }
+    }
+    export class action_Wait extends Action
+    {
+        constructor()
+        {
+            super(ActionType.Wait);
         }
     }
 

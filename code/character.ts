@@ -34,6 +34,7 @@ module RaidNight.Engine
             this.y = y;
             this.actionList = [];
             this.resetState();
+            this.resetDefense();
         }
 
         public resolveStatus()
@@ -91,6 +92,10 @@ module RaidNight.Engine
                 {
                     this.startSkill();
                 }
+                else if(this.currentAction.type == ActionType.Wait)
+                {
+                    this.doWait();
+                }
             }
 
             // finalize action
@@ -116,6 +121,8 @@ module RaidNight.Engine
             {
                 healthToAdd += this.defense;
             }
+
+            console.log(`${this.name} current ${this.health}. change of health.... ${healthToAdd}`)
 
             this.health = Math.max(0, this.health + healthToAdd);
             this.health = Math.min(this.maxHealth, this.health);
@@ -178,6 +185,13 @@ module RaidNight.Engine
             this.isCasting = false;
 
             console.log(`${this.name} moved to ${this.x},${this.y}`);
+        }
+
+        protected doWait()
+        {
+            this.castTimeRemaining = 0;
+            this.isCasting = false;
+            console.log(`${this.name} chose to wait.`);
         }
 
         protected startSkill()
@@ -287,8 +301,6 @@ module RaidNight.Engine
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
             super(name, maxHealth, maxMana, x, y); 
-
-            this.addStatus("ST_TAUNT");
         }
 
         grabNewAction ()
