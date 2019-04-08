@@ -25,6 +25,7 @@ module RaidNight.Graphics
         warrior: Character;
         wizard: Character;
         dragon: Character;
+        room: Room;
 
         text_priestHealth: Phaser.GameObjects.Text;
         text_warriorHealth: Phaser.GameObjects.Text;
@@ -38,7 +39,7 @@ module RaidNight.Graphics
         tileHeight: integer = 40;
         lastKnownTurn: integer = -1;
 
-        allSkillEffects: SpellEffect_Fireball[];
+        allSkillEffects: SpellEffect[];
 
         preload ()
         {
@@ -48,6 +49,8 @@ module RaidNight.Graphics
             this.load.image('assets/wizard.png', 'assets/wizard.png');
             this.load.image('assets/priest.png', 'assets/priest.png');
             this.load.image('assets/dragon.png', 'assets/dragon.png');
+            
+            this.load.image('assets/spike.png', 'assets/spike.png');
             
             this.load.spritesheet('assets/ss_fire.png', 'assets/ss_fire.png', {frameWidth:39, frameHeight: 40});
 
@@ -89,11 +92,13 @@ module RaidNight.Graphics
             if(this.warrior){this.warrior.destroy();}
             if(this.priest){this.priest.destroy();}
             if(this.dragon){this.dragon.destroy();}
+            if(this.room){this.room.destroy();}
 
             let char_priest: RaidNight.Engine.Character = null;
             let char_warrior: RaidNight.Engine.Character = null;
             let char_wizard: RaidNight.Engine.Character = null;
             let char_dragon: RaidNight.Engine.Character = null;
+            let char_room = GLOBAL_GAME.arena.room;
 
             let i = 0;
             for(i = 0; i < GLOBAL_GAME.arena.allies.length; i++)
@@ -125,6 +130,7 @@ module RaidNight.Graphics
             this.priest = new Character(this, char_priest, this.add.sprite(600, 500, 'assets/priest.png'));
             this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'));
             this.dragon.sprite.setFlipX(true);
+            this.room = new Room(this, char_room);
         }
 
         update ()
@@ -151,6 +157,7 @@ module RaidNight.Graphics
             this.warrior.draw(isNewTurn);
             this.priest.draw(isNewTurn);
             this.dragon.draw(isNewTurn);
+            this.room.draw(isNewTurn);
             
             this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth}`);
             this.text_warriorHealth.setText(`${this.warrior.character.health} / ${this.warrior.character.maxHealth}`);
@@ -163,7 +170,7 @@ module RaidNight.Graphics
             {
                 this.allSkillEffects[i].update();
 
-                if (this.allSkillEffects[i].tween.totalProgress >= 1)
+                if (this.allSkillEffects[i].totalProgress() >= 1)
                 {
                     this.allSkillEffects[i].destroy();
                     this.allSkillEffects.splice(i,1);
@@ -172,68 +179,9 @@ module RaidNight.Graphics
             }
         }
 
-        addSkillEffect = (effect: SpellEffect_Fireball) =>
+        addSkillEffect = (effect: SpellEffect) =>
         {
             this.allSkillEffects.push(effect);
-        }
-    }
-
-    class SpellEffect_Fireball
-    {
-        scene: Scene_Arena;
-        sprite: Phaser.GameObjects.Sprite;
-        path: Phaser.Curves.Path;
-        tween: Phaser.Tweens.Tween;
-
-        gfx: Phaser.GameObjects.Graphics;
-
-        create = (scene: Scene_Arena, start: Phaser.Math.Vector2, end: Phaser.Math.Vector2) =>
-        {
-            this.scene = scene;
-
-            let spellStyle = {fontSize: "20px", fill: "#FFF", align: "center"};
-            //this.scene.add.text(0, 0, "SPELL", spellStyle);
-
-            let xNormal = end.x > start.x ? 1 : -1;
-            let yNormal = Math.random() * 2 - 1;
-
-            this.sprite = this.scene.add.sprite(start.x, start.y, "assets/ss_fire.png", 0);
-            this.sprite.setBlendMode(Phaser.BlendModes.ADD);
-            this.path = new Phaser.Curves.Path(start.x, start.y);
-            this.path.cubicBezierTo(
-                end.x, end.y,
-                start.x + 100 * xNormal * -1, start.y + (yNormal * 150), 
-                //end.subtract(start).divide(new Phaser.Math.Vector2(2,2).add(start)), 
-                end.x, end.y);
-
-            this.tween = this.scene.tweens.addCounter({
-                from: 0,
-                to: 1,
-                duration: GLOBAL_GAME.frameLengthMs * 0.6,
-                ease: "Cubic.easeInOut"
-            });
-
-            this.gfx = this.scene.add.graphics();
-
-            return this;
-        }
-
-        update = () =>
-        {
-            let position = this.path.getPoint(this.tween.getValue());
-            this.sprite.setPosition(position.x, position.y);
-
-            this.gfx.clear();
-            this.gfx.lineStyle(2, 0xFF0000, 1);
-            //this.path.draw(this.gfx);
-        }
-
-        destroy = () =>
-        {
-            this.sprite.destroy();
-            this.path.destroy();
-            this.tween.stop();
-            this.gfx.destroy();
         }
     }
 
@@ -354,8 +302,48 @@ module RaidNight.Graphics
                         let targetY = target.y * this.scene.tileHeight + this.sprite.height / 2;
                         let end = new Phaser.Math.Vector2(targetX, targetY);
 
-                        let fb = new SpellEffect_Fireball().create(this.scene, start, end);
+                        let fb = new SpellEffect_Fireball(this.scene, start, end);
                         this.scene.addSkillEffect(fb);
+                    }
+                }
+            }
+        }
+    }
+
+    class Room
+    {
+        scene: Scene_Arena;
+        room: RaidNight.Engine.Room;
+
+        constructor (scene: Scene_Arena, room_reference: RaidNight.Engine.Room)
+        {
+            this.scene = scene;
+            this.room = room_reference;
+        }
+
+        destroy()
+        {
+        }
+        
+        draw = (newTurn: boolean) => 
+        {
+            if (newTurn)
+            {
+                if (this.room.currentAction != null && 
+                    this.room.currentAction.type == RaidNight.Engine.ActionType.Skill &&
+                    this.room.isCasting == false)
+                {
+                    if (this.room.currentAction.targetType == RaidNight.Engine.TargetType.Area)
+                    {
+                        let start = new Phaser.Math.Vector2(
+                            this.room.currentAction.area.ul_x * this.scene.tileWidth, // upper-left anchor
+                            this.room.currentAction.area.ul_y * this.scene.tileHeight);
+                        let end = new Phaser.Math.Vector2(
+                            this.room.currentAction.area.br_x * this.scene.tileWidth + this.scene.tileWidth, // bottom-right anchor
+                            this.room.currentAction.area.br_y * this.scene.tileHeight + this.scene.tileHeight);
+
+                        let spike = new SpellEffect_SpikeTrap(this.scene, start, end);
+                        this.scene.addSkillEffect(spike);
                     }
                 }
             }

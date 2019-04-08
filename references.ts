@@ -10,6 +10,7 @@
 /// <reference path="code/game.ts" />
 /// <reference path="code/input.ts" />
 
+/// <reference path="graphics/spells.ts"/>
 /// <reference path="graphics/graphics.ts"/>
 
 /// <reference path="code/main.ts" />

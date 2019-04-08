@@ -197,7 +197,7 @@ module RaidNight.Engine
             this.castTimeRemaining = skill.castTime - 1;
             this.isCasting = true;
 
-            console.log(`${this.name} started cast of ${skill.name} on ${this.currentAction.targets}`);
+            console.log(`${this.name} started cast of ${skill.name}.`);
         }
 
         protected finishSkill()
