@@ -11,8 +11,9 @@
 /// <reference path="code/game.ts" />
 /// <reference path="code/input.ts" />
 
-/// <reference path="graphics/spells.ts"/>
-/// <reference path="graphics/graphics.ts"/>
+/// <reference path="graphics/gfx_spells.ts"/>
+/// <reference path="graphics/gfx_character.ts"/>
+/// <reference path="graphics/gfx_graphics.ts"/>
 
 /// <reference path="code/main.ts" />
 
