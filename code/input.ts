@@ -101,7 +101,7 @@ module RaidNight.Engine
 
             console.log(`Parsing input ${raw}`);
             
-            let actionTokens = raw.split(",");
+            let actionTokens = raw.split(" ");
             let i = 0;
             for (i = 0; i < actionTokens.length; i++)
             {
@@ -110,6 +110,12 @@ module RaidNight.Engine
                 if (components.length > 0 && components[0].trim().toUpperCase()=="WAIT")
                 {
                     actions.push(new action_Wait());
+                    continue;
+                }
+
+                if (components.length == 1 && components[0].trim().length == 0)
+                {
+                    // empty string
                     continue;
                 }
 
