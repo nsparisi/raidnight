@@ -122,8 +122,6 @@ module RaidNight.Engine
                 healthToAdd += this.defense;
             }
 
-            console.log(`${this.name} current ${this.health}. change of health.... ${healthToAdd}`)
-
             this.health = Math.max(0, this.health + healthToAdd);
             this.health = Math.min(this.maxHealth, this.health);
         }

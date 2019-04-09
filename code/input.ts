@@ -30,7 +30,7 @@ module RaidNight.Engine
         {
             let warrior = new Character("Warrior", 200, 100, 8, 7);
             let priest = new Character("Priest", 100, 200, 13, 7);
-            let wizard = new Character("Wizard", 100, 200, 10, 10);
+            let wizard = new Character("Wizard", 100, 400, 10, 10);
 
             let inputs = document.getElementsByTagName("textarea");
             let isValid = true;
@@ -101,6 +101,9 @@ module RaidNight.Engine
 
             console.log(`Parsing input ${raw}`);
             
+            // join newlines into a single line
+            raw = raw.split("\r\n").join(" ").split("\r").join(" ").split("\n").join(" ");
+
             let actionTokens = raw.split(" ");
             let i = 0;
             for (i = 0; i < actionTokens.length; i++)

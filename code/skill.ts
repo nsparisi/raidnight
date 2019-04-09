@@ -147,7 +147,7 @@ module RaidNight.Engine
             super();
             this.health = -50;
             this.mana = 0;
-            this.castTime = 10;
+            this.castTime = 1;
             this.name = "SpikeTrap";
         }
     }

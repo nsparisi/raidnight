@@ -29,10 +29,60 @@ module RaidNight.Engine
 
             let room = new Room(20, 15);
             room.actionList = [];
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
             room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 9,  7)));
+
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
             room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 0, 19, 7)));
+            
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
             room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 8, 19, 14)));
+            
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
+            room.actionList.push(new action_Wait());
             room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  8, 9,  14)));
+
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 1,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(2,  0, 3,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(4,  0, 5,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(6,  0, 7,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(8,  0, 9,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10,  0, 11,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(12,  0, 13,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(14,  0, 15,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(16,  0, 17,  14)));
+            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(18,  0, 19,  14)));
 
             this.arena.room = room;
             this.arena.enemies = [boss];
