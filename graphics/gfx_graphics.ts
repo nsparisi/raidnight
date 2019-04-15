@@ -47,6 +47,9 @@ module RaidNight.Graphics
         gfx_upperHealthBox: Phaser.GameObjects.Graphics;
         gfx_lowerHealthBox: Phaser.GameObjects.Graphics;
 
+        text_winText: Phaser.GameObjects.Text;
+        sprite_winBg: Phaser.GameObjects.Sprite;
+
         tileWidth: integer = 40;
         tileHeight: integer = 40;
         lastKnownTurn: integer = -1;
@@ -56,6 +59,7 @@ module RaidNight.Graphics
         preload ()
         {
             this.load.image('assets/bg_dungeon.png', 'assets/bg_dungeon.png');
+            this.load.image('assets/scroll.png', 'assets/scroll.png');
 
             this.load.image('assets/warrior.png', 'assets/warrior.png');
             this.load.image('assets/wizard.png', 'assets/wizard.png');
@@ -79,6 +83,20 @@ module RaidNight.Graphics
         {
 
             this.add.image(0, 0, 'assets/bg_dungeon.png').setOrigin(0, 0);
+
+            this.sprite_winBg = this.add.sprite(
+                this.game.canvas.width / 2, 
+                this.game.canvas.height / 2, "assets/scroll.png").setDepth(DepthLayer.HUD);
+            this.sprite_winBg.setDisplaySize(400,400);
+            this.sprite_winBg.setVisible(true);
+            
+            let winStyle = {fontSize: "35px", fill: "#000", align: "center", stroke: "black", fontWeight: "bold"};
+            let text = "NICE WORK!\r\n\r\nTHE ANSWER \r\nIS..."
+            this.text_winText = this.add.text(
+                this.game.canvas.width / 2, 
+                this.game.canvas.height / 2, text, winStyle).setDepth(DepthLayer.HUD);
+            this.text_winText.setOrigin(0.5);
+            this.text_winText.setWordWrapWidth(270, true);
 
             this.newGame();
 
@@ -112,6 +130,12 @@ module RaidNight.Graphics
             this.lastKnownTurn = -1;
         }
 
+        winGame = () =>
+        {
+            this.text_winText.setVisible(true);
+            this.sprite_winBg.setVisible(true);
+        }
+
         newGame = () =>
         {
             if(this.wizard){this.wizard.destroy();}
@@ -119,6 +143,9 @@ module RaidNight.Graphics
             if(this.priest){this.priest.destroy();}
             if(this.dragon){this.dragon.destroy();}
             if(this.room){this.room.destroy();}
+
+            this.text_winText.setVisible(false);
+            this.sprite_winBg.setVisible(false);
 
             let char_priest: RaidNight.Engine.Character = null;
             let char_warrior: RaidNight.Engine.Character = null;
@@ -175,6 +202,11 @@ module RaidNight.Graphics
                 if (GLOBAL_GAME.arena.turn == 1)
                 {
                     this.newGame();
+                }
+
+                if (GLOBAL_GAME.arena.state == RaidNight.Engine.ArenaState.Win)
+                {
+                    this.winGame();
                 }
             }
 
