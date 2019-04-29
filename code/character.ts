@@ -22,6 +22,8 @@ module RaidNight.Engine
         isCasting: boolean;
 
         statuses: Status[];
+
+        cooldowns: Map<string, integer> = new Map();
         
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         {
@@ -33,6 +35,7 @@ module RaidNight.Engine
             this.x = x;
             this.y = y;
             this.actionList = [];
+            this.cooldowns = new Map();
             this.resetState();
             this.resetDefense();
         }
@@ -65,6 +68,9 @@ module RaidNight.Engine
 
         public runAI()
         {
+            // cds should always update
+            this.updateCooldowns();
+
             if (this.isDead())
             {
                 this.resetState();
@@ -154,6 +160,16 @@ module RaidNight.Engine
             }
         }
 
+        public safeGetCooldown(key: string)
+        {
+            if (this.cooldowns.has(key))
+            {
+                return this.cooldowns.get(key);
+            }
+
+            return 0;
+        }
+
         protected resetState()
         {
             this.castTimeRemaining = 0;
@@ -206,8 +222,15 @@ module RaidNight.Engine
                 return;
             }
 
+            if (this.safeGetCooldown(skill.name) > 0)
+            {
+                console.log(`${this.name} failed to cast ${skill.name} because it is on cooldown.`);
+                return;
+            }
+
             this.castTimeRemaining = skill.castTime - 1;
             this.isCasting = true;
+            this.cooldowns.set(skill.name, skill.cooldown);
 
             console.log(`${this.name} started cast of ${skill.name}.`);
         }
@@ -287,6 +310,15 @@ module RaidNight.Engine
         protected addDefense(defense: integer)
         {
             this.defense += defense
+        }
+
+        protected updateCooldowns()
+        {
+            for (let key of this.cooldowns.keys())
+            {
+                let newVal = Math.max(0, this.cooldowns.get(key)-1);
+                this.cooldowns.set(key, newVal);
+            }
         }
     }
 
