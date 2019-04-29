@@ -9,6 +9,7 @@ module RaidNight.Engine
         health: integer;
         mana: integer;
         defense: integer;
+        power: integer;
 
         x: integer;
         y: integer;
@@ -37,7 +38,7 @@ module RaidNight.Engine
             this.actionList = [];
             this.cooldowns = new Map();
             this.resetState();
-            this.resetDefense();
+            this.resetBonuses();
         }
 
         public resolveStatus()
@@ -47,7 +48,7 @@ module RaidNight.Engine
                 return;
             }
 
-            this.resetDefense();
+            this.resetBonuses();
 
             // process good effects first (like defense)
             this.resolveStatusesOfType(StatusType.Good);
@@ -67,8 +68,11 @@ module RaidNight.Engine
 
                 console.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 this.statuses[i].duration--;
-                this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks);
+                
+                let source = GLOBAL_GAME.arena.lookupTarget(this.statuses[i].source);
+                this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks, source);
                 this.addDefense(this.statuses[i].defense * this.statuses[i].stacks);
+                this.addPower(this.statuses[i].power * this.statuses[i].stacks);
 
                 if (this.statuses[i].duration <= 0)
                 {
@@ -129,27 +133,32 @@ module RaidNight.Engine
             return this.health <= 0;
         }
 
-        public addHealth(healthToAdd: integer)
+        public addHealth(health: integer, source: Character)
         {
             if (this.isDead())
             {
                 return;
             }
 
-            if (healthToAdd < 0)
+            if (health < 0)
             {
-                let original = healthToAdd;
-                healthToAdd -= Math.min(0, healthToAdd * this.defense / 100);
-                console.log(`${this.name} took ${healthToAdd} total damage. ${original} (${original-healthToAdd}) def: ${this.defense}`);
+                let original = health;
+                let blocked = health * -this.defense / 100;
+                let empowered = health * source.power / 100;
+
+                health = Math.min(0, health + blocked + empowered);
+
+                // Priest took -100 total damage. 100 (0) [0] (20 def) [20 pow]
+                console.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) (${source.power} pow)`);
             }
 
-            this.health = Math.max(0, this.health + healthToAdd);
+            this.health = Math.max(0, this.health + health);
             this.health = Math.min(this.maxHealth, this.health);
         }
 
-        public addStatus(statusToAdd: string)
+        public addStatus(statusToAdd: string, source: string)
         {
-            let status = GLOBAL_GAME.library.instantiateStatus(statusToAdd);
+            let status = GLOBAL_GAME.library.instantiateStatus(statusToAdd, source);
             if(status == null)
             {
                 return;
@@ -292,12 +301,12 @@ module RaidNight.Engine
                 let target = targets[i];
 
                 console.log(`${this.name} used ${skill.name} on ${target.name}`);
-                target.addHealth(skill.health);
+                target.addHealth(skill.health, this);
 
                 for (let j = 0; j < skill.targetStatuses.length; j++)
                 {
                     console.log(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
-                    target.addStatus(skill.targetStatuses[j]);
+                    target.addStatus(skill.targetStatuses[j], this.name);
                 }
             }
 
@@ -305,7 +314,7 @@ module RaidNight.Engine
             for (let i = 0; i < skill.selfStatuses.length; i++)
             {
                 console.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
-                this.addStatus(skill.selfStatuses[i]);
+                this.addStatus(skill.selfStatuses[i], this.name);
             }
             
             // post-skill wrap up
@@ -347,14 +356,20 @@ module RaidNight.Engine
             this.mana = Math.min(this.maxMana, this.mana);
         }
 
-        protected resetDefense()
+        protected resetBonuses()
         {
             this.defense = 0;
+            this.power = 0;
         }
 
         protected addDefense(defense: integer)
         {
-            this.defense += defense
+            this.defense += defense;
+        }
+
+        protected addPower(power: integer)
+        {
+            this.power += power;
         }
 
         protected updateCooldowns()

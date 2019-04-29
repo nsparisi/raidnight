@@ -83,11 +83,13 @@ module RaidNight.Engine
             return null;
         }
 
-        instantiateStatus = (name: string) =>
+        instantiateStatus = (name: string, source: string) =>
         {
             if (this.statusCatalogue[name.toUpperCase()] != null)
             {
-                return <Status>this.statusCatalogue[name.toUpperCase()]();
+                let status = <Status>this.statusCatalogue[name.toUpperCase()]();
+                status.source = source;
+                return status;
             }
 
             console.log(`ERROR: Status lookup failed: ${name.toUpperCase()}`);

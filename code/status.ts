@@ -11,9 +11,10 @@ module RaidNight.Engine
         maxStacks: integer = 1;
 
         healthPerTurn: integer = 0;
-        defense: integer = 0; // TODO
-        power: integer = 0; // TODO
+        defense: integer = 0;
+        power: integer = 0;
         taunt: boolean = false;
+        source: string = null;
     }
 
     // ********** 
