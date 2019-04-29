@@ -293,8 +293,8 @@ module RaidNight.Engine
     export class Boss extends Character
     {
         isTaunted: boolean = false;
-        tauntOrder = ["Warrior", "Priest", "Wizard"];
-        untauntOrder = ["Priest", "Wizard", "Warrior"];
+        tauntOrder = ["Knight", "Priest", "Wizard"];
+        untauntOrder = ["Priest", "Wizard", "Knight"];
 
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
@@ -330,8 +330,8 @@ module RaidNight.Engine
                 }
             }
 
-            // default to warrior
-            return GLOBAL_GAME.arena.lookupTarget("Warrior");
+            // default to Knight
+            return GLOBAL_GAME.arena.lookupTarget("Knight");
         }
 
         resolveStatus = () =>

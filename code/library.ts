@@ -3,38 +3,67 @@ module RaidNight.Engine
     export class Library 
     {
         skillCatalogue = {
-            "FIREBALL": new skill_Fireball(),
-            "IGNITE": new skill_Ignite(),
-            "MEDITATE": new skill_Meditate(),
-            
-            "HEAL": new skill_Heal(),
-            "REGEN": new skill_Regen(),
-
-            "STRIKE": new skill_Strike(),
-            "FORTIFY": new skill_Fortify(),
+            // KNIGHT
             "TAUNT":new skill_Taunt(),
+            "STRIKE": new skill_Strike(),
+            "SHIELDWALL": new skill_ShieldWall(),
+            "PIERCE": new skill_Pierce(),
+            "SHIELDBASH": new skill_ShieldBash(),
+            "PHALANX": new skill_Phalanx(),
 
-            "DRAGONBREATH": new skill_DragonBreath(),
+            // PRIEST
+            "GREATERHEAL": new skill_GreaterHeal(),
+            "FLASHHEAL": new skill_FlashHeal(),
+            "REGEN": new skill_Regen(),
+            "HYMN": new skill_Hymn(),
+            "DIVINEINTERVENTION": new skill_DivineIntervention(),
+
+            // ICE WIZARD
+            "ICESHARD": new skill_IceShard(),
+            "ICESPEAR": new skill_IceSpear(),
+            "FROSTBITE": new skill_Frostbite(),
+            "WATERBARRIER": new skill_WaterBarrier(),
+            "DELUGE": new skill_Deluge(),
+
+            // DRAGON
+            "CLAW": new skill_Claw(),
             "HEATWAVE": new skill_HeatWave(),
+            "FLAMETHROWER": new skill_Flamethrower(),
 
-            "SPIKETRAP": new skill_SpikeTrap()
+            // ARENA
+            "SPIKETRAP": new skill_SpikeTrap(),
+            "FIRESTORM": new skill_FireStorm(),
         }
 
         statusCatalogue = {
-            "ST_IGNITE": () => {return new status_Ignite();},
-            "ST_FORTIFY": () => {return new status_Fortify();},
+            // KNIGHT
             "ST_TAUNT": () => {return new status_Taunt();},
+            "ST_SHIELDWALL": () => {return new status_ShieldWall();},
+            "ST_PIERCE": () => {return new status_Pierce();},
+            "ST_SHIELDBASH": () => {return new status_ShieldBash();},
+            "ST_PHALANX": () => {return new status_Phalanx();},
+            
+            // PRIEST
+            "ST_REGEN": () => {return new status_Regen();},
+            "ST_DIVINEINTERVENTION": () => {return new status_DivineIntervention();},
+
+            // ICE WIZARD
+            "ST_ICESHARD": () => {return new status_IceShard();},
+            "ST_FROSTBITE": () => {return new status_Frostbite();},
+            "ST_WATERBARRIER": () => {return new status_WaterBarrier();},
+
+            // DRAGON
+            "ST_CLAW": () => {return new status_Claw();},
             "ST_HEATWAVE": () => {return new status_HeatWave();},
-            "ST_REGEN": () => {return new status_Regen();}
         }
 
 
         classSkillLookup = {
-            "WIZARD": ["FIREBALL", "IGNITE"],
-            "PRIEST": ["HEAL", "REGEN"],
-            "WARRIOR": ["STRIKE", "FORTIFY", "TAUNT"],
-            "DRAGON": ["DRAGONBREATH", "HEATWAVE"],
-            "ROOM": ["SPIKETRAP"]
+            "KNIGHT": ["TAUNT", "STRIKE", "SHIELDWALL", "PIERCE", "SHIELDBASH", "PHALANX"],
+            "PRIEST": ["GREATERHEAL", "FLASHHEAL", "REGEN", "HYMN", "DIVINEINTERVENTION"],
+            "WIZARD": ["ICESHARD", "ICESPEAR", "FROSTBITE", "WATERBARRIER", "DELUGE"],            
+            "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],
+            "ROOM": ["SPIKETRAP", "FIRESTORM"]
         }
 
         lookupSkillForClass = (className: string, skillName: string) =>

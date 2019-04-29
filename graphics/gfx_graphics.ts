@@ -31,7 +31,7 @@ module RaidNight.Graphics
         }
                             
         priest: Character;
-        warrior: Character;
+        knight: Character;
         wizard: Character;
         dragon: Character;
         room: Room;
@@ -40,7 +40,7 @@ module RaidNight.Graphics
         gfx_TurnBox: Phaser.GameObjects.Graphics;
 
         text_priestHealth: Phaser.GameObjects.Text;
-        text_warriorHealth: Phaser.GameObjects.Text;
+        text_knightHealth: Phaser.GameObjects.Text;
         text_wizardHealth: Phaser.GameObjects.Text;
         text_dragonHealth: Phaser.GameObjects.Text;
 
@@ -61,7 +61,7 @@ module RaidNight.Graphics
             this.load.image('assets/bg_dungeon.png', 'assets/bg_dungeon.png');
             this.load.image('assets/scroll.png', 'assets/scroll.png');
 
-            this.load.image('assets/warrior.png', 'assets/warrior.png');
+            this.load.image('assets/knight.png', 'assets/knight.png');
             this.load.image('assets/wizard.png', 'assets/wizard.png');
             this.load.image('assets/priest.png', 'assets/priest.png');
             this.load.image('assets/dragon.png', 'assets/dragon.png');
@@ -111,11 +111,11 @@ module RaidNight.Graphics
             let nameStyle = {fontSize: "20px", fill: "#FFF", align: "left"};
             let healthStyle = {fontSize: "20px", fill: "#FFF", align: "right"};
             this.add.text(45,45, "WIZARD:", nameStyle).setDepth(DepthLayer.HUD);
-            this.add.text(45,65, "WARRIOR:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,65, "KNIGHT:", nameStyle).setDepth(DepthLayer.HUD);
             this.add.text(45,85, "PRIEST:", nameStyle).setDepth(DepthLayer.HUD);
             this.add.text(45,530, "DRAGON:", nameStyle).setDepth(DepthLayer.HUD);
             this.text_wizardHealth =  this.add.text(280,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
-            this.text_warriorHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_knightHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
 
@@ -139,7 +139,7 @@ module RaidNight.Graphics
         newGame = () =>
         {
             if(this.wizard){this.wizard.destroy();}
-            if(this.warrior){this.warrior.destroy();}
+            if(this.knight){this.knight.destroy();}
             if(this.priest){this.priest.destroy();}
             if(this.dragon){this.dragon.destroy();}
             if(this.room){this.room.destroy();}
@@ -148,7 +148,7 @@ module RaidNight.Graphics
             this.sprite_winBg.setVisible(false);
 
             let char_priest: RaidNight.Engine.Character = null;
-            let char_warrior: RaidNight.Engine.Character = null;
+            let char_knight: RaidNight.Engine.Character = null;
             let char_wizard: RaidNight.Engine.Character = null;
             let char_dragon: RaidNight.Engine.Character = null;
             let char_room = GLOBAL_GAME.arena.room;
@@ -160,9 +160,9 @@ module RaidNight.Graphics
                 {
                     char_priest = GLOBAL_GAME.arena.allies[i];
                 }
-                else if (GLOBAL_GAME.arena.allies[i].name.toUpperCase() == "WARRIOR")
+                else if (GLOBAL_GAME.arena.allies[i].name.toUpperCase() == "KNIGHT")
                 {
-                    char_warrior = GLOBAL_GAME.arena.allies[i];
+                    char_knight = GLOBAL_GAME.arena.allies[i];
                 }
                 else if (GLOBAL_GAME.arena.allies[i].name.toUpperCase() == "WIZARD")
                 {
@@ -179,7 +179,7 @@ module RaidNight.Graphics
             }
 
             this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'));
-            this.warrior = new Character(this, char_warrior, this.add.sprite(600, 300, 'assets/warrior.png'));
+            this.knight = new Character(this, char_knight, this.add.sprite(600, 300, 'assets/knight.png'));
             this.priest = new Character(this, char_priest, this.add.sprite(600, 500, 'assets/priest.png'));
             this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'));
             this.dragon.sprite.setFlipX(true);
@@ -212,13 +212,13 @@ module RaidNight.Graphics
 
             //console.log(this.time.now);
             this.wizard.update(isNewTurn);
-            this.warrior.update(isNewTurn);
+            this.knight.update(isNewTurn);
             this.priest.update(isNewTurn);
             this.dragon.update(isNewTurn);
             this.room.update(isNewTurn);
             
             this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth}`);
-            this.text_warriorHealth.setText(`${this.warrior.character.health} / ${this.warrior.character.maxHealth}`);
+            this.text_knightHealth.setText(`${this.knight.character.health} / ${this.knight.character.maxHealth}`);
             this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth}`);
             this.text_dragonHealth.setText(`${this.dragon.character.health} / ${this.dragon.character.maxHealth}`);
 

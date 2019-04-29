@@ -28,9 +28,9 @@ module RaidNight.Engine
 
         parseInputCreateTeam = (): Character[] =>
         {
-            let warrior = new Character("Warrior", 200, 100, 8, 7);
-            let priest = new Character("Priest", 100, 200, 13, 7);
-            let wizard = new Character("Wizard", 100, 400, 10, 10);
+            let knight = new Character("Knight", 200, 100, 8, 7);
+            let priest = new Character("Priest", 150, 200, 13, 7);
+            let wizard = new Character("Wizard", 150, 400, 10, 10);
 
             let inputs = document.getElementsByTagName("textarea");
             let isValid = true;
@@ -67,15 +67,15 @@ module RaidNight.Engine
                         break
                     }
                     
-                    case "WARRIOR_INPUT": {
-                        let result = this.parseRawInput("WARRIOR", inputs[i].value);
+                    case "KNIGHT_INPUT": {
+                        let result = this.parseRawInput("KNIGHT", inputs[i].value);
                         if(!result.hasError)
                         {
-                            warrior.actionList = result.actions;
+                            knight.actionList = result.actions;
                         }
                         else 
                         {
-                            console.log(`Warrior Error: ${result.errorMessage}`);
+                            console.log(`Knight Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -85,7 +85,7 @@ module RaidNight.Engine
 
             if (isValid)
             {
-                return [warrior, priest, wizard];
+                return [knight, priest, wizard];
             }
             else 
             {
@@ -97,7 +97,7 @@ module RaidNight.Engine
         {
             // "Flare:Dragon,Fireball:Dragon,Move:Up,Fireball:Dragon";
             let actions: Action[] = [];
-            let validTargets = ["DRAGON", "WIZARD", "PRIEST", "WARRIOR"];
+            let validTargets = ["DRAGON", "WIZARD", "PRIEST", "KNIGHT"];
 
             console.log(`Parsing input ${raw}`);
             
