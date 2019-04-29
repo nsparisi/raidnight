@@ -49,14 +49,27 @@ module RaidNight.Engine
 
             this.resetDefense();
 
-            let i = 0;
-            for(i = 0; i < this.statuses.length; i++)
+            // process good effects first (like defense)
+            this.resolveStatusesOfType(StatusType.Good);
+
+            // process bad effects last, so they can be protected by defense.
+            this.resolveStatusesOfType(StatusType.Bad);
+        }
+
+        protected resolveStatusesOfType(type: StatusType)
+        {
+            for(let i = 0; i < this.statuses.length; i++)
             {
+                if (this.statuses[i].type != type)
+                {
+                    continue;
+                }
+
+                console.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 this.statuses[i].duration--;
                 this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks);
                 this.addDefense(this.statuses[i].defense * this.statuses[i].stacks);
 
-                console.log(`Status ${this.statuses[i].name} has been processed on ${this.name}`);
                 if (this.statuses[i].duration <= 0)
                 {
                     console.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
@@ -125,7 +138,9 @@ module RaidNight.Engine
 
             if (healthToAdd < 0)
             {
-                healthToAdd += this.defense;
+                let original = healthToAdd;
+                healthToAdd -= Math.min(0, healthToAdd * this.defense / 100);
+                console.log(`${this.name} took ${healthToAdd} total damage. ${original} (${original-healthToAdd}) def: ${this.defense}`);
             }
 
             this.health = Math.max(0, this.health + healthToAdd);
