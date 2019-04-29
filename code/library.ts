@@ -4,7 +4,7 @@ module RaidNight.Engine
     {
         skillCatalogue = {
             // KNIGHT
-            "TAUNT":new skill_Taunt(),
+            "TAUNT": new skill_Taunt(),
             "STRIKE": new skill_Strike(),
             "SHIELDWALL": new skill_ShieldWall(),
             "PIERCE": new skill_Pierce(),

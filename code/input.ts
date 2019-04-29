@@ -110,11 +110,6 @@ module RaidNight.Engine
             {
                 let components = actionTokens[i].split(":")
 
-                if (components.length > 0 && components[0].trim().toUpperCase()=="WAIT")
-                {
-                    actions.push(new action_Wait());
-                    continue;
-                }
 
                 if (components.length == 1 && components[0].trim().length == 0)
                 {
@@ -122,16 +117,26 @@ module RaidNight.Engine
                     continue;
                 }
 
-                if (components.length != 2)
+                if (components.length == 0 || components.length > 2)
                 {
                     return this.generateErrorResult("Input not in correct format.");
                 }
 
                 let action = components[0].trim();
-                let target = components[1].trim();
 
-                if (action.toUpperCase() == "MOVE")
+                if (action.toUpperCase() == "WAIT")
                 {
+                    actions.push(new action_Wait());
+                    continue;
+                }
+                else if (action.toUpperCase() == "MOVE")
+                {
+                    if (components.length != 2)
+                    {
+                        return this.generateErrorResult("Input not in correct format. MOVE specified but no direction.");
+                    }
+                    let target = components[1].trim();
+
                     switch (target.toUpperCase())
                     {
                         case "UP": {
@@ -159,9 +164,22 @@ module RaidNight.Engine
                 }
                 else if (GLOBAL_GAME.library.lookupSkillForClass(className, action))
                 {
+                    let skill = GLOBAL_GAME.library.lookupSkill(action);
+                    if (skill.selfOnly || skill.allAllies)
+                    {
+                        actions.push(new action_Skill(action, ["ally"]));
+                        continue;
+                    }
+
+                    if (components.length != 2)
+                    {
+                        return this.generateErrorResult(`No target specified for ${action}`);
+                    }
+                    
+                    let target = components[1].trim();
                     if (!validTargets.includes(target.toUpperCase()))
                     {
-                        return this.generateErrorResult(`Invalid target ${target}`);
+                        return this.generateErrorResult(`Invalid target ${target} for ${action}`);
                     }
 
                     actions.push(new action_Skill(action, [target]));

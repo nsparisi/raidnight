@@ -9,8 +9,8 @@ module RaidNight.Engine
         targetStatuses: string[] = [];
         selfStatuses: string[] = [];
         selfOnly: boolean = false;
-        cooldown: integer = 0; // TODO
-        allAllies: boolean = false; // TODO
+        cooldown: integer = 0;
+        allAllies: boolean = false;
 
         specialAction_IceSpear: boolean = false; // TODO
     }

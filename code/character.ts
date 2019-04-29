@@ -215,6 +215,10 @@ module RaidNight.Engine
             {
                 this.currentAction.targets = [this.name];
             }
+            if (skill.allAllies)
+            {
+                this.currentAction.targets = GLOBAL_GAME.arena.allies.map(({name}) => name);
+            }
 
             if (this.mana + skill.mana < 0)
             {
