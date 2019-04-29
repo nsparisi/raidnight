@@ -7,7 +7,8 @@ module RaidNight.Engine
         type: StatusType;
         duration: integer;
         name: string;
-        maxStacks: integer = 1; // TODO
+        stacks: integer = 1;
+        maxStacks: integer = 1;
 
         healthPerTurn: integer = 0;
         defense: integer = 0; // TODO

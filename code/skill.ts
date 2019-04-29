@@ -12,7 +12,7 @@ module RaidNight.Engine
         cooldown: integer = 0;
         allAllies: boolean = false;
 
-        specialAction_IceSpear: boolean = false; // TODO
+        healthPerIceShard: integer = 0;
     }
 
     // ********** 
@@ -189,11 +189,11 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = -50;
+            this.health = 0;
+            this.healthPerIceShard = -50; 
             this.castTime = 1;
             this.mana = -5;
             this.name = "IceSpear";
-            this.specialAction_IceSpear = true; 
         }
     }
 

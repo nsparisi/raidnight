@@ -53,8 +53,8 @@ module RaidNight.Engine
             for(i = 0; i < this.statuses.length; i++)
             {
                 this.statuses[i].duration--;
-                this.addHealth(this.statuses[i].healthPerTurn);
-                this.addDefense(this.statuses[i].defense);
+                this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks);
+                this.addDefense(this.statuses[i].defense * this.statuses[i].stacks);
 
                 console.log(`Status ${this.statuses[i].name} has been processed on ${this.name}`);
                 if (this.statuses[i].duration <= 0)
@@ -147,6 +147,7 @@ module RaidNight.Engine
             {
                 if (this.statuses[i].name.toUpperCase() == status.name.toUpperCase())
                 {
+                    status.stacks = Math.min(status.maxStacks, this.statuses[i].stacks + 1);
                     this.statuses[i] = status;
                     alreadyApplied = true;
                     console.log(`Refreshing status ${status.name} on ${this.name}`);
@@ -267,6 +268,9 @@ module RaidNight.Engine
                 }
             }
 
+            // special attack of ice wizard
+            this.countIceShardStacksAndConsumeStatus(skill);
+
             // cast on multiple targets
             for(let i = 0; i < targets.length; i++)
             {
@@ -293,6 +297,28 @@ module RaidNight.Engine
             this.castTimeRemaining = 0;
             this.isCasting = false;
             console.log(`${this.name} finished cast of ${skill.name}.`);
+        }
+
+        protected countIceShardStacksAndConsumeStatus(skill: Skill)
+        {
+            if (skill.healthPerIceShard == 0)
+            {
+                return;
+            }
+
+            let stacks = 0;
+            for(let i = 0; i < this.statuses.length; i++)
+            {
+                if (this.statuses[i].name.toUpperCase() == "ST_ICESHARD")
+                {
+                    stacks = this.statuses[i].stacks;
+                    this.statuses.splice(i, 1);
+                    i--;
+                }
+            }
+
+            skill.health = skill.healthPerIceShard * stacks;
+            console.log(`${this.name} is consuming ${stacks} stacks of ICE SHARD for ${skill.health} total damage.`);
         }
 
         protected addMana(manaToAdd: integer)
