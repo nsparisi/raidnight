@@ -28,9 +28,9 @@ module RaidNight.Engine
 
         parseInputCreateTeam = (): Character[] =>
         {
-            let knight = new Character("Knight", 200, 100, 8, 7);
-            let priest = new Character("Priest", 150, 200, 13, 7);
-            let wizard = new Character("Wizard", 150, 400, 10, 10);
+            let knight = new Character("Knight", 200, 100, 7, 7);
+            let priest = new Character("Priest", 150, 200, 12, 6);
+            let wizard = new Character("Wizard", 150, 400, 12, 8);
 
             let inputs = document.getElementsByTagName("textarea");
             let isValid = true;

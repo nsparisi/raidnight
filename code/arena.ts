@@ -142,12 +142,8 @@ module RaidNight.Engine
             for (let i = 0; i < this.allies.length; i++)
             {
                 let ally = this.allies[i];
-               
-                console.log(`characterIsInArea: ${ally.x},${ally.y} :: ${area.ul_x},${area.ul_y} - ${area.br_x},${area.br_y} :: ${this.characterIsInArea(ally, area)}`);
-                
                 if (this.characterIsInArea(ally, area))
                 {
-                    console.log(`ROOM found a valid target in area: ${ally.name}.`);
                     targets.push(ally);
                 }
             }

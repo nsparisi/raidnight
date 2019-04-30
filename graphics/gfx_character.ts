@@ -132,6 +132,22 @@ module RaidNight.Graphics
                             this.scene.addSkillEffect(fb);
                         }
                     }
+
+                    if (this.character.currentAction.targetType == RaidNight.Engine.TargetType.Area)
+                    {
+                        if (this.character.currentAction.skill.toUpperCase() == "FLAMETHROWER")
+                        {
+                            let start = new Phaser.Math.Vector2(
+                                this.character.currentAction.area.ul_x * this.scene.tileWidth, // upper-left anchor
+                                this.character.currentAction.area.ul_y * this.scene.tileHeight);
+                            let end = new Phaser.Math.Vector2(
+                                this.character.currentAction.area.br_x * this.scene.tileWidth + this.scene.tileWidth, // bottom-right anchor
+                                this.character.currentAction.area.br_y * this.scene.tileHeight + this.scene.tileHeight);
+
+                            let effect = new SpellEffect_Flamethrower(this.scene, start, end);
+                            this.scene.addSkillEffect(effect);
+                        }
+                    }
                 }
             }
         }

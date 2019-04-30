@@ -33,7 +33,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(0, 9, 0,  11)));
+            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 5, 19,  7)));
             
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
@@ -53,7 +53,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(0, 6, 0,  8)));
+            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 7, 19,  9)));
 
             let room = new Room(20, 15);
             room.actionList = [];
@@ -66,7 +66,7 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
-            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 9,  7)));
+            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 9,  7)));
 
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
@@ -77,7 +77,7 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
-            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 0, 19, 7)));
+            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 0, 19, 7)));
             
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
@@ -88,7 +88,7 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
-            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 8, 19, 14)));
+            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 8, 19, 14)));
             
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
@@ -99,7 +99,7 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
             room.actionList.push(new action_Wait());
-            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  8, 9,  14)));
+            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  8, 9,  14)));
 
             // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 1,  14)));
             // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(2,  0, 3,  14)));

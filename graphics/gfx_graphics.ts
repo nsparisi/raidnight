@@ -58,7 +58,7 @@ module RaidNight.Graphics
 
         preload ()
         {
-            this.load.image('assets/bg_dungeon.png', 'assets/bg_dungeon.png');
+            this.load.image('assets/map1.png', 'assets/map1.png');
             this.load.image('assets/scroll.png', 'assets/scroll.png');
 
             this.load.image('assets/knight.png', 'assets/knight.png');
@@ -82,7 +82,7 @@ module RaidNight.Graphics
         create ()
         {
 
-            this.add.image(0, 0, 'assets/bg_dungeon.png').setOrigin(0, 0);
+            this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0);
 
             this.sprite_winBg = this.add.sprite(
                 this.game.canvas.width / 2, 
