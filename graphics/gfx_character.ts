@@ -163,7 +163,7 @@ module RaidNight.Graphics
 
         buffCount: integer;
         debuffCount: integer;
-        iconWidth: integer = 20;
+        iconWidth: integer = 22;
         borderWidth: integer = 2;
         
         character: RaidNight.Engine.Character;
@@ -173,7 +173,7 @@ module RaidNight.Graphics
             this.scene = scene;
             this.character = char_reference;
 
-            let totalBuffs = 3;
+            let totalBuffs = 5;
             this.buffCount = 0;
             this.debuffCount = 0;
 
@@ -188,10 +188,11 @@ module RaidNight.Graphics
                     scene.add.sprite(
                         -100, 
                         -100, 
-                        "assets/status/st_fortify.png", 
+                        "assets/status/st_heatwave.png", 
                         0)
                         .setDepth(DepthLayer.High_Priority)
                         .setDisplaySize(this.iconWidth - this.borderWidth*2, this.iconWidth - this.borderWidth*2));
+
                         
                 this.debuffs.push(
                     scene.add.sprite(
@@ -215,7 +216,7 @@ module RaidNight.Graphics
                     centerX, 
                     centerY - i * this.iconWidth);
             }
-            
+
             for(let i = 0; i < this.debuffs.length; i++)
             {
                 this.debuffs[i].setPosition(

@@ -66,11 +66,19 @@ module RaidNight.Graphics
             this.load.image('assets/priest.png', 'assets/priest.png');
             this.load.image('assets/dragon.png', 'assets/dragon.png');
 
-            this.load.image('assets/status/st_fortify.png', 'assets/status/st_fortify.png');
+            this.load.image('assets/status/st_claw.png', 'assets/status/st_claw.png');
+            this.load.image('assets/status/st_divineintervention.png', 'assets/status/st_divineintervention.png');
+            this.load.image('assets/status/st_frostbite.png', 'assets/status/st_frostbite.png');
             this.load.image('assets/status/st_heatwave.png', 'assets/status/st_heatwave.png');
+            this.load.image('assets/status/st_iceshard.png', 'assets/status/st_iceshard.png');
             this.load.image('assets/status/st_ignite.png', 'assets/status/st_ignite.png');
+            this.load.image('assets/status/st_phalanx.png', 'assets/status/st_phalanx.png');
+            this.load.image('assets/status/st_pierce.png', 'assets/status/st_pierce.png');
             this.load.image('assets/status/st_regen.png', 'assets/status/st_regen.png');
+            this.load.image('assets/status/st_shieldbash.png', 'assets/status/st_shieldbash.png');
+            this.load.image('assets/status/st_shieldwall.png', 'assets/status/st_shieldwall.png');
             this.load.image('assets/status/st_taunt.png', 'assets/status/st_taunt.png');
+            this.load.image('assets/status/st_waterbarrier.png', 'assets/status/st_waterbarrier.png');
 
             this.load.image('assets/heatwave.jpg', 'assets/heatwave.jpg');
             this.load.image('assets/spike.png', 'assets/spike.png');
