@@ -214,16 +214,19 @@ module RaidNight.Engine
             let x = this.currentAction.x
             let y = this.currentAction.y
 
-            this.x = Math.min(GLOBAL_GAME.arena.room.width - 1, this.x + x);
-            this.y = Math.min(GLOBAL_GAME.arena.room.height - 1, this.y + y);
-
-            this.x = Math.max(0, this.x);
-            this.y = Math.max(0, this.y);
+            if (GLOBAL_GAME.arena.room.isWalkable(this.x + x, this.y + y))
+            {
+                this.x += x;
+                this.y += y;
+                console.log(`${this.name} moved to ${this.x},${this.y}`);
+            }
+            else 
+            {
+                console.log(`${this.name} was unable to move to ${this.x + x},${this.y + y}`);
+            }
 
             this.castTimeRemaining = 0;
             this.isCasting = false;
-
-            console.log(`${this.name} moved to ${this.x},${this.y}`);
         }
 
         protected doWait()

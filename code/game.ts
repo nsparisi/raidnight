@@ -23,7 +23,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Move(0, 1));
+            boss.actionList.push(new action_Move(0, -1));
             
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
@@ -32,7 +32,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Move(0, -1));
             boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 5, 19,  7)));
             
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
@@ -43,7 +43,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Move(0, -1));
+            boss.actionList.push(new action_Move(0, 1));
             
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
@@ -52,7 +52,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Move(0, 1));
             boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 7, 19,  9)));
 
             let room = new Room(20, 15);
