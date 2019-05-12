@@ -110,7 +110,8 @@ module RaidNight.Graphics
             {
                 if (this.character.currentAction != null && 
                     this.character.currentAction.type == RaidNight.Engine.ActionType.Skill &&
-                    this.character.isCasting == false)
+                    this.character.isCasting == false &&
+                    this.character.isCastSuccessful)
                 {
                     let start = new Phaser.Math.Vector2(centerX, centerY);
 
@@ -120,16 +121,46 @@ module RaidNight.Graphics
                         let targetX = target.x * this.scene.tileWidth + this.sprite.width / 2;
                         let targetY = target.y * this.scene.tileHeight + this.sprite.height / 2;
                         let end = new Phaser.Math.Vector2(targetX, targetY);
+                        let effect: SpellEffect = null;
 
-                        if (this.character.currentAction.skill.toUpperCase() == "HEATWAVE")
+                        switch (this.character.currentAction.skill.toUpperCase())
                         {
-                            let hw = new SpellEffect_HeatWave(this.scene, start);
-                            this.scene.addSkillEffect(hw);
+                            case "TAUNT":
+                            effect = new SpellEffect_Taunt(this.scene, end);
+                            break;
+
+                            case "SHIELDBASH":
+                            effect = new SpellEffect_ShieldBash(this.scene, end);
+                            break;
+
+                            case "PIERCE":
+                            effect = new SpellEffect_Pierce(this.scene, end);
+                            break;
+
+                            case "STRIKE":
+                            effect = new SpellEffect_Strike(this.scene, end);
+                            break;
+                                
+                            case "SHIELDWALL":
+                            effect = new SpellEffect_ShieldWall(this.scene, start);
+                            break;
+                            
+                            case "PHALANX":
+                            effect = new SpellEffect_Phalanx(this.scene, start);
+                            break;
+
+                            case "HEATWAVE":
+                            effect = new SpellEffect_HeatWave(this.scene, start);
+                            break;
+
+                            default:
+                            effect = new SpellEffect_Fireball(this.scene, start, end);
+                            break;
                         }
-                        else 
+
+                        if (effect != null)
                         {
-                            let fb = new SpellEffect_Fireball(this.scene, start, end);
-                            this.scene.addSkillEffect(fb);
+                            this.scene.addSkillEffect(effect);
                         }
                     }
 

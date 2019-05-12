@@ -66,6 +66,7 @@ module RaidNight.Graphics
             this.load.image('assets/priest.png', 'assets/priest.png');
             this.load.image('assets/dragon.png', 'assets/dragon.png');
 
+            // status
             this.load.image('assets/status/st_claw.png', 'assets/status/st_claw.png');
             this.load.image('assets/status/st_divineintervention.png', 'assets/status/st_divineintervention.png');
             this.load.image('assets/status/st_frostbite.png', 'assets/status/st_frostbite.png');
@@ -79,6 +80,14 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_shieldwall.png', 'assets/status/st_shieldwall.png');
             this.load.image('assets/status/st_taunt.png', 'assets/status/st_taunt.png');
             this.load.image('assets/status/st_waterbarrier.png', 'assets/status/st_waterbarrier.png');
+            
+            // skill
+            this.load.image('assets/skill/sk_phalanx.png', 'assets/skill/sk_phalanx.png');
+            this.load.image('assets/skill/sk_pierce.png', 'assets/skill/sk_pierce.png');
+            this.load.image('assets/skill/sk_shieldbash.png', 'assets/skill/sk_shieldbash.png');
+            this.load.image('assets/skill/sk_shieldwall.png', 'assets/skill/sk_shieldwall.png');
+            this.load.image('assets/skill/sk_strike.png', 'assets/skill/sk_strike.png');
+            this.load.image('assets/skill/sk_taunt.png', 'assets/skill/sk_taunt.png');
 
             this.load.image('assets/heatwave.jpg', 'assets/heatwave.jpg');
             this.load.image('assets/spike.png', 'assets/spike.png');

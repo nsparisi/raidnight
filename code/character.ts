@@ -21,6 +21,7 @@ module RaidNight.Engine
 
         castTimeRemaining: integer;
         isCasting: boolean;
+        isCastSuccessful: boolean;
 
         statuses: Status[];
 
@@ -199,6 +200,7 @@ module RaidNight.Engine
         {
             this.castTimeRemaining = 0;
             this.isCasting = false;
+            this.isCastSuccessful = false;
             this.actionIndex = 0;
             this.statuses = [];
         }
@@ -251,12 +253,14 @@ module RaidNight.Engine
             if (this.mana + skill.mana < 0)
             {
                 console.log(`${this.name} has not enough mana to cast ${skill.name}`);
+                this.isCastSuccessful = false;
                 return;
             }
 
             if (this.safeGetCooldown(skill.name) > 0)
             {
                 console.log(`${this.name} failed to cast ${skill.name} because it is on cooldown.`);
+                this.isCastSuccessful = false;
                 return;
             }
 
@@ -274,6 +278,7 @@ module RaidNight.Engine
             if (this.mana + skill.mana < 0)
             {
                 console.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
+                this.isCastSuccessful = false;
                 return;
             }
 
@@ -323,6 +328,7 @@ module RaidNight.Engine
             // post-skill wrap up
             this.castTimeRemaining = 0;
             this.isCasting = false;
+            this.isCastSuccessful = true;
             console.log(`${this.name} finished cast of ${skill.name}.`);
         }
 
