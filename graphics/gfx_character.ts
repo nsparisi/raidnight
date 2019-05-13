@@ -20,6 +20,8 @@ module RaidNight.Graphics
             this.scene = scene;
             this.character = char_reference;
             this.sprite = sprite;
+
+            this.sprite.setDepth(DepthLayer.Med_Priority);
             
             this.gfx_healthBlack = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
             this.gfx_healthRed = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
@@ -142,11 +144,11 @@ module RaidNight.Graphics
                             break;
                                 
                             case "SHIELDWALL":
-                            effect = new SpellEffect_ShieldWall(this.scene, start);
+                            effect = new SpellEffect_ShieldWall(this.scene, end);
                             break;
                             
                             case "PHALANX":
-                            effect = new SpellEffect_Phalanx(this.scene, start);
+                            effect = new SpellEffect_Phalanx(this.scene, end);
                             break;
                             
                             case "REGEN":
@@ -173,6 +175,26 @@ module RaidNight.Graphics
                             effect = new SpellEffect_HeatWave(this.scene, start);
                             break;
 
+                            case "ICESHARD":
+                            effect = new SpellEffect_IceShard(this.scene, start, end);
+                            break;
+
+                            case "ICESPEAR":
+                            effect = new SpellEffect_IceSpear(this.scene, start, end);
+                            break;
+
+                            case "WATERBARRIER":
+                            effect = new SpellEffect_WaterBarrier(this.scene, end);
+                            break;
+
+                            case "FROSTBITE":
+                            effect = new SpellEffect_Frostbite(this.scene, end);
+                            break;
+
+                            case "DELUGE":
+                            effect = new SpellEffect_Deluge(this.scene, end);
+                            break;
+
                             default:
                             effect = new SpellEffect_Fireball(this.scene, start, end);
                             break;
@@ -186,16 +208,24 @@ module RaidNight.Graphics
 
                     if (this.character.currentAction.targetType == RaidNight.Engine.TargetType.Area)
                     {
-                        if (this.character.currentAction.skill.toUpperCase() == "FLAMETHROWER")
-                        {
-                            let start = new Phaser.Math.Vector2(
-                                this.character.currentAction.area.ul_x * this.scene.tileWidth, // upper-left anchor
-                                this.character.currentAction.area.ul_y * this.scene.tileHeight);
-                            let end = new Phaser.Math.Vector2(
-                                this.character.currentAction.area.br_x * this.scene.tileWidth + this.scene.tileWidth, // bottom-right anchor
-                                this.character.currentAction.area.br_y * this.scene.tileHeight + this.scene.tileHeight);
+                        let start = new Phaser.Math.Vector2(
+                            this.character.currentAction.area.ul_x * this.scene.tileWidth, // upper-left anchor
+                            this.character.currentAction.area.ul_y * this.scene.tileHeight);
+                        let end = new Phaser.Math.Vector2(
+                            this.character.currentAction.area.br_x * this.scene.tileWidth + this.scene.tileWidth, // bottom-right anchor
+                            this.character.currentAction.area.br_y * this.scene.tileHeight + this.scene.tileHeight);
 
-                            let effect = new SpellEffect_Flamethrower(this.scene, start, end);
+                        let effect: SpellEffect = null;
+
+                        switch (this.character.currentAction.skill.toUpperCase())
+                        {
+                            case "FLAMETHROWER":
+                            effect = new SpellEffect_Flamethrower(this.scene, start, end);
+                            break;
+                        }
+
+                        if(effect != null)
+                        {
                             this.scene.addSkillEffect(effect);
                         }
                     }
@@ -386,10 +416,26 @@ module RaidNight.Graphics
                         let end = new Phaser.Math.Vector2(
                             this.room.currentAction.area.br_x * this.scene.tileWidth + this.scene.tileWidth, // bottom-right anchor
                             this.room.currentAction.area.br_y * this.scene.tileHeight + this.scene.tileHeight);
+                        
+                        let effect: SpellEffect = null;
 
-                        let spike = new SpellEffect_SpikeTrap(this.scene, start, end);
-                        this.scene.addSkillEffect(spike);
+                        switch (this.room.currentAction.skill.toUpperCase())
+                        {
+                            case "SPIKETRAP":
+                            effect = new SpellEffect_SpikeTrap(this.scene, start, end);
+                            break;
+                            case "FIRESTORM":
+                            effect = new SpellEffect_Firestorm(this.scene, start);
+                            break;
+                        }
+
+                        if(effect != null)
+                        {
+                            this.scene.addSkillEffect(effect);
+                        }
                     }
+
+                    
                 }
             }
         }

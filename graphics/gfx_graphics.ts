@@ -94,6 +94,15 @@ module RaidNight.Graphics
             this.load.image('assets/skill/priest/sk_greaterheal.png', 'assets/skill/priest/sk_greaterheal.png');
             this.load.image('assets/skill/priest/sk_hymn.png', 'assets/skill/priest/sk_hymn.png');
             this.load.image('assets/skill/priest/sk_regen.png', 'assets/skill/priest/sk_regen.png');
+            
+            this.load.image('assets/skill/wizard/sk_deluge.png', 'assets/skill/wizard/sk_deluge.png');
+            this.load.image('assets/skill/wizard/sk_frostbite.png', 'assets/skill/wizard/sk_frostbite.png');
+            this.load.image('assets/skill/wizard/sk_iceshard.png', 'assets/skill/wizard/sk_iceshard.png');
+            this.load.image('assets/skill/wizard/sk_icespear.png', 'assets/skill/wizard/sk_icespear.png');
+            this.load.image('assets/skill/wizard/sk_waterbarrier.png', 'assets/skill/wizard/sk_waterbarrier.png');
+
+            this.load.image('assets/skill/dragon/sk_firestorm.png', 'assets/skill/dragon/sk_firestorm.png');
+            this.load.image('assets/skill/dragon/sk_firestorm_floor.png', 'assets/skill/dragon/sk_firestorm_floor.png');
 
             this.load.image('assets/heatwave.jpg', 'assets/heatwave.jpg');
             this.load.image('assets/spike.png', 'assets/spike.png');
@@ -105,7 +114,7 @@ module RaidNight.Graphics
         create ()
         {
 
-            this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0);
+            this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
 
             this.sprite_winBg = this.add.sprite(
                 this.game.canvas.width / 2, 
