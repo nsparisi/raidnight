@@ -82,12 +82,18 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_waterbarrier.png', 'assets/status/st_waterbarrier.png');
             
             // skill
-            this.load.image('assets/skill/sk_phalanx.png', 'assets/skill/sk_phalanx.png');
-            this.load.image('assets/skill/sk_pierce.png', 'assets/skill/sk_pierce.png');
-            this.load.image('assets/skill/sk_shieldbash.png', 'assets/skill/sk_shieldbash.png');
-            this.load.image('assets/skill/sk_shieldwall.png', 'assets/skill/sk_shieldwall.png');
-            this.load.image('assets/skill/sk_strike.png', 'assets/skill/sk_strike.png');
-            this.load.image('assets/skill/sk_taunt.png', 'assets/skill/sk_taunt.png');
+            this.load.image('assets/skill/knight/sk_phalanx.png', 'assets/skill/knight/sk_phalanx.png');
+            this.load.image('assets/skill/knight/sk_pierce.png', 'assets/skill/knight/sk_pierce.png');
+            this.load.image('assets/skill/knight/sk_shieldbash.png', 'assets/skill/knight/sk_shieldbash.png');
+            this.load.image('assets/skill/knight/sk_shieldwall.png', 'assets/skill/knight/sk_shieldwall.png');
+            this.load.image('assets/skill/knight/sk_strike.png', 'assets/skill/knight/sk_strike.png');
+            this.load.image('assets/skill/knight/sk_taunt.png', 'assets/skill/knight/sk_taunt.png');
+            
+            this.load.image('assets/skill/priest/sk_divineintervention.png', 'assets/skill/priest/sk_divineintervention.png');
+            this.load.image('assets/skill/priest/sk_flashheal.png', 'assets/skill/priest/sk_flashheal.png');
+            this.load.image('assets/skill/priest/sk_greaterheal.png', 'assets/skill/priest/sk_greaterheal.png');
+            this.load.image('assets/skill/priest/sk_hymn.png', 'assets/skill/priest/sk_hymn.png');
+            this.load.image('assets/skill/priest/sk_regen.png', 'assets/skill/priest/sk_regen.png');
 
             this.load.image('assets/heatwave.jpg', 'assets/heatwave.jpg');
             this.load.image('assets/spike.png', 'assets/spike.png');

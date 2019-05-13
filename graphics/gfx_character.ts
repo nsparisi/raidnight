@@ -148,6 +148,26 @@ module RaidNight.Graphics
                             case "PHALANX":
                             effect = new SpellEffect_Phalanx(this.scene, start);
                             break;
+                            
+                            case "REGEN":
+                            effect = new SpellEffect_Regen(this.scene, end);
+                            break;
+                            
+                            case "GREATERHEAL":
+                            effect = new SpellEffect_GreaterHeal(this.scene, end);
+                            break;
+                            
+                            case "FLASHHEAL":
+                            effect = new SpellEffect_FlashHeal(this.scene, end);
+                            break;
+
+                            case "HYMN":
+                            effect = new SpellEffect_Hymn(this.scene, end);
+                            break;
+                            
+                            case "DIVINEINTERVENTION":
+                            effect = new SpellEffect_DivineIntervention(this.scene, end);
+                            break;
 
                             case "HEATWAVE":
                             effect = new SpellEffect_HeatWave(this.scene, start);

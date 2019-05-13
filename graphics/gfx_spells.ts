@@ -52,7 +52,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 start.x + 25, 
                 start.y - 8, 
-                "assets/skill/sk_taunt.png", 0).setDepth(DepthLayer.Med_Priority).setRotation(Phaser.Math.DegToRad(5));
+                "assets/skill/knight/sk_taunt.png", 0).setDepth(DepthLayer.Med_Priority).setRotation(Phaser.Math.DegToRad(5));
 
             this.tween = this.scene.tweens.addCounter({
                 from: 3,
@@ -108,7 +108,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 start.x, 
                 start.y, 
-                "assets/skill/sk_shieldbash.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
+                "assets/skill/knight/sk_shieldbash.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 0,
@@ -169,7 +169,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 start.x, 
                 start.y, 
-                "assets/skill/sk_pierce.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
+                "assets/skill/knight/sk_pierce.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 0,
@@ -231,7 +231,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 start.x, 
                 start.y, 
-                "assets/skill/sk_strike.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
+                "assets/skill/knight/sk_strike.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 0,
@@ -296,7 +296,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 start.x - 2, 
                 start.y - 0, 
-                "assets/skill/sk_shieldwall.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
+                "assets/skill/knight/sk_shieldwall.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 1,
@@ -353,7 +353,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 start.x - 2, 
                 start.y - 0, 
-                "assets/skill/sk_phalanx.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
+                "assets/skill/knight/sk_phalanx.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1.5, 1.5);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 1,
@@ -394,6 +394,349 @@ module RaidNight.Graphics
             this.tween.stop();
             this.sprite.destroy();
             this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_Regen extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/priest/sk_regen.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: -1
+            });
+                
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setAlpha(this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.tweenTimer.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+        }
+    }
+    
+    export class SpellEffect_FlashHeal extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/priest/sk_flashheal.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: -1
+            });
+                
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setAlpha(this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.tweenTimer.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+        }
+    }
+    
+    export class SpellEffect_GreaterHeal extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/priest/sk_greaterheal.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: -1
+            });
+                
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setAlpha(this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.tweenTimer.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_DivineIntervention extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+        path: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 15, 
+                "assets/skill/priest/sk_divineintervention.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: -1
+            });
+                
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn"
+            });
+
+            
+            this.path = new Phaser.Curves.Path(start.x - 0, start.y - 15);
+            this.path.lineTo(start.x - 0, start.y - 10);
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tweenTimer.totalProgress >= 1;
+        }
+        
+        update()
+        {
+            super.update();
+            
+            let position = this.path.getPoint(this.tween.getValue());
+            this.sprite.setPosition(position.x, position.y);
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.tweenTimer.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+            this.path.destroy();
+        }
+    }
+
+    export class SpellEffect_Hymn extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+        path: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 15, 
+                "assets/skill/priest/sk_hymn.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0.5,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: -1
+            });
+                
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn"
+            });
+
+            
+            this.path = new Phaser.Curves.Path(start.x - 0, start.y - 15);
+            this.path.lineTo(start.x - 0, start.y - 10);
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tweenTimer.totalProgress >= 1;
+        }
+        
+        update()
+        {
+            super.update();
+            
+            this.sprite.setAlpha(this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.tweenTimer.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+            this.path.destroy();
         }
     }
 
