@@ -156,7 +156,7 @@ module RaidNight.Graphics
                             break;
                             
                             case "GREATERHEAL":
-                            effect = new SpellEffect_GreaterHeal(this.scene, end);
+                            effect = new SpellEffect_GreaterHeal(this.scene, start, end);
                             break;
                             
                             case "FLASHHEAL":

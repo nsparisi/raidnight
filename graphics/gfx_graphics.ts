@@ -94,6 +94,7 @@ module RaidNight.Graphics
             this.load.image('assets/skill/priest/sk_greaterheal.png', 'assets/skill/priest/sk_greaterheal.png');
             this.load.image('assets/skill/priest/sk_hymn.png', 'assets/skill/priest/sk_hymn.png');
             this.load.image('assets/skill/priest/sk_regen.png', 'assets/skill/priest/sk_regen.png');
+            this.load.image('assets/skill/priest/sparkle.png', 'assets/skill/priest/sparkle.png');
             
             this.load.image('assets/skill/wizard/sk_deluge.png', 'assets/skill/wizard/sk_deluge.png');
             this.load.image('assets/skill/wizard/sk_frostbite.png', 'assets/skill/wizard/sk_frostbite.png');
