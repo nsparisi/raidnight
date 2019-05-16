@@ -104,6 +104,7 @@ module RaidNight.Graphics
 
             this.load.image('assets/skill/dragon/sk_firestorm.png', 'assets/skill/dragon/sk_firestorm.png');
             this.load.image('assets/skill/dragon/sk_firestorm_floor.png', 'assets/skill/dragon/sk_firestorm_floor.png');
+            this.load.image('assets/skill/dragon/sk_claw.png', 'assets/skill/dragon/sk_claw.png');
 
             this.load.image('assets/heatwave.jpg', 'assets/heatwave.jpg');
             this.load.image('assets/spike.png', 'assets/spike.png');
@@ -211,10 +212,10 @@ module RaidNight.Graphics
                 }
             }
 
-            this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'));
-            this.knight = new Character(this, char_knight, this.add.sprite(600, 300, 'assets/knight.png'));
-            this.priest = new Character(this, char_priest, this.add.sprite(600, 500, 'assets/priest.png'));
-            this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'));
+            this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'), false);
+            this.knight = new Character(this, char_knight, this.add.sprite(600, 300, 'assets/knight.png'), false);
+            this.priest = new Character(this, char_priest, this.add.sprite(600, 500, 'assets/priest.png'), false);
+            this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
             this.dragon.sprite.setFlipX(true);
             this.room = new Room(this, char_room);
         }

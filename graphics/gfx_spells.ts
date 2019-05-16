@@ -119,8 +119,8 @@ module RaidNight.Graphics
 
             this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
 
-            this.path = new Phaser.Curves.Path(start.x + 50, start.y);
-            this.path.lineTo(start.x + 30, start.y);
+            this.path = new Phaser.Curves.Path(start.x - 20, start.y);
+            this.path.lineTo(start.x - 50, start.y);
         }
         
         isFinished()
@@ -180,8 +180,8 @@ module RaidNight.Graphics
 
             this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
 
-            this.path = new Phaser.Curves.Path(start.x + 45, start.y + 5);
-            this.path.lineTo(start.x - 0, start.y + 5);
+            this.path = new Phaser.Curves.Path(start.x - 10, start.y + 5);
+            this.path.lineTo(start.x - 30, start.y + 5);
         }
         
         isFinished()
@@ -242,11 +242,11 @@ module RaidNight.Graphics
 
             this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
 
-            this.path = new Phaser.Curves.Path(start.x + 35, start.y - 25);
+            this.path = new Phaser.Curves.Path(start.x - 35, start.y - 25);
             this.path.cubicBezierTo(
-                start.x + 35, start.y + 25,
-                start.x + 0,  start.y - 25,
-                start.x + 0,  start.y + 25
+                start.x - 35, start.y + 25,
+                start.x - 70,  start.y - 25,
+                start.x - 70,  start.y + 25
             );
         }
         
@@ -552,7 +552,7 @@ module RaidNight.Graphics
             this.sprite = this.scene.add.sprite(
                 end.x - 0, 
                 end.y - 0, 
-                "assets/skill/priest/sk_greaterheal.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+                "assets/skill/priest/sk_greaterheal.png", 0).setDepth(DepthLayer.Low_Priority).setScale(1, 1);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 1,
@@ -625,7 +625,7 @@ module RaidNight.Graphics
         {
             super.update();
 
-            this.sprite.setAlpha(this.tween.getValue());
+            //this.sprite.setAlpha(this.tween.getValue());
 
             let position = this.starPath1.getPoint(this.starTween1.getValue());
             this.starSprite1.setPosition(position.x, position.y);
@@ -1501,6 +1501,73 @@ module RaidNight.Graphics
             this.sprite2.destroy();
             this.path1.destroy();
             this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_Claw extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        path: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x, 
+                start.y, 
+                "assets/skill/dragon/sk_claw.png", 0).setDepth(DepthLayer.Med_Priority).setScale(0.75, 0.75);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(500),
+                ease: "Quart.easeInOut"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+
+            this.path = new Phaser.Curves.Path(start.x + 35, start.y - 25);
+            this.path.lineTo(start.x + 35, start.y + 25);
+            //this.path.cubicBezierTo(
+            //    start.x - 35, start.y + 25,
+            //    start.x - 70,  start.y - 25,
+            //    start.x - 70,  start.y + 25
+            //);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tween.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            let position = this.path.getPoint(this.tween.getValue());
+            this.sprite.setPosition(position.x, position.y);
+            //this.sprite.setRotation(Phaser.Math.DegToRad( 65 + this.tween.getValue() * 40));
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+            this.path.destroy();
         }
     }
 

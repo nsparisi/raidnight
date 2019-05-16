@@ -395,7 +395,7 @@ module RaidNight.Engine
     {
         isTaunted: boolean = false;
         tauntOrder = ["Knight", "Priest", "Wizard"];
-        untauntOrder = ["Priest", "Wizard", "Knight"];
+        untauntOrder = ["Wizard", "Priest", "Knight"];
 
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 

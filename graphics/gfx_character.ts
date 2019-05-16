@@ -15,7 +15,7 @@ module RaidNight.Graphics
 
         buffPanel: BuffPanel;
 
-        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, sprite: Phaser.GameObjects.Sprite)
+        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, sprite: Phaser.GameObjects.Sprite, isBoss: boolean)
         {
             this.scene = scene;
             this.character = char_reference;
@@ -30,7 +30,7 @@ module RaidNight.Graphics
             this.gfx_manaBlack = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
             this.gfx_manaBlue = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
 
-            this.buffPanel = new BuffPanel(this.scene, this.character);
+            this.buffPanel = new BuffPanel(this.scene, this.character, isBoss);
         }
 
         destroy = () =>
@@ -132,15 +132,15 @@ module RaidNight.Graphics
                             break;
 
                             case "SHIELDBASH":
-                            effect = new SpellEffect_ShieldBash(this.scene, end);
+                            effect = new SpellEffect_ShieldBash(this.scene, start);
                             break;
 
                             case "PIERCE":
-                            effect = new SpellEffect_Pierce(this.scene, end);
+                            effect = new SpellEffect_Pierce(this.scene, start);
                             break;
 
                             case "STRIKE":
-                            effect = new SpellEffect_Strike(this.scene, end);
+                            effect = new SpellEffect_Strike(this.scene, start);
                             break;
                                 
                             case "SHIELDWALL":
@@ -173,6 +173,10 @@ module RaidNight.Graphics
 
                             case "HEATWAVE":
                             effect = new SpellEffect_HeatWave(this.scene, start);
+                            break;
+
+                            case "CLAW":
+                            effect = new SpellEffect_Claw(this.scene, start);
                             break;
 
                             case "ICESHARD":
@@ -246,13 +250,15 @@ module RaidNight.Graphics
         debuffCount: integer;
         iconWidth: integer = 22;
         borderWidth: integer = 2;
+        isBoss: boolean;
         
         character: RaidNight.Engine.Character;
 
-        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character)
+        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, isBoss: boolean)
         {   
             this.scene = scene;
             this.character = char_reference;
+            this.isBoss = isBoss;
 
             let totalBuffs = 5;
             this.buffCount = 0;
@@ -289,8 +295,9 @@ module RaidNight.Graphics
 
         update(newTurn: boolean)
         {
-            let centerX = this.character.x * this.scene.tileWidth + this.scene.tileWidth + 12;
+            let centerX = this.character.x * this.scene.tileWidth + (( this.scene.tileWidth + 12) * (this.isBoss ? 0 : 1));
             let centerY = this.character.y * this.scene.tileHeight + this.scene.tileHeight;
+            let debuffX = centerX + (this.iconWidth * (this.isBoss ? -1 : 1));
             for(let i = 0; i < this.buffs.length; i++)
             {
                 this.buffs[i].setPosition(
@@ -301,21 +308,21 @@ module RaidNight.Graphics
             for(let i = 0; i < this.debuffs.length; i++)
             {
                 this.debuffs[i].setPosition(
-                    centerX + this.iconWidth, 
+                    debuffX, 
                     centerY - i * this.iconWidth);
             }
 
-            this.gfx_buff.clear();            
+            this.gfx_buff.clear();
             this.gfx_buff.fillStyle(0x2255CC, 1);
             this.gfx_buff.fillRect(
                 centerX - (this.iconWidth / 2), 
                 centerY + (this.iconWidth / 2), 
                 this.iconWidth, -1 * this.iconWidth * this.buffCount);
                 
-            this.gfx_debuff.clear();            
+            this.gfx_debuff.clear();
             this.gfx_debuff.fillStyle(0xAA0000, 1);
             this.gfx_debuff.fillRect(
-                centerX + this.iconWidth - (this.iconWidth / 2), 
+                debuffX - (this.iconWidth / 2), 
                 centerY + (this.iconWidth / 2), 
                 this.iconWidth, -1 * this.iconWidth * this.debuffCount);
 
