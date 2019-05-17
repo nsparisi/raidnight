@@ -242,6 +242,8 @@ module RaidNight.Graphics
     {
         buffs: Phaser.GameObjects.Sprite[];
         debuffs: Phaser.GameObjects.Sprite[];
+        buff_counts: Phaser.GameObjects.Text[];
+        debuff_counts: Phaser.GameObjects.Text[];
         gfx_buff: Phaser.GameObjects.Graphics;
         gfx_debuff: Phaser.GameObjects.Graphics;
         scene: Scene_Arena;
@@ -267,8 +269,12 @@ module RaidNight.Graphics
             this.gfx_buff = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
             this.gfx_debuff = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
 
+            let countStyle = {fontSize: "13px", fill: "#FFF", align: "center", stroke: "black", strokeThickness: "4", fontWeight: "bold"};
+
             this.buffs = [];
             this.debuffs = [];
+            this.buff_counts = [];
+            this.debuff_counts = [];
             for (let i = 0; i < totalBuffs; i++)
             {
                 this.buffs.push(
@@ -279,7 +285,6 @@ module RaidNight.Graphics
                         0)
                         .setDepth(DepthLayer.High_Priority)
                         .setDisplaySize(this.iconWidth - this.borderWidth*2, this.iconWidth - this.borderWidth*2));
-
                         
                 this.debuffs.push(
                     scene.add.sprite(
@@ -289,6 +294,16 @@ module RaidNight.Graphics
                         0)
                         .setDepth(DepthLayer.High_Priority)
                         .setDisplaySize(this.iconWidth - this.borderWidth*2, this.iconWidth - this.borderWidth*2));
+                        
+                this.buff_counts.push(
+                    scene.add.text(
+                        -100, 
+                        -100, "1", countStyle).setDepth(DepthLayer.HUD));
+                        
+                this.debuff_counts.push(
+                    scene.add.text(
+                        -100, 
+                        -100, "2", countStyle).setDepth(DepthLayer.HUD));
             }
 
         }
@@ -298,11 +313,16 @@ module RaidNight.Graphics
             let centerX = this.character.x * this.scene.tileWidth + (( this.scene.tileWidth + 12) * (this.isBoss ? 0 : 1));
             let centerY = this.character.y * this.scene.tileHeight + this.scene.tileHeight;
             let debuffX = centerX + (this.iconWidth * (this.isBoss ? -1 : 1));
+            let textOffset = -7;
             for(let i = 0; i < this.buffs.length; i++)
             {
                 this.buffs[i].setPosition(
                     centerX, 
                     centerY - i * this.iconWidth);
+
+                this.buff_counts[i].setPosition(
+                    centerX + textOffset, 
+                    centerY - i * this.iconWidth + textOffset);
             }
 
             for(let i = 0; i < this.debuffs.length; i++)
@@ -310,6 +330,10 @@ module RaidNight.Graphics
                 this.debuffs[i].setPosition(
                     debuffX, 
                     centerY - i * this.iconWidth);
+
+                this.debuff_counts[i].setPosition(
+                    debuffX + textOffset, 
+                    centerY - i * this.iconWidth + textOffset);
             }
 
             this.gfx_buff.clear();
@@ -331,46 +355,36 @@ module RaidNight.Graphics
                 return;
             }
 
-            let goods = [];
-            let bads = [];
+            
+            for(let i = 0; i < this.buffs.length; i++)
+            {
+                this.buffs[i].setVisible(false);
+                this.buff_counts[i].setVisible(false);
+                this.debuffs[i].setVisible(false);
+                this.debuff_counts[i].setVisible(false);
+            }
+
+            this.buffCount = 0;
+            this.debuffCount = 0;
             for(let i = 0; i < this.character.statuses.length; i++)
             {
+                let name = this.character.statuses[i].name.toLowerCase();
+                let count = this.character.statuses[i].stacks > 1 ? this.character.statuses[i].stacks.toString() : "";
                 if(this.character.statuses[i].type == Engine.StatusType.Good)
                 {
-                    goods.push(this.character.statuses[i].name.toLowerCase());
+                    this.buffs[this.buffCount].setTexture(`assets/status/${name}.png`);
+                    this.buffs[this.buffCount].setVisible(true);
+                    this.buff_counts[this.buffCount].setVisible(true);
+                    this.buff_counts[this.buffCount].setText(count);
+                    this.buffCount++;
                 }
                 else
                 {
-                    bads.push(this.character.statuses[i].name.toLowerCase());
-                }
-            }
-
-            this.buffCount = goods.length;
-            this.debuffCount = bads.length;
-
-            for(let i = 0; i < this.buffs.length; i++)
-            {
-                if (i < goods.length)
-                {
-                    this.buffs[i].setTexture(`assets/status/${goods[i]}.png`);
-                    this.buffs[i].setVisible(true);
-                }
-                else 
-                {
-                    this.buffs[i].setVisible(false);
-                }
-            }
-            
-            for(let i = 0; i < this.debuffs.length; i++)
-            {
-                if (i < bads.length)
-                {
-                    this.debuffs[i].setTexture(`assets/status/${bads[i]}.png`);
-                    this.debuffs[i].setVisible(true);
-                }
-                else 
-                {
-                    this.debuffs[i].setVisible(false);
+                    this.debuffs[this.debuffCount].setTexture(`assets/status/${name}.png`);
+                    this.debuffs[this.debuffCount].setVisible(true);
+                    this.debuff_counts[this.debuffCount].setVisible(true);
+                    this.debuff_counts[this.debuffCount].setText(count);
+                    this.debuffCount++;
                 }
             }
         }
@@ -380,11 +394,13 @@ module RaidNight.Graphics
             for(let i = 0; i < this.buffs.length; i++)
             {
                 this.buffs[i].destroy();
+                this.buff_counts[i].destroy();
             }
             
             for(let i = 0; i < this.debuffs.length; i++)
             {
                 this.debuffs[i].destroy();
+                this.debuff_counts[i].destroy();
             }
 
             this.gfx_buff.destroy();
