@@ -222,18 +222,13 @@ module RaidNight.Graphics
 
         update ()
         {
-            if(GLOBAL_GAME.arena.state == RaidNight.Engine.ArenaState.NotStarted)
-            {
-                return;
-            }
-
             let isNewTurn = false;
             if (GLOBAL_GAME.arena.turn != this.lastKnownTurn)
             {
                 this.lastKnownTurn = GLOBAL_GAME.arena.turn;
                 isNewTurn = true;
 
-                if (GLOBAL_GAME.arena.turn == 1)
+                if (GLOBAL_GAME.arena.turn == 0 || GLOBAL_GAME.arena.turn == 1)
                 {
                     this.newGame();
                 }

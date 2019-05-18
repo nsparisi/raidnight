@@ -125,7 +125,7 @@ module RaidNight.Engine
             
             this.type = StatusType.Good;
             this.name = "ST_IceShard";
-            this.duration = 3;
+            this.duration = 5;
             this.maxStacks = 3;
         }
     }

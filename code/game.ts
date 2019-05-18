@@ -11,8 +11,10 @@ module RaidNight.Engine
         private stepMode = false;
         private stepPending = false;
 
-        newGame = (allies: Character[]) =>
+        newGame = (allyActions: PlayerActions) =>
         {
+            this.setup();
+
             let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
@@ -114,25 +116,25 @@ module RaidNight.Engine
 
             this.arena.room = room;
             this.arena.enemies = [boss];
-            this.arena.allies = allies;
+            this.arena.allies[0].actionList = allyActions.knight;
+            this.arena.allies[1].actionList = allyActions.priest;
+            this.arena.allies[2].actionList = allyActions.wizard;
         }
 
         setup = () =>
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.room = new Room(20, 20);
+            this.arena.room = new Room(20, 15);
             
+            let knight = new Character("Knight", 300, 100, 7, 7);
+            knight.mana = 0;
+            let priest = new Character("Priest", 150, 200, 11, 6);
+            let wizard = new Character("Wizard", 150, 400, 13, 8);
             let boss = new Character("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
-
-            let knight = new Character("Knight", 200, 100, 10, 8);
             knight.actionList = [];
- 
-            let priest = new Character("Priest", 100, 200, 12, 6);
             priest.actionList = [];
-
-            let wizard = new Character("Wizard", 100, 200, 12, 10);
             wizard.actionList = [];
 
             this.arena.allies = [knight, priest, wizard];
@@ -195,8 +197,6 @@ module RaidNight.Engine
         {
             let element = <HTMLInputElement>document.getElementById("turn_length_ms");
             let valueMs = parseInt(element.value);
-
-            console.log(`valueMs: ${valueMs}`);
 
             valueMs = valueMs ? valueMs : 500;
             valueMs = Math.max(100, valueMs);

@@ -6,6 +6,12 @@ module RaidNight.Engine
         actions: Action[];
     } 
 
+    export interface PlayerActions {
+        knight: Action[];
+        priest: Action[];
+        wizard: Action[];
+    }
+
     enum TokenType { Wait, Loop, Arg_Open, Arg_Close, Block_Open, Block_Close, Skill_Operator, Alphabetic, Numeric }
 
     interface Token {
@@ -33,14 +39,15 @@ module RaidNight.Engine
             }
         }
 
-        parseInputCreateTeam = (): Character[] =>
+        parseInputCreateTeam = (): PlayerActions =>
         {
-            let knight = new Character("Knight", 200, 100, 7, 7);
-            let priest = new Character("Priest", 150, 200, 11, 6);
-            let wizard = new Character("Wizard", 150, 400, 13, 8);
-
             let inputs = document.getElementsByTagName("textarea");
             let isValid = true;
+            let playerActions = {
+                knight: [],
+                priest: [],
+                wizard: [],
+            }
 
             for (let i = 0; i < inputs.length; i++)
             {
@@ -50,7 +57,7 @@ module RaidNight.Engine
                         let result = this.parseWrapper("WIZARD", inputs[i].value);
                         if(!result.hasError)
                         {
-                            wizard.actionList = result.actions;
+                            playerActions.wizard = result.actions;
                         }
                         else 
                         {
@@ -64,7 +71,7 @@ module RaidNight.Engine
                         let result = this.parseWrapper("PRIEST", inputs[i].value);
                         if(!result.hasError)
                         {
-                            priest.actionList = result.actions;
+                            playerActions.priest = result.actions;
                         }
                         else 
                         {
@@ -78,7 +85,7 @@ module RaidNight.Engine
                         let result = this.parseWrapper("KNIGHT", inputs[i].value);
                         if(!result.hasError)
                         {
-                            knight.actionList = result.actions;
+                            playerActions.knight = result.actions;
                         }
                         else 
                         {
@@ -92,7 +99,7 @@ module RaidNight.Engine
 
             if (isValid)
             {
-                return [knight, priest, wizard];
+                return playerActions;
             }
             else 
             {
