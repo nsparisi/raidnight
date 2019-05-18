@@ -127,9 +127,9 @@ module RaidNight.Engine
             this.arena = new Arena();
             this.arena.room = new Room(20, 15);
             
-            let knight = new Character("Knight", 300, 100, 7, 7);
+            let knight = new Character("Knight", 350, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 150, 200, 11, 6);
+            let priest = new Character("Priest", 150, 400, 11, 6);
             let wizard = new Character("Wizard", 150, 400, 13, 8);
             let boss = new Character("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];

@@ -292,7 +292,7 @@ module RaidNight.Engine
 
             for(let i = 0; i < actions.length; i++)
             {
-                console.log(`b ${ActionType[actions[i].type]} name: ${actions[i].skill} target: ${actions[i].targets[0]}`);
+                // console.log(`b ${ActionType[actions[i].type]} name: ${actions[i].skill} target: ${actions[i].targets[0]}`);
             }
 
             return actions;

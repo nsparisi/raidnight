@@ -28,7 +28,7 @@ module RaidNight.Engine
             
             this.type = StatusType.Bad;
             this.name = "ST_Taunt";
-            this.duration = 10;
+            this.duration = 5;
             this.taunt = true;
         }
     }

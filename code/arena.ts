@@ -135,7 +135,7 @@ module RaidNight.Engine
         }
         
         
-        findAlliesInArea(area: Area)
+        findAllTargetsInArea(area: Area)
         {
             let targets = new Array<Character>();
 
@@ -145,6 +145,15 @@ module RaidNight.Engine
                 if (this.characterIsInArea(ally, area))
                 {
                     targets.push(ally);
+                }
+            }
+            
+            for (let i = 0; i < this.enemies.length; i++)
+            {
+                let enemy = this.enemies[i];
+                if (this.characterIsInArea(enemy, area))
+                {
+                    targets.push(enemy);
                 }
             }
 

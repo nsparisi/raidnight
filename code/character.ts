@@ -289,8 +289,7 @@ module RaidNight.Engine
             let targets = new Array<Character>();
             if (this.currentAction.targetType == TargetType.Area)
             {
-                // caution:: only allies can get hit by AOE at this time
-                targets = GLOBAL_GAME.arena.findAlliesInArea(this.currentAction.area);
+                targets = GLOBAL_GAME.arena.findAllTargetsInArea(this.currentAction.area);
             }
             else if (this.currentAction.targetType == TargetType.Character)
             {

@@ -77,9 +77,8 @@ module RaidNight.Engine
         {
             super();
             this.health = -5;
-            this.mana = -30;
+            this.mana = -20;
             this.castTime = 1;
-            this.cooldown = 20;
             this.name = "ShieldBash";
             this.targetStatuses = ["ST_SHIELDBASH"];
         }
@@ -109,7 +108,7 @@ module RaidNight.Engine
         {
             super();
             this.health = 75;
-            this.mana = -5;
+            this.mana = -4;
             this.castTime = 3;
             this.name = "GreaterHeal";
         }
@@ -159,7 +158,7 @@ module RaidNight.Engine
         {
             super();
             this.health = 0;
-            this.mana = -20;
+            this.mana = -10;
             this.castTime = 1;
             this.cooldown = 100;
             this.allAllies = true;
@@ -178,7 +177,7 @@ module RaidNight.Engine
             super();
             this.health = -20;
             this.castTime = 2;
-            this.mana = -5;
+            this.mana = -4;
             this.name = "IceShard";
             this.selfStatuses = ["ST_ICESHARD"];
         }
@@ -203,7 +202,7 @@ module RaidNight.Engine
         {
             super();
             this.health = 0;
-            this.mana = 5;
+            this.mana = -5;
             this.castTime = 1;
             this.cooldown = 20;
             this.name = "Frostbite";
@@ -232,7 +231,7 @@ module RaidNight.Engine
         {
             super();
             this.health = -200;
-            this.mana = 5;
+            this.mana = 20;
             this.castTime = 1;
             this.cooldown = 100;
             this.name = "Deluge";
@@ -275,7 +274,7 @@ module RaidNight.Engine
             super();
             this.health = -100;
             this.mana = 0;
-            this.castTime = 2;
+            this.castTime = 3;
             this.name = "Flamethrower";
         }
     }
@@ -297,7 +296,7 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = -50;
+            this.health = -100;
             this.mana = 0;
             this.castTime = 1;
             this.name = "FireStorm";

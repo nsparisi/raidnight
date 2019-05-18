@@ -72,23 +72,47 @@ module RaidNight.Engine
                 this.actionIndex = 0;
 
                 this.actionList = [];
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(6, 3, 7,  4)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(5, 1, 6,  2)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(16, 6, 17,  7)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(6, 2, 7,  3)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(10, 4, 11,  5)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(7, 3, 8,  4)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(8, 7, 9,  8)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(8, 4, 9,  5)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(12, 12, 13,  13)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(9, 5, 10,  6)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(5, 11, 6,  12)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(10, 6, 11,  7)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(7, 5, 8,  6)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(11, 7, 12,  8)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(9, 8, 10,  9)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(12, 8, 13,  9)));
                 this.actionList.push(new action_Wait());
-                this.actionList.push(new action_AreaSkill("FireStorm", new Area(12, 6, 13,  7)));
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(13, 9, 14,  10)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(14, 10, 15,  11)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(15, 11, 16,  12)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(16, 12, 17,  13)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(17, 13, 18,  14)));
+                this.actionList.push(new action_Wait());
+
+                
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 0, 3,  1)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 2, 3,  3)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 4, 3,  5)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 6, 3,  7)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 8, 3,  9)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 10, 3,  11)));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 12, 3,  13)));
                 this.actionList.push(new action_Wait());
 
                 console.log("DRAGON has called down a FIRESTORM!");
