@@ -205,7 +205,7 @@ module RaidNight.Graphics
         update ()
         {
             this.textManager.update();
-            
+
             let isNewTurn = false;
             if (GLOBAL_GAME.arena.turn != this.lastKnownTurn)
             {
@@ -233,7 +233,7 @@ module RaidNight.Graphics
             this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth}`);
             this.text_knightHealth.setText(`${this.knight.character.health} / ${this.knight.character.maxHealth}`);
             this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth}`);
-            this.text_dragonHealth.setText(`${this.dragon.character.health} / ${this.dragon.character.maxHealth}`);
+            this.text_dragonHealth.setText(`${this.dragon.character.health}/${this.dragon.character.maxHealth}`);
 
             this.text_TurnCount.setText(`${GLOBAL_GAME.arena.turn}`);
 
