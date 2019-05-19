@@ -7,9 +7,11 @@ module RaidNight.Engine
         library: Library;
         frameLengthMs: integer = 500;
         private elapsedTimeMs: number = 0;
-        private isInitialized = false;
         private stepMode = false;
         private stepPending = false;
+
+        isShowingText: boolean;
+        textToShow: string[];
 
         newGame = (allyActions: PlayerActions) =>
         {
@@ -60,59 +62,6 @@ module RaidNight.Engine
             let room = new Room(20, 15);
             room.actionList = [];
             room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 9,  7)));
-
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 0, 19, 7)));
-            
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 8, 19, 14)));
-            
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            room.actionList.push(new action_Wait());
-            //room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  8, 9,  14)));
-
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(0,  0, 1,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(2,  0, 3,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(4,  0, 5,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(6,  0, 7,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(8,  0, 9,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10,  0, 11,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(12,  0, 13,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(14,  0, 15,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(16,  0, 17,  14)));
-            // room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(18,  0, 19,  14)));
 
             this.arena.room = room;
             this.arena.enemies = [boss];
@@ -139,6 +88,9 @@ module RaidNight.Engine
 
             this.arena.allies = [knight, priest, wizard];
             this.arena.enemies = [boss];
+
+            this.isShowingText = false;
+            this.textToShow = [];
         }
 
         start = () =>
@@ -155,17 +107,31 @@ module RaidNight.Engine
         {
             this.stepMode = false;
             this.elapsedTimeMs = this.frameLengthMs;
+            this.nextText();
         }
 
         step = () =>
         {
             this.stepMode = true;
             this.stepPending = true;
+            this.nextText();
+        }
+
+        startText = (...texts: string[]) =>
+        {
+            this.textToShow = texts;
+            this.isShowingText = true;
+        }
+
+        nextText = () =>
+        {
+            this.textToShow.shift();
+            this.isShowingText = this.textToShow.length > 0;
         }
 
         update = () =>
         {
-            if (this.arena == null || this.arena.state != ArenaState.InProgress)
+            if (this.arena == null || this.arena.state != ArenaState.InProgress || this.isShowingText)
             {
                 return;
             }

@@ -12,6 +12,7 @@
 /// <reference path="code/input.ts" />
 
 /// <reference path="graphics/gfx_spells.ts"/>
+/// <reference path="graphics/gfx_text.ts"/>
 /// <reference path="graphics/gfx_character.ts"/>
 /// <reference path="graphics/gfx_graphics.ts"/>
 

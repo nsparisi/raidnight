@@ -81,6 +81,8 @@ module RaidNight.Engine
             {
                 console.log(`WON! Enemies are dead.`);
                 this.state = ArenaState.Win;
+
+                GLOBAL_GAME.startText("NICE WORK!\r\n\r\nTHE ANSWER \r\nIS...");
             }
         }
         

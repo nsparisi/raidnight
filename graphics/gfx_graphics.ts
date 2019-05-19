@@ -47,14 +47,13 @@ module RaidNight.Graphics
         gfx_upperHealthBox: Phaser.GameObjects.Graphics;
         gfx_lowerHealthBox: Phaser.GameObjects.Graphics;
 
-        text_winText: Phaser.GameObjects.Text;
-        sprite_winBg: Phaser.GameObjects.Sprite;
-
         tileWidth: integer = 40;
         tileHeight: integer = 40;
         lastKnownTurn: integer = -1;
 
         allSkillEffects: SpellEffect[];
+
+        textManager: TextManager;
 
         preload ()
         {
@@ -117,20 +116,7 @@ module RaidNight.Graphics
         {
 
             this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
-
-            this.sprite_winBg = this.add.sprite(
-                this.game.canvas.width / 2, 
-                this.game.canvas.height / 2, "assets/scroll.png").setDepth(DepthLayer.HUD);
-            this.sprite_winBg.setDisplaySize(400,400);
-            this.sprite_winBg.setVisible(true);
-            
-            let winStyle = {fontSize: "35px", fill: "#000", align: "center", stroke: "black", fontWeight: "bold"};
-            let text = "NICE WORK!\r\n\r\nTHE ANSWER \r\nIS..."
-            this.text_winText = this.add.text(
-                this.game.canvas.width / 2, 
-                this.game.canvas.height / 2, text, winStyle).setDepth(DepthLayer.HUD);
-            this.text_winText.setOrigin(0.5);
-            this.text_winText.setWordWrapWidth(270, true);
+            this.textManager = new TextManager(this);
 
             this.newGame();
 
@@ -166,8 +152,7 @@ module RaidNight.Graphics
 
         winGame = () =>
         {
-            this.text_winText.setVisible(true);
-            this.sprite_winBg.setVisible(true);
+            let text = "NICE WORK!\r\n\r\nTHE ANSWER \r\nIS..."
         }
 
         newGame = () =>
@@ -177,9 +162,6 @@ module RaidNight.Graphics
             if(this.priest){this.priest.destroy();}
             if(this.dragon){this.dragon.destroy();}
             if(this.room){this.room.destroy();}
-
-            this.text_winText.setVisible(false);
-            this.sprite_winBg.setVisible(false);
 
             let char_priest: RaidNight.Engine.Character = null;
             let char_knight: RaidNight.Engine.Character = null;
@@ -222,6 +204,8 @@ module RaidNight.Graphics
 
         update ()
         {
+            this.textManager.update();
+            
             let isNewTurn = false;
             if (GLOBAL_GAME.arena.turn != this.lastKnownTurn)
             {

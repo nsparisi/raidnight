@@ -116,6 +116,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_Wait());
 
                 console.log("DRAGON has called down a FIRESTORM!");
+                GLOBAL_GAME.startText("DRAGON has called down a FIRESTORM!");
             }
 
             super.grabNewAction();
