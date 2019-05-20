@@ -67,7 +67,7 @@ module RaidNight.Engine
                     continue;
                 }
 
-                console.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
+                Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 this.statuses[i].duration--;
                 
                 let source = GLOBAL_GAME.arena.lookupTarget(this.statuses[i].source);
@@ -77,7 +77,7 @@ module RaidNight.Engine
 
                 if (this.statuses[i].duration <= 0)
                 {
-                    console.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
+                    Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
                     this.statuses.splice(i, 1);
                     i--;
                 }
@@ -150,7 +150,7 @@ module RaidNight.Engine
                 health = Math.min(0, health + blocked + empowered);
 
                 // Priest took -100 total damage. 100 (0) [0] (20 def) [20 pow]
-                console.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) (${source.power} pow)`);
+                Debug.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) [${source.power} pow]`);
             }
 
             this.health = Math.max(0, this.health + health);
@@ -175,7 +175,7 @@ module RaidNight.Engine
                     status.stacks = Math.min(status.maxStacks, this.statuses[i].stacks + 1);
                     this.statuses[i] = status;
                     alreadyApplied = true;
-                    console.log(`Refreshing status ${status.name} on ${this.name}`);
+                    Debug.log(`Refreshing status ${status.name} on ${this.name}`);
                 }
             }
 
@@ -220,11 +220,11 @@ module RaidNight.Engine
             {
                 this.x += x;
                 this.y += y;
-                console.log(`${this.name} moved to ${this.x},${this.y}`);
+                Debug.log(`${this.name} moved to ${this.x},${this.y}`);
             }
             else 
             {
-                console.log(`${this.name} was unable to move to ${this.x + x},${this.y + y}`);
+                Debug.log(`${this.name} was unable to move to ${this.x + x},${this.y + y}`);
             }
 
             this.castTimeRemaining = 0;
@@ -235,7 +235,11 @@ module RaidNight.Engine
         {
             this.castTimeRemaining = 0;
             this.isCasting = false;
-            console.log(`${this.name} chose to wait.`);
+
+            if (this.name.toUpperCase() != "ROOM")
+            {
+                Debug.log(`${this.name} chose to wait.`);
+            }
         }
 
         protected startSkill()
@@ -252,14 +256,14 @@ module RaidNight.Engine
 
             if (this.mana + skill.mana < 0)
             {
-                console.log(`${this.name} has not enough mana to cast ${skill.name}`);
+                Debug.log(`${this.name} has not enough mana to cast ${skill.name}`);
                 this.isCastSuccessful = false;
                 return;
             }
 
             if (this.safeGetCooldown(skill.name) > 0)
             {
-                console.log(`${this.name} failed to cast ${skill.name} because it is on cooldown.`);
+                Debug.log(`${this.name} failed to cast ${skill.name} because it is on cooldown.`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -268,7 +272,10 @@ module RaidNight.Engine
             this.isCasting = true;
             this.cooldowns.set(skill.name, skill.cooldown);
 
-            console.log(`${this.name} started cast of ${skill.name}.`);
+            if (skill.castTime > 1)
+            {
+                Debug.log(`${this.name} started cast of ${skill.name}.`);
+            }
         }
 
         protected finishSkill()
@@ -277,7 +284,7 @@ module RaidNight.Engine
             let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
             if (this.mana + skill.mana < 0)
             {
-                console.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
+                Debug.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -307,12 +314,12 @@ module RaidNight.Engine
             {
                 let target = targets[i];
 
-                console.log(`${this.name} used ${skill.name} on ${target.name}`);
+                Debug.log(`${this.name} used ${skill.name} on ${target.name}`);
                 target.addHealth(skill.health, this);
 
                 for (let j = 0; j < skill.targetStatuses.length; j++)
                 {
-                    console.log(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
+                    Debug.log(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
                     target.addStatus(skill.targetStatuses[j], this.name);
                 }
             }
@@ -320,7 +327,7 @@ module RaidNight.Engine
             // apply statues to self
             for (let i = 0; i < skill.selfStatuses.length; i++)
             {
-                console.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
+                Debug.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
                 this.addStatus(skill.selfStatuses[i], this.name);
             }
             
@@ -328,7 +335,7 @@ module RaidNight.Engine
             this.castTimeRemaining = 0;
             this.isCasting = false;
             this.isCastSuccessful = true;
-            console.log(`${this.name} finished cast of ${skill.name}.`);
+            // Debug.log(`${this.name} finished cast of ${skill.name}.`);
         }
 
         protected countIceShardStacksAndConsumeStatus(skill: Skill)
@@ -350,7 +357,7 @@ module RaidNight.Engine
             }
 
             skill.health = skill.healthPerIceShard * stacks;
-            console.log(`${this.name} is consuming ${stacks} stacks of ICE SHARD for ${skill.health} total damage.`);
+            Debug.log(`${this.name} is consuming ${stacks} stacks of ICE SHARD for ${skill.health} total damage.`);
         }
 
         protected addMana(manaToAdd: integer)

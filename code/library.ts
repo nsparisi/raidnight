@@ -79,7 +79,7 @@ module RaidNight.Engine
                 return <Skill>this.skillCatalogue[name.toUpperCase()];
             }
 
-            console.log(`ERROR: Skill lookup failed: ${name.toUpperCase()}`);
+            Debug.log(`ERROR: Skill lookup failed: ${name.toUpperCase()}`);
             return null;
         }
 
@@ -92,7 +92,7 @@ module RaidNight.Engine
                 return status;
             }
 
-            console.log(`ERROR: Status lookup failed: ${name.toUpperCase()}`);
+            Debug.log(`ERROR: Status lookup failed: ${name.toUpperCase()}`);
             return null;
         }
     }

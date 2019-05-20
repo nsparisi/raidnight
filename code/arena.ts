@@ -28,11 +28,11 @@ module RaidNight.Engine
         {
             this.turn++;
             let i = 0;
-            console.log(`Executing turn ${this.turn}`);
+            Debug.logNewTurn(this.turn);
 
             if (this.state != ArenaState.InProgress)
             {
-                console.log(`Game is not running, cannot execute turn. '${this.state}'`);
+                Debug.log(`Game is not running, cannot execute turn. '${this.state}'`);
             }
 
             // resolve allies status + action
@@ -79,7 +79,7 @@ module RaidNight.Engine
 
             if (isWon)
             {
-                console.log(`WON! Enemies are dead.`);
+                Debug.log(`WON! Enemies are dead.`);
                 this.state = ArenaState.Win;
 
                 GLOBAL_GAME.startText("NICE WORK!\r\n\r\nTHE ANSWER \r\nIS...");
@@ -90,7 +90,7 @@ module RaidNight.Engine
         {
             if(this.turn >= this.maxTurns)
             {
-                console.log(`LOSE! Took too long.`);
+                Debug.log(`LOSE! Took too long.`);
                 this.state = ArenaState.Lose;
                 return;
             }
@@ -108,7 +108,7 @@ module RaidNight.Engine
 
             if (isLose)
             {
-                console.log(`LOSE! All allies are dead!`);
+                Debug.log(`LOSE! All allies are dead!`);
                 this.state = ArenaState.Lose;
             }
         }
@@ -132,7 +132,7 @@ module RaidNight.Engine
                 }
             }
 
-            console.log(`ERROR: Lookup target failed ${targetName}`);
+            Debug.log(`ERROR: Lookup target failed ${targetName}`);
             return null;
         }
         

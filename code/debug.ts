@@ -5,11 +5,16 @@ module RaidNight.Debug
     
     export var log = (message) =>
     {
-        console.log("[debug]" + message);
+        console.log(message);
+    }
+
+    export var logNewTurn = (turn) =>
+    {
+        console.log("%c    Executing turn %s    ", "background: #44FFAA", turn);
     }
     
     export var logError = (message) =>
     {
-        console.log("[error]" + message);
+        console.error(message);
     }
 }

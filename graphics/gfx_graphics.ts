@@ -223,7 +223,6 @@ module RaidNight.Graphics
                 }
             }
 
-            //console.log(this.time.now);
             this.wizard.update(isNewTurn);
             this.knight.update(isNewTurn);
             this.priest.update(isNewTurn);

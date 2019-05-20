@@ -36,7 +36,7 @@ module RaidNight.Engine
 
         public isWalkable(x: integer, y: integer)
         {
-            console.log(`isWalkable ${x},${y} : ${x + y * this.width}`);
+            Debug.log(`isWalkable ${x},${y} : ${x + y * this.width}`);
             return  x < this.width &&
                     x >= 0 &&
                     y < this.height && 
@@ -115,7 +115,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 12, 3,  13)));
                 this.actionList.push(new action_Wait());
 
-                console.log("DRAGON has called down a FIRESTORM!");
+                Debug.log("DRAGON has called down a FIRESTORM!");
                 GLOBAL_GAME.startText("DRAGON has called down a FIRESTORM!");
             }
 

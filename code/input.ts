@@ -61,7 +61,7 @@ module RaidNight.Engine
                         }
                         else 
                         {
-                            console.error(`Wizard Error: ${result.errorMessage}`);
+                            Debug.logError(`Wizard Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -75,7 +75,7 @@ module RaidNight.Engine
                         }
                         else 
                         {
-                            console.error(`Priest Error: ${result.errorMessage}`);
+                            Debug.logError(`Priest Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -89,7 +89,7 @@ module RaidNight.Engine
                         }
                         else 
                         {
-                            console.error(`Knight Error: ${result.errorMessage}`);
+                            Debug.logError(`Knight Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -292,7 +292,7 @@ module RaidNight.Engine
 
             for(let i = 0; i < actions.length; i++)
             {
-                // console.log(`b ${ActionType[actions[i].type]} name: ${actions[i].skill} target: ${actions[i].targets[0]}`);
+                // Debug.log(`b ${ActionType[actions[i].type]} name: ${actions[i].skill} target: ${actions[i].targets[0]}`);
             }
 
             return actions;
@@ -432,7 +432,7 @@ module RaidNight.Engine
             {
                 let token = readToken();
                 tokens.push(token);
-                //console.log(`seek: ${seek} token: ${token.token} type: ${TokenType[token.type]}`);
+                //Debug.log(`seek: ${seek} token: ${token.token} type: ${TokenType[token.type]}`);
             }
 
             return tokens;
