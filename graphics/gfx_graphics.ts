@@ -42,6 +42,9 @@ module RaidNight.Graphics
         text_priestHealth: Phaser.GameObjects.Text;
         text_knightHealth: Phaser.GameObjects.Text;
         text_wizardHealth: Phaser.GameObjects.Text;
+        text_priestMana: Phaser.GameObjects.Text;
+        text_knightMana: Phaser.GameObjects.Text;
+        text_wizardMana: Phaser.GameObjects.Text;
         text_dragonHealth: Phaser.GameObjects.Text;
 
         gfx_upperHealthBox: Phaser.GameObjects.Graphics;
@@ -122,7 +125,7 @@ module RaidNight.Graphics
 
             this.gfx_upperHealthBox = this.add.graphics().setDepth(DepthLayer.HUD);
             this.gfx_upperHealthBox.fillStyle(0x000000, 0.7);
-            this.gfx_upperHealthBox.fillRoundedRect(35, 40, 254, 70);
+            this.gfx_upperHealthBox.fillRoundedRect(35, 40, 490, 70);
             
             this.gfx_lowerHealthBox = this.add.graphics().setDepth(DepthLayer.HUD);
             this.gfx_lowerHealthBox.fillStyle(0x000000, 0.7);
@@ -130,14 +133,17 @@ module RaidNight.Graphics
 
             let nameStyle = {fontSize: "20px", fill: "#FFF", align: "left"};
             let healthStyle = {fontSize: "20px", fill: "#FFF", align: "right"};
-            this.add.text(45,45, "WIZARD:", nameStyle).setDepth(DepthLayer.HUD);
-            this.add.text(45,65, "KNIGHT:", nameStyle).setDepth(DepthLayer.HUD);
-            this.add.text(45,85, "PRIEST:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,45, "KNIGHT:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,65, "PRIEST:", nameStyle).setDepth(DepthLayer.HUD);
+            this.add.text(45,85, "WIZARD:", nameStyle).setDepth(DepthLayer.HUD);
             this.add.text(45,530, "DRAGON:", nameStyle).setDepth(DepthLayer.HUD);
-            this.text_wizardHealth =  this.add.text(280,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
-            this.text_knightHealth = this.add.text(280,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
-            this.text_priestHealth =  this.add.text(280,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_knightHealth = this.add.text(285,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_priestHealth =  this.add.text(285,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_wizardHealth =  this.add.text(285,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_knightMana = this.add.text(500,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_priestMana =  this.add.text(500,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_wizardMana =  this.add.text(500,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
 
             // upper-right turn box
             this.gfx_TurnBox = this.add.graphics().setDepth(DepthLayer.HUD);
@@ -229,10 +235,13 @@ module RaidNight.Graphics
             this.dragon.update(isNewTurn);
             this.room.update(isNewTurn);
             
-            this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth}`);
-            this.text_knightHealth.setText(`${this.knight.character.health} / ${this.knight.character.maxHealth}`);
-            this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth}`);
+            this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth} HP`);
+            this.text_knightHealth.setText(`${this.knight.character.health} / ${this.knight.character.maxHealth} HP`);
+            this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth} HP`);
             this.text_dragonHealth.setText(`${this.dragon.character.health}/${this.dragon.character.maxHealth}`);
+            this.text_wizardMana.setText(`${this.wizard.character.mana} / ${this.wizard.character.maxMana} MANA`);
+            this.text_knightMana.setText(`${this.knight.character.mana} / ${this.knight.character.maxMana} MANA`);
+            this.text_priestMana.setText(`${this.priest.character.mana} / ${this.priest.character.maxMana} MANA`);
 
             this.text_TurnCount.setText(`${GLOBAL_GAME.arena.turn}`);
 
