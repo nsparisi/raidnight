@@ -161,8 +161,8 @@ module RaidNight.Engine
 
         calculateNewFrameLength = () =>
         {
-            let element = <HTMLInputElement>document.getElementById("turn_length_ms");
-            let valueMs = parseInt(element.value);
+            let speed = (<HTMLInputElement>document.querySelector('input[name="speed"]:checked')).value;
+            let valueMs = parseInt(speed);
 
             valueMs = valueMs ? valueMs : 500;
             valueMs = Math.max(100, valueMs);

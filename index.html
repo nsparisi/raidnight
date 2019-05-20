@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=1200, initial-scale=0">
@@ -77,8 +78,10 @@
             placeholder="guess and press Enter"> <span id="tlo-response"></span> </nav>
     <div id="tlo-framela">
         <h1>Raid Night</h1>
-        <p class="flavor">Oh No! Dragons have taken over the castle and it's up to our heroes to reclaim the throne.<br /><br />
-            They arrive at the castle drawbridge, where a FIRE DRAGON awaits.
+        <p class="flavor">Oh No! Dragons have taken over the castle and it's up to our heroes to reclaim the
+            throne.<br /><br />
+            They arrive at the castle drawbridge, where a FIRE DRAGON awaits.<br /><br />
+            <a href="#instructions">See Instructions</a>
         </p>
         <div style="text-align:center;">
             <div id="Game"></div>
@@ -86,8 +89,10 @@
                 <button onclick="GameAction_New();">New Game</button>
                 <button onclick="GameAction_Step();">Step</button>
                 <button onclick="GameAction_Resume();">Auto-Play</button>
-                Turn ms <input type="text" id="turn_length_ms" value="1000"> <br />
-                Debug: <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();"><br />
+                <input type="radio" name="speed" value="1000" checked> Slow
+                <input type="radio" name="speed" value="500"> Fast
+                <input type="radio" name="speed" value="100"> Fastest
+                <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br />
             </div>
 
             <div style="width: 30%; float: left; padding: 0 15px;">
@@ -99,7 +104,8 @@
                 <ul>
                     <li>Mana: 0 cost</li>
                     <li>Cast Time: Instant</li>
-                    <li class="description">Taunts the target, forcing attacks to be directed towards the knight for 5 turns</li>
+                    <li class="description">Taunts the target, forcing attacks to be directed towards the knight for 5
+                        turns</li>
                 </ul>
                 <h4>Strike</h4>
                 <ul>
@@ -180,7 +186,8 @@
                 <ul>
                     <li>Mana: Costs 4 mana</li>
                     <li>Cast Time: 2 turns</li>
-                    <li class="description">Deals 20 damage and builds a stack of ICESHARD increasing the damage done by IceSpear. (Max 3 stacks)</li>
+                    <li class="description">Deals 20 damage and builds a stack of ICESHARD increasing the damage done by
+                        IceSpear. (Max 3 stacks)</li>
                 </ul>
                 <h4>IceSpear</h4>
                 <ul>
@@ -224,13 +231,15 @@
                     <div style="width: 22%; float: left; padding: 0 10px;">
                         <h4>Claw</h4>
                         <ul>
-                            <li class="description">Deals 20 damage and builds a stack of CLAW dealing 15 damage over 3 turns. (Max 5 stacks)</li>
+                            <li class="description">Deals 20 damage and builds a stack of CLAW dealing 15 damage over 3
+                                turns. (Max 5 stacks)</li>
                         </ul>
                     </div>
                     <div style="width: 22%; float: left; padding: 0 10px;">
                         <h4>HeatWave</h4>
                         <ul>
-                            <li class="description">Deals 5 damage to the party and an additional 60 damage over 3 turns</li>
+                            <li class="description">Deals 5 damage to the party and an additional 60 damage over 3 turns
+                            </li>
                         </ul>
                     </div>
                     <div style="width: 22%; float: left; padding: 0 10px;">
@@ -249,8 +258,24 @@
                 <div style="clear: both;">
                 </div>
             </div>
+
+            <div id="instructions">
+                <hr />
+                <h3>INPUT INSTRUCTIONS</h3>
+                <ul>
+                    <li>Provide input to the game system by specifying any number of skill:target pairs into the text
+                        boxes. For example, issuing the commands for the knight to strike the dragon twice then wait
+                        would be <strong>STRIKE:DRAGON STRIKE:DRAGON WAIT</strong>. Skills without a target or with multiple targets can
+                        optionally leave the target text empty such as with <strong>HYMN</strong>.</li>
+                    <h3>Valid Inputs:</h3>
+                    <li>skill:target</li>
+                    <li>move:up|down|left|right</li>
+                    <li>wait</li>
+                </ul>
+            </div>
             <script src="./out/raidnight.js"></script>
         </div>
     </div>
 </body>
+
 </html>
