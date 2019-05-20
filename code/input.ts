@@ -61,7 +61,7 @@ module RaidNight.Engine
                         }
                         else 
                         {
-                            console.log(`Wizard Error: ${result.errorMessage}`);
+                            console.error(`Wizard Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -75,7 +75,7 @@ module RaidNight.Engine
                         }
                         else 
                         {
-                            console.log(`Priest Error: ${result.errorMessage}`);
+                            console.error(`Priest Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -89,7 +89,7 @@ module RaidNight.Engine
                         }
                         else 
                         {
-                            console.log(`Knight Error: ${result.errorMessage}`);
+                            console.error(`Knight Error: ${result.errorMessage}`);
                             isValid = false;
                         }
                         break
@@ -137,7 +137,7 @@ module RaidNight.Engine
                 if (action == null  || 
                     action.type != TokenType.Alphabetic)
                 {
-                    throw "ERROR P3";
+                    throw `Did not understand action: '${action.token}'`;
                 }
 
                 if (action.token == "MOVE")
@@ -149,7 +149,7 @@ module RaidNight.Engine
                         operator.type != TokenType.Skill_Operator || 
                         target.type != TokenType.Alphabetic)
                     {
-                        throw "ERROR P4";
+                        throw `MOVE command should be of the format 'MOVE:[UP|DOWN|LEFT|RIGHT]'.`;
                     }
 
                     switch (target.token)
@@ -167,7 +167,7 @@ module RaidNight.Engine
                             return new action_Move(1, 0);
                         }
                         default: {
-                            throw "ERROR P5";
+                            throw `MOVE command should be followed by either of UP DOWN LEFT RIGHT but was '${target.token}'.`;
                         }
                     }
                 }
@@ -185,7 +185,7 @@ module RaidNight.Engine
                             operator.type != TokenType.Skill_Operator || 
                             target.type != TokenType.Alphabetic)
                         {
-                            throw "ERROR P6";
+                            throw `Skill '${action.token}' was not in the correct format 'skill:target'.`;
                         }
                     }
 
@@ -197,7 +197,7 @@ module RaidNight.Engine
                     
                     if (operator == null || target == null)
                     {
-                        throw "ERROR P7";
+                        throw `Skill '${action.token}' was not in the correct format 'skill:target'.`;
                     }
 
                     if (validTargets.includes(target.token))
@@ -206,7 +206,7 @@ module RaidNight.Engine
                     }
                 } 
 
-                throw "ERROR P8";
+                throw `Skill '${action.token}' is not appropriate for this character.`;
             }
             
             let process_loop = (): Action[] =>
@@ -223,7 +223,7 @@ module RaidNight.Engine
                     token4 == null || token4.type != TokenType.Arg_Close || 
                     token5 == null || token5.type != TokenType.Block_Open)
                 {
-                    throw "ERROR L4";
+                    throw `Loop statement not in the correct format of 'loop(num){}'.`;
                 }
 
                 let loopedActions: Action[] = [];
@@ -242,14 +242,14 @@ module RaidNight.Engine
                         }
 
                         default: {
-                            throw "ERROR L1";
+                            throw `Could not process word '${tokens[seek].token}' within a loop statement.`;
                         }
                     }
                 }
                 
                 if (tokens[seek] == null)
                 {
-                    throw "ERROR L2";
+                    throw `Loop statement did not end with a curly brace '}'.`;
                 }
 
                 seek++;
@@ -285,7 +285,7 @@ module RaidNight.Engine
                     }
 
                     default: {
-                        throw "ERROR B9";
+                        throw `Did not understand token ${tokens[seek].token}`;
                     }
                 }
             }
@@ -382,7 +382,7 @@ module RaidNight.Engine
 
                 if (!isAlphaNumeric(char))
                 {
-                    throw "ERROR 1"
+                    throw `Error reading character ${char} at position ${seek}.`
                 }
 
                 if (isAlphabetic(char))
