@@ -82,7 +82,7 @@ module RaidNight.Engine
                 Debug.log(`WON! Enemies are dead.`);
                 this.state = ArenaState.Win;
 
-                GLOBAL_GAME.startText("NICE WORK!\r\n\r\nTHE ANSWER \r\nIS...");
+                GLOBAL_GAME.startText("NICE WORK!\r\n\r\nTHE DRAGON HAS FALLEN");
             }
         }
         

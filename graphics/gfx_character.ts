@@ -160,7 +160,7 @@ module RaidNight.Graphics
                             break;
                             
                             case "FLASHHEAL":
-                            effect = new SpellEffect_FlashHeal(this.scene, end);
+                            effect = new SpellEffect_FlashHeal(this.scene, start, end);
                             break;
 
                             case "HYMN":

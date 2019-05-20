@@ -469,15 +469,23 @@ module RaidNight.Graphics
         gfx: Phaser.GameObjects.Graphics;
         tween: Phaser.Tweens.Tween;
         tweenTimer: Phaser.Tweens.Tween;
+        
+        starSprite1: Phaser.GameObjects.Sprite;
+        starTween1: Phaser.Tweens.Tween;
+        starPath1: Phaser.Curves.Path;
 
-        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        starSprite2: Phaser.GameObjects.Sprite;
+        starTween2: Phaser.Tweens.Tween;
+        starPath2: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2, end: Phaser.Math.Vector2)
         {
             super(scene);
 
             this.sprite = this.scene.add.sprite(
-                start.x - 0, 
-                start.y - 0, 
-                "assets/skill/priest/sk_flashheal.png", 0).setDepth(DepthLayer.Med_Priority).setScale(1, 1);
+                end.x - 0, 
+                end.y - 0, 
+                "assets/skill/priest/sk_flashheal.png", 0).setDepth(DepthLayer.Low_Priority).setScale(1, 1);
 
             this.tween = this.scene.tweens.addCounter({
                 from: 1,
@@ -494,6 +502,39 @@ module RaidNight.Graphics
                 duration: this.calculateDuration(800),
                 ease: "Quart.easeIn"
             });
+            
+            this.starSprite1 = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/priest/sparkle.png", 0).setDepth(DepthLayer.Med_Priority).setScale(0.25, 0.25);
+            
+            this.starTween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: 400,
+                ease: "Linear",
+                repeat: -1
+            });
+            
+            this.starSprite2 = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/priest/sparkle.png", 0).setDepth(DepthLayer.Med_Priority).setScale(0.25, 0.25);
+            
+            this.starTween2 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: 400,
+                ease: "Linear",
+                repeat: -1,
+                delay: 200
+            });
+            
+            this.starPath1 = new Phaser.Curves.Path(start.x, start.y);
+            this.starPath1.lineTo(end.x, end.y);
+
+            this.starPath2 = new Phaser.Curves.Path(start.x, start.y);
+            this.starPath2.lineTo(end.x, end.y);
 
             this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
         }
@@ -509,6 +550,12 @@ module RaidNight.Graphics
             super.update();
 
             this.sprite.setAlpha(this.tween.getValue());
+            
+            let position = this.starPath1.getPoint(this.starTween1.getValue());
+            this.starSprite1.setPosition(position.x, position.y);
+
+            position = this.starPath2.getPoint(this.starTween2.getValue());
+            this.starSprite2.setPosition(position.x, position.y);
         }
 
         debug()
@@ -526,6 +573,12 @@ module RaidNight.Graphics
             this.tweenTimer.stop();
             this.sprite.destroy();
             this.gfx.destroy();
+            this.starSprite1.destroy();
+            this.starPath1.destroy();
+            this.starTween1.stop();
+            this.starSprite2.destroy();
+            this.starPath2.destroy();
+            this.starTween2.stop();
         }
     }
 
@@ -536,7 +589,6 @@ module RaidNight.Graphics
         tween: Phaser.Tweens.Tween;
         tweenTimer: Phaser.Tweens.Tween;
 
-        
         starSprite1: Phaser.GameObjects.Sprite;
         starTween1: Phaser.Tweens.Tween;
         starPath1: Phaser.Curves.Path;
