@@ -295,6 +295,11 @@ module RaidNight.Engine
                 // Debug.log(`b ${ActionType[actions[i].type]} name: ${actions[i].skill} target: ${actions[i].targets[0]}`);
             }
 
+            if (actions.length == 0)
+            {
+                throw `No actions were found.`;
+            }
+
             return actions;
         }
 
