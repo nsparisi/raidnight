@@ -25,10 +25,25 @@ module RaidNight.Engine
             "WATERBARRIER": new skill_WaterBarrier(),
             "DELUGE": new skill_Deluge(),
 
-            // DRAGON
+            // FWIZARD
+            "KINDLE": new skill_Kindle(),
+            "FIREBALL": new skill_Fireball(),
+            "SCORCH": new skill_Scorch(),
+            "CAUTERIZE": new skill_Cauterize(),
+            "FIREBARRIER": new skill_FireBarrier(),
+            "CREMATE": new skill_Cremate(),
+
+            // FDRAGON
             "CLAW": new skill_Claw(),
             "HEATWAVE": new skill_HeatWave(),
             "FLAMETHROWER": new skill_Flamethrower(),
+            
+            // MDRAGON
+            "TAILSWIPE": new skill_TailSwipe(),
+            "VENOMOUSBITE": new skill_VenomousBite(),
+            "WHIP": new skill_Whip(),
+            "BIND": new skill_Bind(),
+            "POISONFOG": new skill_PoisonFog(),
 
             // ARENA
             "SPIKETRAP": new skill_SpikeTrap(),
@@ -52,17 +67,30 @@ module RaidNight.Engine
             "ST_FROSTBITE": () => {return new status_Frostbite();},
             "ST_WATERBARRIER": () => {return new status_WaterBarrier();},
 
+            // FWIZARD
+            "ST_SCORCH": () => {return new status_IceShard();},
+            "ST_FIREBARRIER": () => {return new status_Frostbite();},
+            "ST_HEATINGUP": () => {return new status_WaterBarrier();},
+
             // DRAGON
             "ST_CLAW": () => {return new status_Claw();},
             "ST_HEATWAVE": () => {return new status_HeatWave();},
+            
+            // MDRAGON
+            "ST_VENOMOUSBITE": () => {return new status_VenomousBite();},
+            "ST_BIND": () => {return new status_Bind();},
+            "ST_POISONFOG": () => {return new status_PoisonFog();},
         }
-
 
         classSkillLookup = {
             "KNIGHT": ["TAUNT", "STRIKE", "SHIELDWALL", "PIERCE", "SHIELDBASH", "PHALANX"],
             "PRIEST": ["GREATERHEAL", "FLASHHEAL", "REGEN", "HYMN", "DIVINEINTERVENTION"],
-            "WIZARD": ["ICESHARD", "ICESPEAR", "FROSTBITE", "WATERBARRIER", "DELUGE"],            
-            "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],
+            "IWIZARD": ["ICESHARD", "ICESPEAR", "FROSTBITE", "WATERBARRIER", "DELUGE"],
+            "FWIZARD": ["KINDLE", "FIREBALL", "SCORCH", "CAUTERIZE", "FIREBARRIER", "CREMATE"],
+            "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],     
+            "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],
+            "DEVILVINE": ["WHIP", "BIND"],
+            "CORPSEFLOWER": ["POISONFOG"],
             "ROOM": ["SPIKETRAP", "FIRESTORM"]
         }
 

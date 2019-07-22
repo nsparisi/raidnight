@@ -29,11 +29,16 @@ module RaidNight.Graphics
         {
             super({});
         }
-                            
+        
+        img_background: Phaser.GameObjects.Image;
+        
         priest: Character;
         knight: Character;
         wizard: Character;
         dragon: Character;
+        mossDragon: Character;
+        devilVine: Character;
+        corpseFlower: Character;
         room: Room;
 
         text_TurnCount: Phaser.GameObjects.Text;
@@ -61,12 +66,15 @@ module RaidNight.Graphics
         preload ()
         {
             this.load.image('assets/map1.png', 'assets/map1.png');
+            this.load.image('assets/map2.png', 'assets/map2.png');
             this.load.image('assets/scroll.png', 'assets/scroll.png');
 
             this.load.image('assets/knight.png', 'assets/knight.png');
             this.load.image('assets/wizard.png', 'assets/wizard.png');
             this.load.image('assets/priest.png', 'assets/priest.png');
             this.load.image('assets/dragon.png', 'assets/dragon.png');
+            this.load.image('assets/devil_vine.png', 'assets/devil_vine.png');
+            this.load.image('assets/corpse_flower.png', 'assets/corpse_flower.png');
 
             // status
             this.load.image('assets/status/st_claw.png', 'assets/status/st_claw.png');
@@ -117,8 +125,6 @@ module RaidNight.Graphics
 
         create ()
         {
-
-            this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
             this.textManager = new TextManager(this);
 
             this.newGame();
@@ -163,16 +169,23 @@ module RaidNight.Graphics
 
         newGame = () =>
         {
+            if(this.img_background){this.img_background.destroy();}
             if(this.wizard){this.wizard.destroy();}
             if(this.knight){this.knight.destroy();}
             if(this.priest){this.priest.destroy();}
             if(this.dragon){this.dragon.destroy();}
+            if(this.mossDragon){this.mossDragon.destroy();}
+            if(this.devilVine){this.devilVine.destroy();}
+            if(this.corpseFlower){this.corpseFlower.destroy();}
             if(this.room){this.room.destroy();}
 
             let char_priest: RaidNight.Engine.Character = null;
             let char_knight: RaidNight.Engine.Character = null;
             let char_wizard: RaidNight.Engine.Character = null;
             let char_dragon: RaidNight.Engine.Character = null;
+            let char_mossdragon: RaidNight.Engine.Character = null;
+            let char_devilVine: RaidNight.Engine.Character = null;
+            let char_corpseFlower: RaidNight.Engine.Character = null;
             let char_room = GLOBAL_GAME.arena.room;
 
             let i = 0;
@@ -198,13 +211,43 @@ module RaidNight.Graphics
                 {
                     char_dragon = GLOBAL_GAME.arena.enemies[i];
                 }
+                else if (GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == "MOSSDRAGON")
+                {
+                    char_mossdragon = GLOBAL_GAME.arena.enemies[i];
+                }
+                else if (GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == "DEVILVINE")
+                {
+                    char_devilVine = GLOBAL_GAME.arena.enemies[i];
+                }
+                else if (GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == "CORPSEFLOWER")
+                {
+                    char_corpseFlower = GLOBAL_GAME.arena.enemies[i];
+                }
             }
 
             this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'), false);
             this.knight = new Character(this, char_knight, this.add.sprite(600, 300, 'assets/knight.png'), false);
             this.priest = new Character(this, char_priest, this.add.sprite(600, 500, 'assets/priest.png'), false);
-            this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
-            this.dragon.sprite.setFlipX(true);
+
+            if (GLOBAL_GAME.fightType == Engine.FightType.Fight1)
+            {
+                this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
+                this.dragon.sprite.setFlipX(true);
+                this.img_background = this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+                Debug.log(`1 ${GLOBAL_GAME.fightType}`)
+            }
+            else if (GLOBAL_GAME.fightType == Engine.FightType.Fight2)
+            {
+                this.mossDragon = new Character(this, char_mossdragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
+                this.mossDragon.sprite.setFlipX(true);
+                this.devilVine = new Character(this, char_devilVine, this.add.sprite(100, 500, 'assets/devil_vine.png'), true);
+                this.devilVine.sprite.setFlipX(true);
+                this.corpseFlower = new Character(this, char_corpseFlower, this.add.sprite(100, 500, 'assets/corpse_flower.png'), true);
+                this.corpseFlower.sprite.setFlipX(true);
+                this.img_background = this.add.image(0, 0, 'assets/map2.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+                Debug.log(`2 ${GLOBAL_GAME.fightType}`)
+            }
+
             this.room = new Room(this, char_room);
         }
 
@@ -232,13 +275,32 @@ module RaidNight.Graphics
             this.wizard.update(isNewTurn);
             this.knight.update(isNewTurn);
             this.priest.update(isNewTurn);
-            this.dragon.update(isNewTurn);
+
+
+            if(this.dragon){this.dragon.update(isNewTurn);}
+            if(this.mossDragon){this.mossDragon.update(isNewTurn);}
+            if(this.devilVine){this.devilVine.update(isNewTurn);}
+            if(this.corpseFlower){this.corpseFlower.update(isNewTurn);}
+            if (GLOBAL_GAME.fightType == Engine.FightType.Fight1)
+            {
+                //Debug.log(`D1 ${this.dragon} GLOBAL_GAME.arena.turn ${GLOBAL_GAME.arena.turn} this.lastKnownTurn ${this.lastKnownTurn}` );
+                //this.dragon.update(isNewTurn);
+                //this.text_dragonHealth.setText(`${this.dragon.character.health}/${this.dragon.character.maxHealth}`);
+            }
+            else if (GLOBAL_GAME.fightType == Engine.FightType.Fight2)
+            {
+                //Debug.log(`D2 ${this.mossDragon} GLOBAL_GAME.arena.turn ${GLOBAL_GAME.arena.turn} this.lastKnownTurn ${this.lastKnownTurn}` );
+                //this.mossDragon.update(isNewTurn);
+                //this.devilVine.update(isNewTurn);
+                //this.corpseFlower.update(isNewTurn);
+                //this.text_dragonHealth.setText(`${this.mossDragon.character.health}/${this.mossDragon.character.maxHealth}`);
+            }
+
             this.room.update(isNewTurn);
             
             this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth} HP`);
             this.text_knightHealth.setText(`${this.knight.character.health} / ${this.knight.character.maxHealth} HP`);
             this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth} HP`);
-            this.text_dragonHealth.setText(`${this.dragon.character.health}/${this.dragon.character.maxHealth}`);
             this.text_wizardMana.setText(`${this.wizard.character.mana} / ${this.wizard.character.maxMana} MANA`);
             this.text_knightMana.setText(`${this.knight.character.mana} / ${this.knight.character.maxMana} MANA`);
             this.text_priestMana.setText(`${this.priest.character.mana} / ${this.priest.character.maxMana} MANA`);

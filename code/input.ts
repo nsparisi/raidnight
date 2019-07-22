@@ -21,6 +21,8 @@ module RaidNight.Engine
 
     export class Input
     {
+        validTargets = ["DRAGON", "WIZARD", "PRIEST", "KNIGHT"];
+
         private generateErrorResult = (errorMessage: string): InputResult =>
         {
             return {
@@ -39,14 +41,31 @@ module RaidNight.Engine
             }
         }
 
-        parseInputCreateTeam = (): PlayerActions =>
+        parseInputCreateTeam = (fightType: FightType): PlayerActions =>
         {
             let inputs = document.getElementsByTagName("textarea");
             let isValid = true;
+            let wizardName = ""
             let playerActions = {
                 knight: [],
                 priest: [],
                 wizard: [],
+            }
+
+            if (fightType == FightType.Fight1)
+            {
+                wizardName = "IWIZARD";
+                this.validTargets = ["DRAGON", "WIZARD", "PRIEST", "KNIGHT"];
+            }
+            else if (fightType == FightType.Fight2)
+            {
+                wizardName = "FWIZARD";
+                this.validTargets = ["MOSSDRAGON", "DEVILVINE", "CORPSEFLOWER", "WIZARD", "PRIEST", "KNIGHT"];
+            }
+            else
+            {
+                wizardName = "EWIZARD";
+                this.validTargets = ["DRAGON", "WIZARD", "PRIEST", "KNIGHT"];
             }
 
             for (let i = 0; i < inputs.length; i++)
@@ -54,7 +73,7 @@ module RaidNight.Engine
                 switch(inputs[i].id.toUpperCase())
                 {
                     case "WIZARD_INPUT": {
-                        let result = this.parseWrapper("WIZARD", inputs[i].value);
+                        let result = this.parseWrapper(wizardName, inputs[i].value);
                         if(!result.hasError)
                         {
                             playerActions.wizard = result.actions;
@@ -122,7 +141,6 @@ module RaidNight.Engine
         {
             let seek = 0;
             let tokens = this.tokenize(raw);
-            let validTargets = ["DRAGON", "WIZARD", "PRIEST", "KNIGHT"];
 
             let process_wait = (): Action =>
             {
@@ -200,9 +218,13 @@ module RaidNight.Engine
                         throw `Skill '${action.token}' was not in the correct format 'skill:target'.`;
                     }
 
-                    if (validTargets.includes(target.token))
+                    if (this.validTargets.includes(target.token))
                     {
                         return new action_Skill(action.token, [target.token])
+                    }
+                    else
+                    {
+                        throw `Target '${target.token}' is not a valid target.`;
                     }
                 } 
 

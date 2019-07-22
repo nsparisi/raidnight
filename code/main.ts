@@ -43,7 +43,7 @@ var GLOBAL_deltaTimeMs = 0;
 
 const GLOBAL_INPUT_HELPER = new RaidNight.Engine.Input();
 const GLOBAL_GAME = new RaidNight.Engine.Game();
-GLOBAL_GAME.setup();
+GLOBAL_GAME.setup1();
 GLOBAL_GAME.step();
 
 const GLOBAL_MAIN = new Main();
@@ -51,12 +51,22 @@ GLOBAL_MAIN.begin();
 
 const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
 
-var GameAction_New = function (){
+var GameAction_New1 = function (){
     GLOBAL_GAME.stop();
-    let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam();
+    let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight1);
     if (team)
     {
-        GLOBAL_GAME.newGame(team);
+        GLOBAL_GAME.newGame1(team);
+        GLOBAL_GAME.start();
+    }
+}
+
+var GameAction_New2 = function (){
+    GLOBAL_GAME.stop();
+    let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight2);
+    if (team)
+    {
+        GLOBAL_GAME.newGame2(team);
         GLOBAL_GAME.start();
     }
 }

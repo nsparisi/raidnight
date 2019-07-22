@@ -1,6 +1,8 @@
 
 module RaidNight.Engine
 {
+    export enum FightType { Fight1, Fight2, Fight3 }
+
     export class Game
     {
         arena: Arena;
@@ -12,10 +14,11 @@ module RaidNight.Engine
 
         isShowingText: boolean;
         textToShow: string[];
+        fightType: FightType;
 
-        newGame = (allyActions: PlayerActions) =>
+        newGame1 = (allyActions: PlayerActions) =>
         {
-            this.setup();
+            this.setup1();
 
             let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
@@ -59,7 +62,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Move(0, 1));
             boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 7, 19,  9)));
 
-            let room = new Room(20, 15);
+            let room = new Room1(20, 15);
             room.actionList = [];
             room.actionList.push(new action_Wait());
 
@@ -70,16 +73,82 @@ module RaidNight.Engine
             this.arena.allies[2].actionList = allyActions.wizard;
         }
 
-        setup = () =>
+        newGame2 = (allyActions: PlayerActions) =>
+        {
+            this.setup2();
+
+            let boss1 = new Boss("MossDragon", 5000, 100, 2, 7);
+
+            boss1.actionList = [];
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("VenomousBite", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+            boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
+
+            let boss2 = new Boss("DevilVine", 5000, 100, 4, 3);
+            boss2.actionList = [];
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Skill("Whip", ["knight"]));
+            boss2.actionList.push(new action_Skill("Bind", ["knight"]));
+
+            let boss3 = new Boss("CorpseFlower", 5000, 100, 4, 11);
+            boss3.actionList.push(new action_Skill("PoisonFog", ["knight", "priest", "wizard"]));
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+
+            let room = new Room2(20, 15);
+            room.actionList = [];
+            room.actionList.push(new action_Wait());
+
+            this.arena.room = room;
+            this.arena.enemies = [boss1,boss2,boss3];
+            this.arena.allies[0].actionList = allyActions.knight;
+            this.arena.allies[1].actionList = allyActions.priest;
+            this.arena.allies[2].actionList = allyActions.wizard;
+        }
+
+        setup1 = () =>
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.room = new Room(20, 15);
+            this.arena.room = new Room1(20, 15);
+            
+            this.fightType = FightType.Fight1;
             
             let knight = new Character("Knight", 350, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 150, 400, 11, 6);
-            let wizard = new Character("Wizard", 150, 400, 13, 8);
+            let priest = new Character("Priest", 150, 400, 12, 6);
+            let wizard = new Character("Wizard", 150, 400, 14, 8);
             let boss = new Character("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
             knight.actionList = [];
@@ -88,6 +157,36 @@ module RaidNight.Engine
 
             this.arena.allies = [knight, priest, wizard];
             this.arena.enemies = [boss];
+
+            this.isShowingText = false;
+            this.textToShow = [];
+        }
+
+        setup2 = () =>
+        {
+            this.library = new Library();
+            this.arena = new Arena();
+            this.arena.room = new Room2(20, 15);
+            
+            this.fightType = FightType.Fight2;
+            
+            let knight = new Character("Knight", 350, 100, 9, 7);
+            knight.mana = 0;
+            let priest = new Character("Priest", 150, 400, 12, 6);
+            let wizard = new Character("Wizard", 150, 100, 14, 8);
+            wizard.mana = 0;
+            let boss1 = new Character("MossDragon", 5000, 100, 3, 8);
+            let boss2 = new Character("DevilVine", 5000, 100, 3, 8);
+            let boss3 = new Character("CorpseFlower", 5000, 100, 3, 8);
+            boss1.actionList = [];
+            boss2.actionList = [];
+            boss3.actionList = [];
+            knight.actionList = [];
+            priest.actionList = [];
+            wizard.actionList = [];
+
+            this.arena.allies = [knight, priest, wizard];
+            this.arena.enemies = [boss1,boss2,boss3];
 
             this.isShowingText = false;
             this.textToShow = [];

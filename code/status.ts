@@ -15,6 +15,8 @@ module RaidNight.Engine
         power: integer = 0;
         taunt: boolean = false;
         source: string = null;
+
+        st_bindEffect: integer = 0;
     }
 
     // ********** 
@@ -155,6 +157,49 @@ module RaidNight.Engine
             this.defense = 20;
         }
     }
+    
+    // ********** 
+    // FWIZARD
+    // ********** 
+    export class status_Scorch extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_Scorch";
+            this.duration = 10;
+            this.healthPerTurn = -2;
+            this.maxStacks = 20;
+        }
+    }
+
+    export class status_FireBarrier extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Good;
+            this.name = "ST_FireBarrier";
+            this.duration = 1;
+            this.defense = 50;
+        }
+    }
+    
+    export class status_HeatingUp extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Good;
+            this.name = "ST_HeatingUp";
+            this.duration = 1000;
+        }
+    }
+
 
     // ********** 
     // FIRE DRAGON
@@ -197,6 +242,50 @@ module RaidNight.Engine
             this.duration = 5;
 
             this.healthPerTurn = -10;
+        }
+    }
+
+
+    // ********** 
+    // MDRAGON
+    // ********** 
+    export class status_VenomousBite extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_VenomousBite";
+            this.duration = 10;
+            this.healthPerTurn = -20;
+        }
+    }
+
+    export class status_Bind extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_Bind";
+            this.duration = 20;
+            this.st_bindEffect = 100;
+        }
+    }
+
+    export class status_PoisonFog extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_PoisonFog";
+            this.duration = 100;
+            this.healthPerTurn = -1;
+            this.maxStacks = 100;
         }
     }
 }

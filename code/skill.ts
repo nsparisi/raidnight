@@ -239,6 +239,90 @@ module RaidNight.Engine
     }
 
     // ********** 
+    // FWIZARD
+    // ********** 
+    export class skill_Kindle extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -10;
+            this.castTime = 2;
+            this.mana = 20;
+            this.name = "Kindle";
+        }
+    }
+
+    export class skill_Fireball extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -100;
+            this.castTime = 3;
+            this.mana = -30;
+            this.name = "Fireball";
+        }
+    }
+
+    export class skill_Scorch extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = -10;
+            this.castTime = 1;
+            this.cooldown = 5;
+            this.name = "Scorch";
+            this.targetStatuses = ["ST_SCORCH"];
+        }
+    }
+    
+
+    export class skill_Cauterize extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 50;
+            this.mana = -20;
+            this.castTime = 1;
+            this.cooldown = 20;
+            this.name = "Cauterize";
+        }
+    }
+
+    export class skill_FireBarrier extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = -20;
+            this.castTime = 1;
+            this.cooldown = 20;
+            this.allAllies = true;
+            this.name = "FireBarrier";
+            this.targetStatuses = ["ST_FIREBARRIER"];
+        }
+    }
+
+    export class skill_Cremate extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -100;
+            this.mana = -50;
+            this.castTime = 1;
+            this.cooldown = 100;
+            this.name = "Cremate";
+        }
+    }
+
+
+    // ********** 
     // FIRE DRAGON
     // ********** 
     export class skill_Claw extends Skill
@@ -300,6 +384,72 @@ module RaidNight.Engine
             this.mana = 0;
             this.castTime = 1;
             this.name = "FireStorm";
+        }
+    }
+    
+    // ********** 
+    // MDRAGON
+    // ********** 
+    export class skill_TailSwipe extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -15;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "TailSwipe";
+        }
+    }
+
+    export class skill_VenomousBite extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "VenomousBite";
+            this.targetStatuses = ["ST_VENOMOUSBITE"];
+        }
+    }
+
+    export class skill_Whip extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -10;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "Whip";
+        }
+    }
+
+    export class skill_Bind extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "Bind";
+            this.targetStatuses = ["ST_BIND"];
+        }
+    }
+
+    export class skill_PoisonFog extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "PoisonFog";
+            this.targetStatuses = ["ST_POISONFOG"];
         }
     }
 }
