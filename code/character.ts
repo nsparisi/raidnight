@@ -10,6 +10,7 @@ module RaidNight.Engine
         mana: integer;
         defense: integer;
         power: integer;
+        bindValue: integer;
 
         x: integer;
         y: integer;
@@ -67,6 +68,11 @@ module RaidNight.Engine
                     continue;
                 }
 
+                if (this.statuses[i].st_bindEffect > 0)
+                {
+                    continue;
+                }
+
                 Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 this.statuses[i].duration--;
                 
@@ -75,11 +81,32 @@ module RaidNight.Engine
                 this.addDefense(this.statuses[i].defense * this.statuses[i].stacks);
                 this.addPower(this.statuses[i].power * this.statuses[i].stacks);
 
+                // special status HeatingUp
+                if (this.statuses[i].st_heatingUpEffect)
+                {
+                    this.addPower(this.mana);
+                }
+
                 if (this.statuses[i].duration <= 0)
                 {
                     Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
                     this.statuses.splice(i, 1);
                     i--;
+                }
+            }
+            
+            // process bind last, so it's not affected by DoT damage
+            for(let i = 0; i < this.statuses.length; i++)
+            {
+                if (this.statuses[i].type != type)
+                {
+                    continue;
+                }
+
+                if (this.statuses[i].st_bindEffect > 0)
+                {
+                    Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
+                    this.addBindValue(this.statuses[i].st_bindEffect)
                 }
             }
         }
@@ -151,6 +178,9 @@ module RaidNight.Engine
 
                 // Priest took -100 total damage. 100 (0) [0] (20 def) [20 pow]
                 Debug.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) [${source.power} pow]`);
+
+                // Damage the vines
+                this.addBindValue(health);
             }
 
             this.health = Math.max(0, this.health + health);
@@ -260,6 +290,13 @@ module RaidNight.Engine
                 this.isCastSuccessful = false;
                 return;
             }
+            
+            if (this.bindValue > 0)
+            {
+                Debug.log(`${this.name} is bound by vines and cannot use ${skill.name}!`);
+                this.isCastSuccessful = false;
+                return;
+            }
 
             if (this.safeGetCooldown(skill.name) > 0)
             {
@@ -285,6 +322,13 @@ module RaidNight.Engine
             if (this.mana + skill.mana < 0)
             {
                 Debug.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
+                this.isCastSuccessful = false;
+                return;
+            }
+            
+            if (this.bindValue > 0)
+            {
+                Debug.log(`${this.name} could not finalize cast of ${skill.name} because they are bound by vines!`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -375,6 +419,7 @@ module RaidNight.Engine
         {
             this.defense = 0;
             this.power = 0;
+            this.bindValue = 0;
         }
 
         protected addDefense(defense: integer)
@@ -385,6 +430,35 @@ module RaidNight.Engine
         protected addPower(power: integer)
         {
             this.power += power;
+        }
+
+        protected addBindValue(bind: integer)
+        {
+            if (bind > 0)
+            {
+                this.bindValue += bind;
+            }
+            else if (this.bindValue > 0)
+            {
+                this.bindValue += bind;
+                this.bindValue = Math.max(0, this.bindValue);
+                Debug.log(`${this.name}'s bind effect was reduced by ${bind}. Total bind left: ${this.bindValue}.`);
+
+                for (let i = 0; i < this.statuses.length; i++)
+                {
+                    if (this.statuses[i].st_bindEffect > 0)
+                    {
+                        this.statuses[i].st_bindEffect = this.bindValue;
+                        if (this.bindValue == 0)
+                        {
+                            Debug.log(`${this.name}'s bind effect wore off!`);
+                            this.statuses.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+                
+            }
         }
 
         protected updateCooldowns()

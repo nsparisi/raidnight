@@ -17,6 +17,7 @@ module RaidNight.Engine
         source: string = null;
 
         st_bindEffect: integer = 0;
+        st_heatingUpEffect: boolean = false;
     }
 
     // ********** 
@@ -197,6 +198,7 @@ module RaidNight.Engine
             this.type = StatusType.Good;
             this.name = "ST_HeatingUp";
             this.duration = 1000;
+            this.st_heatingUpEffect = true;
         }
     }
 

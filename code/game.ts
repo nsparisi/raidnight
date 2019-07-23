@@ -91,7 +91,7 @@ module RaidNight.Engine
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
 
-            let boss2 = new Boss("DevilVine", 5000, 100, 4, 3);
+            let boss2 = new Boss("DevilVine", 1000, 100, 4, 3);
             boss2.actionList = [];
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
@@ -114,7 +114,7 @@ module RaidNight.Engine
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Skill("Bind", ["knight"]));
 
-            let boss3 = new Boss("CorpseFlower", 5000, 100, 4, 11);
+            let boss3 = new Boss("CorpseFlower", 1000, 100, 4, 11);
             boss3.actionList.push(new action_Skill("PoisonFog", ["knight", "priest", "wizard"]));
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());
@@ -175,9 +175,10 @@ module RaidNight.Engine
             let priest = new Character("Priest", 150, 400, 12, 6);
             let wizard = new Character("Wizard", 150, 100, 14, 8);
             wizard.mana = 0;
+            wizard.addStatus("ST_HEATINGUP", "Wizard");
             let boss1 = new Character("MossDragon", 5000, 100, 3, 8);
-            let boss2 = new Character("DevilVine", 5000, 100, 3, 8);
-            let boss3 = new Character("CorpseFlower", 5000, 100, 3, 8);
+            let boss2 = new Character("DevilVine", 1000, 100, 3, 8);
+            let boss3 = new Character("CorpseFlower", 1000, 100, 3, 8);
             boss1.actionList = [];
             boss2.actionList = [];
             boss3.actionList = [];
@@ -186,7 +187,6 @@ module RaidNight.Engine
             wizard.actionList = [];
 
             this.arena.allies = [knight, priest, wizard];
-            this.arena.enemies = [boss1,boss2,boss3];
 
             this.isShowingText = false;
             this.textToShow = [];

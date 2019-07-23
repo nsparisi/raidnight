@@ -68,9 +68,9 @@ module RaidNight.Engine
             "ST_WATERBARRIER": () => {return new status_WaterBarrier();},
 
             // FWIZARD
-            "ST_SCORCH": () => {return new status_IceShard();},
-            "ST_FIREBARRIER": () => {return new status_Frostbite();},
-            "ST_HEATINGUP": () => {return new status_WaterBarrier();},
+            "ST_SCORCH": () => {return new status_Scorch();},
+            "ST_FIREBARRIER": () => {return new status_FireBarrier();},
+            "ST_HEATINGUP": () => {return new status_HeatingUp();},
 
             // DRAGON
             "ST_CLAW": () => {return new status_Claw();},
