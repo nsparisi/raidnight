@@ -9,8 +9,10 @@ module RaidNight.Engine
         targetStatuses: string[] = [];
         selfStatuses: string[] = [];
         selfOnly: boolean = false;
+        cremate: boolean = false;
         cooldown: integer = 0;
         allAllies: boolean = false;
+
 
         healthPerIceShard: integer = 0;
     }
@@ -317,6 +319,7 @@ module RaidNight.Engine
             this.mana = -50;
             this.castTime = 1;
             this.cooldown = 100;
+            this.cremate = true;
             this.name = "Cremate";
         }
     }

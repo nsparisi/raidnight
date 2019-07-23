@@ -212,6 +212,10 @@ module RaidNight.Engine
                     {
                         return new action_Skill(action.token, ["all"]);
                     }
+                    if (skill.cremate)
+                    {
+                        return new action_AreaSkill(action.token, new Area(0,0,0,0));
+                    }
                     
                     if (operator == null || target == null)
                     {

@@ -283,6 +283,11 @@ module RaidNight.Engine
             {
                 this.currentAction.targets = GLOBAL_GAME.arena.allies.map(({name}) => name);
             }
+            if (skill.cremate)
+            {
+                this.currentAction.targetType = TargetType.Area;
+                this.currentAction.area = new Area(0, this.y - 1, this.x - 1, this.y + 1);
+            }
 
             if (this.mana + skill.mana < 0)
             {

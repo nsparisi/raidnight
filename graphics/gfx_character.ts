@@ -226,6 +226,10 @@ module RaidNight.Graphics
                             case "FLAMETHROWER":
                             effect = new SpellEffect_Flamethrower(this.scene, start, end);
                             break;
+
+                            case "CREMATE":
+                            effect = new SpellEffect_Cremate(this.scene, start, end);
+                            break;
                         }
 
                         if(effect != null)
