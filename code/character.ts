@@ -185,6 +185,11 @@ module RaidNight.Engine
 
             this.health = Math.max(0, this.health + health);
             this.health = Math.min(this.maxHealth, this.health);
+
+            if(this.health <= 0)
+            {
+                Debug.logDeath(this.name);
+            }
         }
 
         public addStatus(statusToAdd: string, source: string)

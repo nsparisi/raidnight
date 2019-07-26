@@ -12,6 +12,11 @@ module RaidNight.Debug
     {
         console.log("%c    Executing turn %s    ", "background: #44FFAA", turn);
     }
+
+    export var logDeath = (name) =>
+    {
+        console.log("%c    %s has fallen!    ", "background: #FF6699", name);
+    }
     
     export var logError = (message) =>
     {
