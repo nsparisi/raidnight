@@ -199,6 +199,14 @@ module RaidNight.Graphics
                             effect = new SpellEffect_Deluge(this.scene, end);
                             break;
 
+                            case "FIREBARRIER":
+                            effect = new SpellEffect_FireBarrier(this.scene, end);
+                            break;
+
+                            case "KINDLE":
+                            effect = new SpellEffect_Kindle(this.scene, end);
+                            break;
+
                             default:
                             effect = new SpellEffect_Fireball(this.scene, start, end);
                             break;

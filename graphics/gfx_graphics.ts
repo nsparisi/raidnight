@@ -91,6 +91,20 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_taunt.png', 'assets/status/st_taunt.png');
             this.load.image('assets/status/st_waterbarrier.png', 'assets/status/st_waterbarrier.png');
             
+            // status round 2
+            this.load.image('assets/status/st_scorch.png', 'assets/status/st_scorch.png');
+            this.load.image('assets/status/st_firebarrier.png', 'assets/status/st_firebarrier.png');
+            this.load.image('assets/status/st_heatingup.png', 'assets/status/st_heatingup.png');
+            this.load.image('assets/status/st_bind.png', 'assets/status/st_bind.png');
+            this.load.image('assets/status/st_venomousbite.png', 'assets/status/st_venomousbite.png');
+            this.load.image('assets/status/st_poisonfog.png', 'assets/status/st_poisonfog.png');
+
+            
+            // skill round 2
+            this.load.image('assets/skill/wizard/sk_firebarrier.png', 'assets/skill/wizard/sk_firebarrier.png');
+            this.load.image('assets/skill/wizard/sk_kindle.png', 'assets/skill/wizard/sk_kindle.png');
+
+            
             // skill
             this.load.image('assets/skill/knight/sk_phalanx.png', 'assets/skill/knight/sk_phalanx.png');
             this.load.image('assets/skill/knight/sk_pierce.png', 'assets/skill/knight/sk_pierce.png');
