@@ -15,7 +15,7 @@ module RaidNight.Debug
 
     export var logDeath = (name) =>
     {
-        console.log("%c    %s has fallen!    ", "background: #FF6699", name);
+        console.log("%c 💀💀 %s has fallen! 💀💀 ", "background: #FF6699", name);
     }
     
     export var logError = (message) =>

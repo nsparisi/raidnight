@@ -91,7 +91,7 @@ module RaidNight.Engine
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
 
-            let boss2 = new Boss("DevilVine", 1000, 100, 4, 3);
+            let boss2 = new Boss("DevilVine", 1000, 100, 4, 4);
             boss2.actionList = [];
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
@@ -114,7 +114,7 @@ module RaidNight.Engine
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Skill("Bind", ["knight"]));
 
-            let boss3 = new Boss("CorpseFlower", 1000, 100, 4, 11);
+            let boss3 = new Boss("CorpseFlower", 1000, 100, 4, 10);
             boss3.actionList.push(new action_Skill("PoisonFog", ["knight", "priest", "wizard"]));
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());

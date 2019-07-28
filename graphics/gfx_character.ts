@@ -207,6 +207,38 @@ module RaidNight.Graphics
                             effect = new SpellEffect_Kindle(this.scene, end);
                             break;
 
+                            case "SCORCH":
+                            effect = new SpellEffect_Scorch(this.scene, end);
+                            break;
+
+                            case "CAUTERIZE":
+                            effect = new SpellEffect_Cauterize(this.scene, start, end);
+                            break;
+
+                            case "FIREBALL":
+                            effect = new SpellEffect_Fireball(this.scene, start, end);
+                            break;
+
+                            case "TAILSWIPE":
+                            effect = new SpellEffect_TailSwipe(this.scene, start);
+                            break;
+
+                            case "WHIP":
+                            effect = new SpellEffect_Whip(this.scene, start);
+                            break;
+
+                            case "BIND":
+                            effect = new SpellEffect_Bind(this.scene, end);
+                            break;
+
+                            case "POISONFOG":
+                            effect = new SpellEffect_PoisonFog(this.scene, start, end);
+                            break;
+
+                            case "VENOMOUSBITE":
+                            effect = new SpellEffect_VenomousBite(this.scene, end);
+                            break;
+
                             default:
                             effect = new SpellEffect_Fireball(this.scene, start, end);
                             break;

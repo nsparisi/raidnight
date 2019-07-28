@@ -103,8 +103,17 @@ module RaidNight.Graphics
             // skill round 2
             this.load.image('assets/skill/wizard/sk_firebarrier.png', 'assets/skill/wizard/sk_firebarrier.png');
             this.load.image('assets/skill/wizard/sk_kindle.png', 'assets/skill/wizard/sk_kindle.png');
+            this.load.image('assets/skill/wizard/sk_scorch.png', 'assets/skill/wizard/sk_scorch.png');
+            this.load.image('assets/skill/wizard/sk_cauterize.png', 'assets/skill/wizard/sk_cauterize.png');
+            this.load.image('assets/skill/wizard/sk_cauterize_particle.png', 'assets/skill/wizard/sk_cauterize_particle.png');
+            this.load.image('assets/skill/particle.png', 'assets/skill/particle.png');
+            this.load.image('assets/skill/dragon/sk_tailswipe.png', 'assets/skill/dragon/sk_tailswipe.png');
+            this.load.image('assets/skill/dragon/st_venomousbite.png', 'assets/skill/dragon/st_venomousbite.png');
+            this.load.image('assets/skill/dragon/st_venomousbite2.png', 'assets/skill/dragon/st_venomousbite2.png');
+            this.load.image('assets/skill/dragon/sk_whip.png', 'assets/skill/dragon/sk_whip.png');
+            this.load.image('assets/skill/dragon/sk_bind.png', 'assets/skill/dragon/sk_bind.png');
+            this.load.image('assets/skill/dragon/sk_poisonfog.png', 'assets/skill/dragon/sk_poisonfog.png');
 
-            
             // skill
             this.load.image('assets/skill/knight/sk_phalanx.png', 'assets/skill/knight/sk_phalanx.png');
             this.load.image('assets/skill/knight/sk_pierce.png', 'assets/skill/knight/sk_pierce.png');
@@ -174,7 +183,29 @@ module RaidNight.Graphics
             this.text_TurnCount = this.add.text(780, 10, "123", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
 
             this.lastKnownTurn = -1;
+
+            /* // playing with particles
+            let startrect = new Phaser.Geom.Rectangle(0, 0, 50, 200);
+            let endrect = new Phaser.Geom.Rectangle(200, 0, 50, 200);
+            this.particles = this.add.particles("assets/skill/particle.png");
+            this.particles.createEmitter({
+                x: 200,
+                y: 200,
+                blendMode: 'ADD',
+                frequency: 20,
+                lifespan: 2000,
+                //speedY: -50,
+                speedX: 200,
+                //accelerationX: 1000,
+                tint: 0xFF0000,
+                scale: {start: 0.5, end: 0.5},
+                
+                //emitZone: this.rect
+            }).setEmitZone({source: startrect}).setDeathZone({source: endrect});
+            */
         }
+
+        //particles: Phaser.GameObjects.Particles.ParticleEmitterManager;
 
         winGame = () =>
         {
@@ -290,34 +321,27 @@ module RaidNight.Graphics
             this.knight.update(isNewTurn);
             this.priest.update(isNewTurn);
 
-
-            if(this.dragon){this.dragon.update(isNewTurn);}
-            if(this.mossDragon){this.mossDragon.update(isNewTurn);}
             if(this.devilVine){this.devilVine.update(isNewTurn);}
             if(this.corpseFlower){this.corpseFlower.update(isNewTurn);}
-            if (GLOBAL_GAME.fightType == Engine.FightType.Fight1)
+            if (this.dragon)
             {
-                //Debug.log(`D1 ${this.dragon} GLOBAL_GAME.arena.turn ${GLOBAL_GAME.arena.turn} this.lastKnownTurn ${this.lastKnownTurn}` );
-                //this.dragon.update(isNewTurn);
-                //this.text_dragonHealth.setText(`${this.dragon.character.health}/${this.dragon.character.maxHealth}`);
+                this.dragon.update(isNewTurn);
+                this.text_dragonHealth.setText(`${this.dragon.character.health.toFixed(0)}/${this.dragon.character.maxHealth}`);
             }
-            else if (GLOBAL_GAME.fightType == Engine.FightType.Fight2)
+            else if (this.mossDragon)
             {
-                //Debug.log(`D2 ${this.mossDragon} GLOBAL_GAME.arena.turn ${GLOBAL_GAME.arena.turn} this.lastKnownTurn ${this.lastKnownTurn}` );
-                //this.mossDragon.update(isNewTurn);
-                //this.devilVine.update(isNewTurn);
-                //this.corpseFlower.update(isNewTurn);
-                //this.text_dragonHealth.setText(`${this.mossDragon.character.health}/${this.mossDragon.character.maxHealth}`);
+                this.mossDragon.update(isNewTurn);
+                this.text_dragonHealth.setText(`${this.mossDragon.character.health.toFixed(0)}/${this.mossDragon.character.maxHealth}`);
             }
 
             this.room.update(isNewTurn);
             
-            this.text_wizardHealth.setText(`${this.wizard.character.health} / ${this.wizard.character.maxHealth} HP`);
-            this.text_knightHealth.setText(`${this.knight.character.health} / ${this.knight.character.maxHealth} HP`);
-            this.text_priestHealth.setText(`${this.priest.character.health} / ${this.priest.character.maxHealth} HP`);
-            this.text_wizardMana.setText(`${this.wizard.character.mana} / ${this.wizard.character.maxMana} MANA`);
-            this.text_knightMana.setText(`${this.knight.character.mana} / ${this.knight.character.maxMana} MANA`);
-            this.text_priestMana.setText(`${this.priest.character.mana} / ${this.priest.character.maxMana} MANA`);
+            this.text_wizardHealth.setText(`${this.wizard.character.health.toFixed(0)} / ${this.wizard.character.maxHealth} HP`);
+            this.text_knightHealth.setText(`${this.knight.character.health.toFixed(0)} / ${this.knight.character.maxHealth} HP`);
+            this.text_priestHealth.setText(`${this.priest.character.health.toFixed(0)} / ${this.priest.character.maxHealth} HP`);
+            this.text_wizardMana.setText(`${this.wizard.character.mana.toFixed(0)} / ${this.wizard.character.maxMana} MANA`);
+            this.text_knightMana.setText(`${this.knight.character.mana.toFixed(0)} / ${this.knight.character.maxMana} MANA`);
+            this.text_priestMana.setText(`${this.priest.character.mana.toFixed(0)} / ${this.priest.character.maxMana} MANA`);
 
             this.text_TurnCount.setText(`${GLOBAL_GAME.arena.turn}`);
 

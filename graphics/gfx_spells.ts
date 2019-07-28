@@ -1485,6 +1485,242 @@ module RaidNight.Graphics
         }
     }
     
+    export class SpellEffect_Scorch extends SpellEffect
+    {
+        sprite1: Phaser.GameObjects.Sprite;
+        sprite2: Phaser.GameObjects.Sprite;
+        sprite3: Phaser.GameObjects.Sprite;
+        path1: Phaser.Curves.Path;
+        path2: Phaser.Curves.Path;
+        path3: Phaser.Curves.Path;
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        tween2: Phaser.Tweens.Tween;
+        tween3: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite1 = this.scene.add.sprite(end.x, end.y, "assets/skill/wizard/sk_scorch.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite2 = this.scene.add.sprite(end.x, end.y, "assets/skill/wizard/sk_scorch.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite3 = this.scene.add.sprite(end.x, end.y, "assets/skill/wizard/sk_scorch.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite1.setScale(0.3).setRotation(Phaser.Math.DegToRad(50));
+            this.sprite2.setScale(0.3).setRotation(Phaser.Math.DegToRad(20));
+            this.sprite3.setScale(0.3).setFlipX(true).setRotation(Phaser.Math.DegToRad(10));;
+
+            this.path1 = new Phaser.Curves.Path(end.x + 5, end.y + 0);
+            this.path1.lineTo(end.x - 10, end.y - 30);
+
+            this.path2 = new Phaser.Curves.Path(end.x + 5, end.y + 20);
+            this.path2.lineTo(end.x - 20, end.y - 20);
+            
+            this.path3 = new Phaser.Curves.Path(end.x + 5, end.y + 20);
+            this.path3.lineTo(end.x - 30, end.y - 60);
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Cubic.easeOut",
+                delay: this.calculateDuration(0)
+            });
+
+            this.tween2 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Cubic.easeOut",
+                delay: this.calculateDuration(0)
+            });
+
+            this.tween3 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Cubic.easeOut",
+                delay: this.calculateDuration(0)
+            });
+
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(1200),
+                ease: "Cubic.easeOut",
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            let position = this.path1.getPoint(this.tween1.getValue());
+            this.sprite1.setPosition(position.x, position.y);
+            this.sprite1.setAlpha(2-(this.tween1.getValue()*2));
+            
+            position = this.path2.getPoint(this.tween2.getValue());
+            this.sprite2.setPosition(position.x, position.y);
+            this.sprite2.setAlpha(2-(this.tween2.getValue()*2));
+
+            position = this.path3.getPoint(this.tween3.getValue());
+            this.sprite3.setPosition(position.x, position.y);
+            this.sprite3.setAlpha(2-(this.tween3.getValue()*2));
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path1.draw(this.gfx);
+            this.path2.draw(this.gfx);
+            this.path3.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween1.stop();
+            this.tween2.stop();
+            this.tween3.stop();
+            this.tweenTimer.stop();
+            this.sprite1.destroy();
+            this.sprite2.destroy();
+            this.sprite3.destroy();
+            this.path1.destroy();
+            this.path2.destroy();
+            this.path3.destroy();
+            this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_Cauterize extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+        
+        starSprite1: Phaser.GameObjects.Sprite;
+        starTween1: Phaser.Tweens.Tween;
+        starPath1: Phaser.Curves.Path;
+
+        starSprite2: Phaser.GameObjects.Sprite;
+        starTween2: Phaser.Tweens.Tween;
+        starPath2: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                end.x - 0, 
+                end.y - 0, 
+                "assets/skill/wizard/sk_cauterize.png", 0).setDepth(DepthLayer.Low_Priority).setScale(1, 1);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: -1
+            });
+                
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Quart.easeIn"
+            });
+            
+            this.starSprite1 = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/wizard/sk_cauterize_particle.png", 0).setDepth(DepthLayer.Med_Priority).setScale(0.25, 0.25);
+            
+            this.starTween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: 400,
+                ease: "Linear",
+                repeat: -1
+            });
+            
+            this.starSprite2 = this.scene.add.sprite(
+                start.x - 0, 
+                start.y - 0, 
+                "assets/skill/wizard/sk_cauterize_particle.png", 0).setDepth(DepthLayer.Med_Priority).setScale(0.25, 0.25);
+            
+            this.starTween2 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: 400,
+                ease: "Linear",
+                repeat: -1,
+                delay: 200
+            });
+            
+            this.starPath1 = new Phaser.Curves.Path(start.x, start.y);
+            this.starPath1.lineTo(end.x, end.y);
+
+            this.starPath2 = new Phaser.Curves.Path(start.x, start.y);
+            this.starPath2.lineTo(end.x, end.y);
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setAlpha(this.tween.getValue());
+            
+            let position = this.starPath1.getPoint(this.starTween1.getValue());
+            this.starSprite1.setPosition(position.x, position.y);
+
+            position = this.starPath2.getPoint(this.starTween2.getValue());
+            this.starSprite2.setPosition(position.x, position.y);
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.tweenTimer.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+            this.starSprite1.destroy();
+            this.starPath1.destroy();
+            this.starTween1.stop();
+            this.starSprite2.destroy();
+            this.starPath2.destroy();
+            this.starTween2.stop();
+        }
+    }
+    
     
 
     export class SpellEffect_Fireball extends SpellEffect
@@ -2018,6 +2254,377 @@ module RaidNight.Graphics
         {
             return GLOBAL_GAME.arena.turn != this.startTurn && 
                 this.tween3.totalProgress >= 1;
+        }
+    }
+
+    export class SpellEffect_TailSwipe extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        path: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x, 
+                start.y, 
+                "assets/skill/dragon/sk_tailswipe.png", 0).setDepth(DepthLayer.Med_Priority)
+                    .setScale(0.6, 0.6).setRotation(Phaser.Math.DegToRad(100));
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(500),
+                ease: "Quart.easeInOut"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+
+            this.path = new Phaser.Curves.Path(start.x + 35, start.y - 25);
+            this.path.cubicBezierTo(
+                start.x + 35, start.y + 25,
+                start.x + 70,  start.y - 25,
+                start.x + 70,  start.y + 25
+            );
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tween.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            let position = this.path.getPoint(this.tween.getValue());
+            this.sprite.setPosition(position.x, position.y);
+            this.sprite.setRotation(Phaser.Math.DegToRad( 40 + this.tween.getValue() * 100));
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+            this.path.destroy();
+        }
+    }
+
+    export class SpellEffect_Whip extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+        path: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x, 
+                start.y, 
+                "assets/skill/dragon/sk_whip.png", 0).setDepth(DepthLayer.Med_Priority)
+                    .setScale(0.6, 0.6).setRotation(Phaser.Math.DegToRad(100));
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(500),
+                ease: "Quart.easeInOut"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+
+            this.path = new Phaser.Curves.Path(start.x + 35, start.y - 25);
+            this.path.cubicBezierTo(
+                start.x + 35, start.y + 25,
+                start.x + 70,  start.y - 25,
+                start.x + 70,  start.y + 25
+            );
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tween.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            let position = this.path.getPoint(this.tween.getValue());
+            this.sprite.setPosition(position.x, position.y);
+            this.sprite.setRotation(Phaser.Math.DegToRad( 40 + this.tween.getValue() * 100));
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+            this.path.destroy();
+        }
+    }
+
+    export class SpellEffect_Bind extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(
+                start.x - 8, 
+                start.y - 0, 
+                "assets/skill/dragon/sk_bind.png", 0).setDepth(DepthLayer.Med_Priority).setScale(0.8, 1.2);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0,
+                duration: this.calculateDuration(200),
+                ease: "Quart.easeIn",
+                yoyo: true,
+                repeat: 1
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tween.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setAlpha(this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.sprite.destroy();
+            this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_PoisonFog extends SpellEffect
+    {
+        sprite1: Phaser.GameObjects.Sprite;
+        path1: Phaser.Curves.Path;
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        tweenScale: Phaser.Tweens.Tween;
+        tweenAlpha: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite1 = this.scene.add.sprite(start.x, start.y, "assets/skill/dragon/sk_poisonfog.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite1.setScale(0.8);
+
+            this.path1 = new Phaser.Curves.Path(start.x, start.y);
+            let diff = new Phaser.Math.Vector2(end.x - start.x, end.y - start.y);
+            let norm = diff.normalize();
+            //let pathend = new Phaser.Math.Vector2(start.x + (norm.x * diff.length() * 0.5), start.y + (norm.y * diff.length() * 0.5));
+            let pathend = new Phaser.Math.Vector2((end.x - start.x) * 0.2 + start.x, (end.y - start.y) * 0.2 + start.y);
+            this.path1.lineTo(end.x, end.y);
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(3000),
+                ease: "Linear"
+            });
+
+            this.tweenScale = this.scene.tweens.addCounter({
+                from: 0.6,
+                to: 5,
+                duration: this.calculateDuration(3000),
+                ease: "Linear"
+            });
+
+            this.tweenAlpha = this.scene.tweens.addCounter({
+                from: 1,
+                to: 0,
+                duration: this.calculateDuration(3000),
+                ease: "Linear"
+            });
+
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(3000),
+                ease: "Linear",
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            let position = this.path1.getPoint(this.tween1.getValue());
+            this.sprite1.setPosition(position.x, position.y);
+            this.sprite1.setScale(this.tweenScale.getValue());
+            this.sprite1.setAlpha(this.tweenAlpha.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path1.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween1.stop();
+            this.tweenTimer.stop();
+            this.tweenScale.stop();
+            this.tweenAlpha.stop();
+            this.sprite1.destroy();
+            this.path1.destroy();
+            this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_VenomousBite extends SpellEffect
+    {
+        sprite1: Phaser.GameObjects.Sprite;
+        sprite2: Phaser.GameObjects.Sprite;
+        path1: Phaser.Curves.Path;
+        path2: Phaser.Curves.Path;
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        tween2: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite1 = this.scene.add.sprite(end.x, end.y, "assets/skill/dragon/st_venomousbite.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite2 = this.scene.add.sprite(end.x, end.y, "assets/skill/dragon/st_venomousbite2.png", 0).setDepth(DepthLayer.Med_Priority);
+            
+            this.path1 = new Phaser.Curves.Path(end.x - 10, end.y - 20);
+            this.path1.lineTo(end.x - 10, end.y - 2);
+
+            this.path2 = new Phaser.Curves.Path(end.x - 10, end.y + 15);
+            this.path2.lineTo(end.x - 10, end.y + 2);
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Cubic.easeOut",
+                delay: this.calculateDuration(300)
+            });
+
+            this.tween2 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(800),
+                ease: "Cubic.easeOut",
+                delay: this.calculateDuration(300)
+            });
+
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(1500),
+                ease: "Cubic.easeOut",
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            let position = this.path1.getPoint(this.tween1.getValue());
+            this.sprite1.setPosition(position.x, position.y);
+            
+            position = this.path2.getPoint(this.tween2.getValue());
+            this.sprite2.setPosition(position.x, position.y);
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+            this.path1.draw(this.gfx);
+            this.path2.draw(this.gfx);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween1.stop();
+            this.tween2.stop();
+            this.tweenTimer.stop();
+            this.sprite1.destroy();
+            this.sprite2.destroy();
+            this.path1.destroy();
+            this.path2.destroy();
+            this.gfx.destroy();
         }
     }
 }
