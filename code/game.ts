@@ -20,7 +20,7 @@ module RaidNight.Engine
         {
             this.setup1();
 
-            let boss = new Boss("Dragon", 10000, 100, 3, 8);
+            let boss = this.arena.enemies[0];
             boss.actionList = [];
             boss.actionList.push(new action_Skill("Claw", ["knight"]));
             boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
@@ -67,7 +67,6 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
 
             this.arena.room = room;
-            this.arena.enemies = [boss];
             this.arena.allies[0].actionList = allyActions.knight;
             this.arena.allies[1].actionList = allyActions.priest;
             this.arena.allies[2].actionList = allyActions.wizard;
@@ -77,8 +76,7 @@ module RaidNight.Engine
         {
             this.setup2();
 
-            let boss1 = new Boss("MossDragon", 5000, 100, 2, 7);
-
+            let boss1 = this.arena.enemies[0];
             boss1.actionList = [];
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
             boss1.actionList.push(new action_Skill("VenomousBite", ["knight"]));
@@ -91,7 +89,7 @@ module RaidNight.Engine
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
             boss1.actionList.push(new action_Skill("TailSwipe", ["knight"]));
 
-            let boss2 = new Boss("DevilVine", 1000, 100, 4, 4);
+            let boss2 = this.arena.enemies[1];
             boss2.actionList = [];
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
@@ -114,8 +112,8 @@ module RaidNight.Engine
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Skill("Bind", ["knight"]));
 
-            let boss3 = new Boss("CorpseFlower", 1000, 100, 4, 10);
-            boss3.actionList.push(new action_Skill("PoisonFog", ["knight", "priest", "wizard"]));
+            let boss3 = this.arena.enemies[2];
+            boss3.actionList.push(new action_Skill("Miasma", ["knight", "priest", "wizard"]));
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());
@@ -131,7 +129,62 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
 
             this.arena.room = room;
-            this.arena.enemies = [boss1,boss2,boss3];
+            this.arena.allies[0].actionList = allyActions.knight;
+            this.arena.allies[1].actionList = allyActions.priest;
+            this.arena.allies[2].actionList = allyActions.wizard;
+        }
+        
+        newGame3 = (allyActions: PlayerActions) =>
+        {
+            this.setup1();
+
+            let boss = this.arena.enemies[0];
+            boss.actionList = [];
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Move(0, -1));
+            
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Move(0, -1));
+            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 5, 19,  7)));
+            
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Move(0, 1));
+            
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Skill("Claw", ["knight"]));
+            boss.actionList.push(new action_Move(0, 1));
+            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 7, 19,  9)));
+
+            let room = new Room1(20, 15);
+            room.actionList = [];
+            room.actionList.push(new action_Wait());
+
+            this.arena.room = room;
             this.arena.allies[0].actionList = allyActions.knight;
             this.arena.allies[1].actionList = allyActions.priest;
             this.arena.allies[2].actionList = allyActions.wizard;
@@ -175,10 +228,11 @@ module RaidNight.Engine
             let priest = new Character("Priest", 150, 400, 12, 6);
             let wizard = new Character("Wizard", 150, 100, 14, 8);
             wizard.mana = 0;
-            wizard.addStatus("ST_HEATINGUP", "Wizard");
-            let boss1 = new Character("MossDragon", 5000, 100, 3, 8);
-            let boss2 = new Character("DevilVine", 1000, 100, 3, 8);
-            let boss3 = new Character("CorpseFlower", 1000, 100, 3, 8);
+            wizard.addStatus("ST_HEATINGUP", "Wizard");            
+            let boss1 = new Boss("MossDragon", 5000, 100, 2, 7);
+            let boss2 = new Boss("DevilVine", 1000, 100, 4, 4);
+            let boss3 = new Boss("CorpseFlower", 1000, 100, 4, 10);
+
             boss1.actionList = [];
             boss2.actionList = [];
             boss3.actionList = [];
@@ -187,6 +241,35 @@ module RaidNight.Engine
             wizard.actionList = [];
 
             this.arena.allies = [knight, priest, wizard];
+            this.arena.enemies = [boss1, boss2, boss3];
+
+            this.isShowingText = false;
+            this.textToShow = [];
+        }
+
+        setup3 = () =>
+        {
+            this.library = new Library();
+            this.arena = new Arena();
+            this.arena.room = new Room2(20, 15);
+            
+            this.fightType = FightType.Fight3;
+            
+            let knight = new Character("Knight", 350, 100, 9, 7);
+            knight.mana = 0;
+            let priest = new Character("Priest", 150, 400, 12, 6);
+            let wizard = new Character("Wizard", 150, 100, 14, 8);
+            wizard.mana = 0;
+            wizard.addStatus("ST_HEATINGUP", "Wizard");            
+            let boss1 = new Boss("Dragon", 5000, 100, 2, 7);
+
+            boss1.actionList = [];
+            knight.actionList = [];
+            priest.actionList = [];
+            wizard.actionList = [];
+
+            this.arena.allies = [knight, priest, wizard];
+            this.arena.enemies = [boss1];
 
             this.isShowingText = false;
             this.textToShow = [];

@@ -2448,7 +2448,7 @@ module RaidNight.Graphics
         }
     }
 
-    export class SpellEffect_PoisonFog extends SpellEffect
+    export class SpellEffect_Miasma extends SpellEffect
     {
         sprite1: Phaser.GameObjects.Sprite;
         path1: Phaser.Curves.Path;
@@ -2462,7 +2462,7 @@ module RaidNight.Graphics
         {
             super(scene);
 
-            this.sprite1 = this.scene.add.sprite(start.x, start.y, "assets/skill/dragon/sk_poisonfog.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite1 = this.scene.add.sprite(start.x, start.y, "assets/skill/dragon/sk_miasma.png", 0).setDepth(DepthLayer.Med_Priority);
             this.sprite1.setScale(0.8);
 
             this.path1 = new Phaser.Curves.Path(start.x, start.y);

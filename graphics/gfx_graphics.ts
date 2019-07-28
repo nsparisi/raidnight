@@ -93,13 +93,13 @@ module RaidNight.Graphics
             
             // status round 2
             this.load.image('assets/status/st_scorch.png', 'assets/status/st_scorch.png');
+            this.load.image('assets/status/st_cauterize.png', 'assets/status/st_cauterize.png');
             this.load.image('assets/status/st_firebarrier.png', 'assets/status/st_firebarrier.png');
             this.load.image('assets/status/st_heatingup.png', 'assets/status/st_heatingup.png');
             this.load.image('assets/status/st_bind.png', 'assets/status/st_bind.png');
             this.load.image('assets/status/st_venomousbite.png', 'assets/status/st_venomousbite.png');
-            this.load.image('assets/status/st_poisonfog.png', 'assets/status/st_poisonfog.png');
+            this.load.image('assets/status/st_miasma.png', 'assets/status/st_miasma.png');
 
-            
             // skill round 2
             this.load.image('assets/skill/wizard/sk_firebarrier.png', 'assets/skill/wizard/sk_firebarrier.png');
             this.load.image('assets/skill/wizard/sk_kindle.png', 'assets/skill/wizard/sk_kindle.png');
@@ -112,7 +112,7 @@ module RaidNight.Graphics
             this.load.image('assets/skill/dragon/st_venomousbite2.png', 'assets/skill/dragon/st_venomousbite2.png');
             this.load.image('assets/skill/dragon/sk_whip.png', 'assets/skill/dragon/sk_whip.png');
             this.load.image('assets/skill/dragon/sk_bind.png', 'assets/skill/dragon/sk_bind.png');
-            this.load.image('assets/skill/dragon/sk_poisonfog.png', 'assets/skill/dragon/sk_poisonfog.png');
+            this.load.image('assets/skill/dragon/sk_miasma.png', 'assets/skill/dragon/sk_miasma.png');
 
             // skill
             this.load.image('assets/skill/knight/sk_phalanx.png', 'assets/skill/knight/sk_phalanx.png');
@@ -279,7 +279,6 @@ module RaidNight.Graphics
                 this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
                 this.dragon.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
-                Debug.log(`1 ${GLOBAL_GAME.fightType}`)
             }
             else if (GLOBAL_GAME.fightType == Engine.FightType.Fight2)
             {
@@ -290,7 +289,6 @@ module RaidNight.Graphics
                 this.corpseFlower = new Character(this, char_corpseFlower, this.add.sprite(100, 500, 'assets/corpse_flower.png'), true);
                 this.corpseFlower.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map2.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
-                Debug.log(`2 ${GLOBAL_GAME.fightType}`)
             }
 
             this.room = new Room(this, char_room);

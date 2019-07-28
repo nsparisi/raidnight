@@ -43,7 +43,7 @@ module RaidNight.Engine
             "VENOMOUSBITE": new skill_VenomousBite(),
             "WHIP": new skill_Whip(),
             "BIND": new skill_Bind(),
-            "POISONFOG": new skill_PoisonFog(),
+            "MIASMA": new skill_Miasma(),
 
             // ARENA
             "SPIKETRAP": new skill_SpikeTrap(),
@@ -69,6 +69,7 @@ module RaidNight.Engine
 
             // FWIZARD
             "ST_SCORCH": () => {return new status_Scorch();},
+            "ST_CAUTERIZE": () => {return new status_Cauterize();},
             "ST_FIREBARRIER": () => {return new status_FireBarrier();},
             "ST_HEATINGUP": () => {return new status_HeatingUp();},
 
@@ -79,7 +80,7 @@ module RaidNight.Engine
             // MDRAGON
             "ST_VENOMOUSBITE": () => {return new status_VenomousBite();},
             "ST_BIND": () => {return new status_Bind();},
-            "ST_POISONFOG": () => {return new status_PoisonFog();},
+            "ST_MIASMA": () => {return new status_Miasma();},
         }
 
         classSkillLookup = {
@@ -90,7 +91,7 @@ module RaidNight.Engine
             "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],     
             "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],
             "DEVILVINE": ["WHIP", "BIND"],
-            "CORPSEFLOWER": ["POISONFOG"],
+            "CORPSEFLOWER": ["MIASMA"],
             "ROOM": ["SPIKETRAP", "FIRESTORM"]
         }
 

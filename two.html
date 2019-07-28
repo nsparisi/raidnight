@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=0">
+    <title>Raid Night: Dungeon</title>
+    <style>
+        .flavor {
+            font-family: serif;
+            font-style: italic;
+            color: #024;
+        }
+
+        .authors {
+            text-align: right;
+            font: italic 100% serif;
+        }
+
+        .authors:before {
+            content: "Author(s): "
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #def;
+            color: black;
+            margin: 0px;
+        }
+
+        #tlo-menubar {
+            background-color: black;
+            color: #def;
+            font: bold 14px sans-serif;
+        }
+
+        #tlo-framela {
+            padding: 3em;
+            margin: 2em auto;
+            background-color: white;
+            border: 2px dotted #bcf;
+            width: 1000px;
+        }
+
+        @media print {
+            #tlo-menubar {
+                display: none;
+            }
+
+            #tlo-framela {
+                margin: 0px;
+            }
+        }
+
+        h4 {
+            text-align: left;
+            margin-bottom: 0;
+        }
+
+        ul {
+            text-align: left;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .description {
+            padding-top: 10px;
+            font-style: italic;
+            padding-bottom: 20px;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser-arcade-physics.min.js"></script>
+</head>
+
+<body>
+    <nav id="tlo-menubar">NO MAP &nbsp; NO USEFUL LINKS &nbsp; <input name="tlo-guess" id="tlo-guess" value=""
+            placeholder="guess and press Enter"> <span id="tlo-response"></span> </nav>
+    <div id="tlo-framela">
+        <h1>Raid Night: Dungeon</h1>
+        <p class="flavor">Oh No! Dragons have taken over the castle and it's up to our heroes to reclaim the
+            throne.<br /><br />
+            In the dungeon, a MOSS DRAGON has imprisioned the King and Queen. Save them!<br /><br />
+            <a href="#instructions">See Instructions</a>
+        </p>
+        <div style="text-align:center;">
+            <div id="Game"></div>
+            <div style="width: 100%; padding: 15px; background: #ddddff;">
+                <button onclick="GameAction_New2();">New Game</button>
+                <button onclick="GameAction_Step();">Step</button>
+                <button onclick="GameAction_Resume();">Auto-Play</button>
+                <input type="radio" name="speed" value="1000" checked> Slow
+                <input type="radio" name="speed" value="500"> Fast
+                <input type="radio" name="speed" value="100"> Fastest
+                <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br />
+            </div>
+
+            <div style="width: 30%; float: left; padding: 0 15px;">
+                <h2>KNIGHT</h2>
+                <textarea cols="40" rows="10" id="knight_input">taunt:mossdragon
+                    taunt:devilvine</textarea>
+                <h3>KNIGHT SKILLS</h3>
+
+                <h4>Taunt</h4>
+                <ul>
+                    <li>Mana: 0 cost</li>
+                    <li>Cast Time: Instant</li>
+                    <li class="description">Taunts the target, forcing attacks to be directed towards the knight for 5
+                        turns</li>
+                </ul>
+                <h4>Strike</h4>
+                <ul>
+                    <li>Mana: Recovers 10 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li class="description">Deals 10 damage</li>
+                </ul>
+                <h4>Pierce</h4>
+                <ul>
+                    <li>Mana: Recovers 20 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 5 turns</li>
+                    <li class="description">Deals 5 damage and an additional 25 damage over 5 turns</li>
+                </ul>
+                <h4>ShieldWall</h4>
+                <ul>
+                    <li>Mana: Costs 20 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li class="description">The knight gains 20% defense for 5 turns</li>
+                </ul>
+                <h4>ShieldBash</h4>
+                <ul>
+                    <li>Mana: Costs 20 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li class="description">Deals 5 damage and reduces the target's defense by 20% for 5 turns</li>
+                </ul>
+                <h4>Phalanx (Ultimate)</h4>
+                <ul>
+                    <li>Mana: Costs 100 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 100 turns</li>
+                    <li class="description">The knight gains 100% defense for 5 turns</li>
+                </ul>
+            </div>
+            <div style="width: 30%; float: left; padding: 0 15px;">
+                <h2>PRIEST</h2>
+                <textarea cols="40" rows="10" id="priest_input">flashheal:knight</textarea>
+                <h3>PRIEST SKILLS</h3>
+
+                <h4>GreaterHeal</h4>
+                <ul>
+                    <li>Mana: Costs 4 mana</li>
+                    <li>Cast Time: 3 turns</li>
+                    <li class="description">Heals the target for 75 health</li>
+                </ul>
+                <h4>FlashHeal</h4>
+                <ul>
+                    <li>Mana: Costs 5 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li class="description">Heals the target for 35 health</li>
+                </ul>
+                <h4>Regen</h4>
+                <ul>
+                    <li>Mana: Costs 2 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li class="description">Heals the target for 5 health and additional 50 health over 10 turns</li>
+                </ul>
+                <h4>Hymn</h4>
+                <ul>
+                    <li>Mana: Recovers 10 mana</li>
+                    <li>Cast Time: 2 turns</li>
+                    <li class="description">Heals the party for 20 health each and recovers 10 mana for the priest</li>
+                </ul>
+                <h4>DivineIntervention (Ultimate)</h4>
+                <ul>
+                    <li>Mana: Costs 10 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 100 turns</li>
+                    <li class="description">Heals the party for 500 health over 5 turns</li>
+                </ul>
+            </div>
+            <div style="width: 30%; float: left; padding: 0 15px;">
+                <h2>WIZARD</h2>
+                <textarea cols="40" rows="10" id="wizard_input">
+                    kindle:corpseflower
+                    scorch:corpseflower
+                    kindle:corpseflower
+                    kindle:corpseflower</textarea>
+                <h3>WIZARD SKILLS</h3>
+
+                <h4>Kindle</h4>
+                <ul>
+                    <li>Mana: Gain 20 fervor</li>
+                    <li>Cast Time: 2 turns</li>
+                    <li class="description">Deals 10 damage and builds fervor, making subsequent attacks stronger</li>
+                </ul>
+                <h4>Fireball</h4>
+                <ul>
+                    <li>Mana: Costs 30 fervor</li>
+                    <li>Cast Time: 3 turns</li>
+                    <li class="description">Deals 100 damage</li>
+                </ul>
+                <h4>Scorch</h4>
+                <ul>
+                    <li>Mana: Costs 10 fervor</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 5 turns</li>
+                    <li class="description">Deals 20 damage over 10 turns. Stacks accumulate damage</li>
+                </ul>
+                <h4>Cauterize</h4>
+                <ul>
+                    <li>Mana: Costs 20 fervor</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 20 turns</li>
+                    <li class="description">Deals 50 damage then heals the target for 100 health over 2 turns</li>
+                </ul>
+                <h4>FireBarrier</h4>
+                <ul>
+                    <li>Mana: Costs 20 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 20 turns</li>
+                    <li class="description">All party members gain 50% defense for 1 turn</li>
+                </ul>
+                <h4>Cremate (Ultimate)</h4>
+                <ul>
+                    <li>Mana: Costs 50 mana</li>
+                    <li>Cast Time: Instant</li>
+                    <li>Cooldown: Cannot be cast again for 100 turns</li>
+                    <li class="description">Deals 100 damage in a line in front of the Wizard</li>
+                </ul>
+            </div>
+
+            <div style="clear: both;">
+                <hr />
+                <div>
+                    <h3>MOSSDRAGON SKILLS</h3>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>TailSwipe</h4>
+                        <ul>
+                            <li class="description">Deals 15 damage</li>
+                        </ul>
+                    </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>VenomousBite</h4>
+                        <ul>
+                            <li class="description">Deals 200 damage to the target over 10 turns
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>SpikeTrap</h4>
+                        <ul>
+                            <li class="description">Dungeon traps activate, dealing 100 damage
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Overgrowth</h4>
+                        <ul>
+                            <li class="description">Deadly flora emerge from the walls, dealing 100 damage.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                </div>
+            </div>
+            
+            <div style="clear: both;">
+                <hr />
+                <div>
+                    <h3>DEVILVINE SKILLS</h3>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Whip</h4>
+                        <ul>
+                            <li class="description">Deals 10 damage</li>
+                        </ul>
+                    </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Bind</h4>
+                        <ul>
+                            <li class="description">Binds the target, preventing them from performing any action 
+                                until they receive 100 direct damage from any source
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                </div>
+            </div>
+            
+            <div style="clear: both;">
+                <hr />
+                <div>
+                    <h3>CORPSEFLOWER SKILLS</h3>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Miasma</h4>
+                        <ul>
+                            <li class="description">Enshrouds the party in a deadly fog. 
+                                Deals 1 damage per turn. Stacks once every 10 turns.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                </div>
+            </div>
+
+            <div id="instructions">
+                <hr />
+                <h3>INPUT INSTRUCTIONS</h3>
+                <ul>
+                    <li>Provide input to the game system by specifying any number of skill:target pairs into the text
+                        boxes. For example, issuing the commands for the knight to strike the dragon twice then wait
+                        would be <strong>STRIKE:DRAGON STRIKE:DRAGON WAIT</strong>. Skills without a target or with multiple targets can
+                        optionally leave the target text empty such as with <strong>HYMN</strong>.</li>
+                    <h3>Valid Inputs:</h3>
+                    <li>skill:target</li>
+                    <li>move:up|down|left|right</li>
+                    <li>wait</li>
+                    <h3>Tip:</h3>
+                    <li>Check out the F12 Developer Tools console logs in your browser for detailed information.</li>
+                </ul>
+            </div>
+            <script src="./out/raidnight.js"></script>
+            <script type="text/javascript">
+                GLOBAL_GAME.setup2();
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

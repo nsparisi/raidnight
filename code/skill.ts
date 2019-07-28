@@ -287,11 +287,12 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = 50;
+            this.health = -50;
             this.mana = -20;
             this.castTime = 1;
             this.cooldown = 20;
             this.name = "Cauterize";
+            this.targetStatuses = ["ST_CAUTERIZE"];
         }
     }
 
@@ -443,7 +444,7 @@ module RaidNight.Engine
         }
     }
 
-    export class skill_PoisonFog extends Skill
+    export class skill_Miasma extends Skill
     {
         constructor()
         {
@@ -451,8 +452,8 @@ module RaidNight.Engine
             this.health = 0;
             this.mana = 0;
             this.castTime = 1;
-            this.name = "PoisonFog";
-            this.targetStatuses = ["ST_POISONFOG"];
+            this.name = "Miasma";
+            this.targetStatuses = ["ST_MIASMA"];
         }
     }
 }

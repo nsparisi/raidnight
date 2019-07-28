@@ -85,6 +85,7 @@ module RaidNight.Engine
                 if (this.statuses[i].st_heatingUpEffect)
                 {
                     this.addPower(this.mana);
+                    Debug.log(`${this.name} has ${this.mana} power gained from fervor.`);
                 }
 
                 if (this.statuses[i].duration <= 0)
@@ -176,11 +177,23 @@ module RaidNight.Engine
 
                 health = Math.min(0, health + blocked + empowered);
 
-                // Priest took -100 total damage. 100 (0) [0] (20 def) [20 pow]
+                // Priest took -100 total damage from Dragon. 100 (20) [20] (20 def) [20 pow]
                 Debug.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) [${source.power} pow]`);
 
                 // Damage the vines
                 this.addBindValue(health);
+            }
+            else if(health > 0)
+            {
+                let original = health;
+                let empowered = health * source.power / 100;
+                
+                health = Math.max(0, original + empowered);
+
+                // Knight healed for 100 total health from Priest. 100 [20] [20 pow]
+                let log = `${this.name} healed for ${health} total health from ${source.name}.`;
+                if(source.power != 0){log += ` ${original} [${empowered}] [${source.power} pow]`;}
+                Debug.log(log);
             }
 
             this.health = Math.max(0, this.health + health);

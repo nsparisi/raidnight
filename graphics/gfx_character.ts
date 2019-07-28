@@ -231,8 +231,8 @@ module RaidNight.Graphics
                             effect = new SpellEffect_Bind(this.scene, end);
                             break;
 
-                            case "POISONFOG":
-                            effect = new SpellEffect_PoisonFog(this.scene, start, end);
+                            case "MIASMA":
+                            effect = new SpellEffect_Miasma(this.scene, start, end);
                             break;
 
                             case "VENOMOUSBITE":

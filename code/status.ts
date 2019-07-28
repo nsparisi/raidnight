@@ -175,6 +175,19 @@ module RaidNight.Engine
             this.maxStacks = 20;
         }
     }
+    
+    export class status_Cauterize extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Good;
+            this.name = "ST_Cauterize";
+            this.duration = 2;
+            this.healthPerTurn = 50;
+        }
+    }
 
     export class status_FireBarrier extends Status
     {
@@ -277,14 +290,14 @@ module RaidNight.Engine
         }
     }
 
-    export class status_PoisonFog extends Status
+    export class status_Miasma extends Status
     {
         constructor()
         {
             super();
             
             this.type = StatusType.Bad;
-            this.name = "ST_PoisonFog";
+            this.name = "ST_Miasma";
             this.duration = 100;
             this.healthPerTurn = -1;
             this.maxStacks = 100;

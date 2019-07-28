@@ -71,6 +71,16 @@ var GameAction_New2 = function (){
     }
 }
 
+var GameAction_New3 = function (){
+    GLOBAL_GAME.stop();
+    let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight3);
+    if (team)
+    {
+        GLOBAL_GAME.newGame3(team);
+        GLOBAL_GAME.start();
+    }
+}
+
 var GameAction_Step = function (){
     GLOBAL_GAME.step();
 }
