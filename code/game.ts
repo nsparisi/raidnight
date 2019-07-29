@@ -210,7 +210,7 @@ module RaidNight.Engine
             knight.mana = 0;
             let priest = new Character("Priest", 150, 400, 12, 6);
             let wizard = new Character("Wizard", 150, 400, 14, 8);
-            let boss = new Character("Dragon", 10000, 100, 3, 8);
+            let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
             knight.actionList = [];
             priest.actionList = [];
