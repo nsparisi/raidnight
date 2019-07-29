@@ -126,7 +126,15 @@ module RaidNight.Engine
 
             let room = new Room2(20, 15);
             room.actionList = [];
-            room.actionList.push(new action_Wait());
+            for(let i = 0; i < 24; i++){room.actionList.push(new action_Wait());}
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(1,  1, 9,  7)));
+            for(let i = 0; i < 24; i++){room.actionList.push(new action_Wait());}
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 1, 18, 7)));
+            for(let i = 0; i < 24; i++){room.actionList.push(new action_Wait());}
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(10, 8, 18, 13)));
+            for(let i = 0; i < 24; i++){room.actionList.push(new action_Wait());}
+            room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(1,  8, 9,  13)));
+
 
             this.arena.room = room;
             this.arena.allies[0].actionList = allyActions.knight;

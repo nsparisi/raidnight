@@ -2161,7 +2161,7 @@ module RaidNight.Graphics
                             i + scene.tileWidth * 0.5, 
                             j + scene.tileHeight * 0.5, 
                             "assets/spike.png", 
-                            0).setDepth(DepthLayer.Med_Priority));
+                            0).setDepth(DepthLayer.Low_Priority));
 
                     this.sprites[this.sprites.length-1].setScale(1.5,1.5);
                 }

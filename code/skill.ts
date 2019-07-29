@@ -367,18 +367,6 @@ module RaidNight.Engine
         }
     }
 
-    export class skill_SpikeTrap extends Skill
-    {
-        constructor()
-        {
-            super();
-            this.health = -50;
-            this.mana = 0;
-            this.castTime = 1;
-            this.name = "SpikeTrap";
-        }
-    }
-
     export class skill_FireStorm extends Skill
     {
         constructor()
@@ -416,6 +404,18 @@ module RaidNight.Engine
             this.castTime = 1;
             this.name = "VenomousBite";
             this.targetStatuses = ["ST_VENOMOUSBITE"];
+        }
+    }
+
+    export class skill_SpikeTrap extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -100;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "SpikeTrap";
         }
     }
 
