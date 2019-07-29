@@ -65,7 +65,7 @@ module RaidNight.Engine
             else
             {
                 wizardName = "EWIZARD";
-                this.validTargets = ["DRAGON", "WIZARD", "PRIEST", "KNIGHT"];
+                this.validTargets = ["TIMEDRAGON", "WIZARD", "PRIEST", "KNIGHT"];
             }
 
             for (let i = 0; i < inputs.length; i++)

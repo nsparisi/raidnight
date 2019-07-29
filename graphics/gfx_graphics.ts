@@ -39,6 +39,7 @@ module RaidNight.Graphics
         mossDragon: Character;
         devilVine: Character;
         corpseFlower: Character;
+        timeDragon: Character;
         room: Room;
 
         text_TurnCount: Phaser.GameObjects.Text;
@@ -67,6 +68,7 @@ module RaidNight.Graphics
         {
             this.load.image('assets/map1.png', 'assets/map1.png');
             this.load.image('assets/map2.png', 'assets/map2.png');
+            this.load.image('assets/map3.png', 'assets/map3.png');
             this.load.image('assets/scroll.png', 'assets/scroll.png');
 
             this.load.image('assets/knight.png', 'assets/knight.png');
@@ -100,6 +102,11 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_venomousbite.png', 'assets/status/st_venomousbite.png');
             this.load.image('assets/status/st_miasma.png', 'assets/status/st_miasma.png');
 
+            // status round 3
+            this.load.image('assets/status/st_iceshardultra.png', 'assets/status/st_iceshardultra.png');
+            this.load.image('assets/status/st_frostbiteultra.png', 'assets/status/st_frostbiteultra.png');
+            this.load.image('assets/status/st_overheating.png', 'assets/status/st_overheating.png');
+
             // skill round 2
             this.load.image('assets/skill/wizard/sk_firebarrier.png', 'assets/skill/wizard/sk_firebarrier.png');
             this.load.image('assets/skill/wizard/sk_kindle.png', 'assets/skill/wizard/sk_kindle.png');
@@ -113,6 +120,9 @@ module RaidNight.Graphics
             this.load.image('assets/skill/dragon/sk_whip.png', 'assets/skill/dragon/sk_whip.png');
             this.load.image('assets/skill/dragon/sk_bind.png', 'assets/skill/dragon/sk_bind.png');
             this.load.image('assets/skill/dragon/sk_miasma.png', 'assets/skill/dragon/sk_miasma.png');
+            
+            // skill round 3
+            this.load.image('assets/skill/wizard/sk_coolingwinds.png', 'assets/skill/wizard/sk_coolingwinds.png');
 
             // skill
             this.load.image('assets/skill/knight/sk_phalanx.png', 'assets/skill/knight/sk_phalanx.png');
@@ -222,6 +232,7 @@ module RaidNight.Graphics
             if(this.mossDragon){this.mossDragon.destroy();}
             if(this.devilVine){this.devilVine.destroy();}
             if(this.corpseFlower){this.corpseFlower.destroy();}
+            if(this.timeDragon){this.timeDragon.destroy();}
             if(this.room){this.room.destroy();}
 
             let char_priest: RaidNight.Engine.Character = null;
@@ -231,6 +242,7 @@ module RaidNight.Graphics
             let char_mossdragon: RaidNight.Engine.Character = null;
             let char_devilVine: RaidNight.Engine.Character = null;
             let char_corpseFlower: RaidNight.Engine.Character = null;
+            let char_timeDragon: RaidNight.Engine.Character = null;
             let char_room = GLOBAL_GAME.arena.room;
 
             let i = 0;
@@ -268,6 +280,10 @@ module RaidNight.Graphics
                 {
                     char_corpseFlower = GLOBAL_GAME.arena.enemies[i];
                 }
+                else if (GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == "TIMEDRAGON")
+                {
+                    char_timeDragon = GLOBAL_GAME.arena.enemies[i];
+                }
             }
 
             this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'), false);
@@ -289,6 +305,12 @@ module RaidNight.Graphics
                 this.corpseFlower = new Character(this, char_corpseFlower, this.add.sprite(100, 500, 'assets/corpse_flower.png'), true);
                 this.corpseFlower.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map2.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+            }
+            else if (GLOBAL_GAME.fightType == Engine.FightType.Fight3)
+            {
+                this.timeDragon = new Character(this, char_timeDragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
+                this.timeDragon.sprite.setFlipX(true);
+                this.img_background = this.add.image(0, 0, 'assets/map3.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
             }
 
             this.room = new Room(this, char_room);
@@ -330,6 +352,11 @@ module RaidNight.Graphics
             {
                 this.mossDragon.update(isNewTurn);
                 this.text_dragonHealth.setText(`${this.mossDragon.character.health.toFixed(0)}/${this.mossDragon.character.maxHealth}`);
+            }
+            else if (this.timeDragon)
+            {
+                this.timeDragon.update(isNewTurn);
+                this.text_dragonHealth.setText(`${this.timeDragon.character.health.toFixed(0)}/${this.timeDragon.character.maxHealth}`);
             }
 
             this.room.update(isNewTurn);

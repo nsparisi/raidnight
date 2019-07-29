@@ -78,6 +78,7 @@ module RaidNight.Engine
                 
                 let source = GLOBAL_GAME.arena.lookupTarget(this.statuses[i].source);
                 this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks, source);
+                this.addMana(this.statuses[i].manaPerTurn * this.statuses[i].stacks);
                 this.addDefense(this.statuses[i].defense * this.statuses[i].stacks);
                 this.addPower(this.statuses[i].power * this.statuses[i].stacks);
 
@@ -86,6 +87,14 @@ module RaidNight.Engine
                 {
                     this.addPower(this.mana);
                     Debug.log(`${this.name} has ${this.mana} power gained from fervor.`);
+                }
+                
+                // special status Overheating
+                if (this.statuses[i].st_overheatingEffect)
+                {
+                    this.addPower(this.mana);
+                    this.addDefense(-this.mana);
+                    Debug.log(`${this.name} has ${this.mana} power gained and ${this.mana} defense reduced by overheating.`);
                 }
 
                 if (this.statuses[i].duration <= 0)
@@ -359,6 +368,11 @@ module RaidNight.Engine
             // spend mana
             this.addMana(skill.mana);
 
+            if (skill.useAllMana)
+            {
+                this.addMana(-this.mana);
+            }
+
             // calculate targets
             let targets = new Array<Character>();
             if (this.currentAction.targetType == TargetType.Area)
@@ -396,6 +410,12 @@ module RaidNight.Engine
             {
                 Debug.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
                 this.addStatus(skill.selfStatuses[i], this.name);
+            }
+            
+            // hurt self if applicable
+            if (skill.selfHealth != 0)
+            {
+                this.addHealth(skill.selfHealth, this);
             }
             
             // post-skill wrap up

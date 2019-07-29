@@ -32,6 +32,14 @@ module RaidNight.Engine
             "CAUTERIZE": new skill_Cauterize(),
             "FIREBARRIER": new skill_FireBarrier(),
             "CREMATE": new skill_Cremate(),
+            
+            // EWIZARD
+            "FIREBALLULTRA": new skill_FireballUltra(),
+            "CREMATEULTRA": new skill_CremateUltra(),
+            "ICESHARDULTRA": new skill_IceShardUltra(),
+            "ICESPEARULTRA": new skill_IceSpearUltra(),
+            "FROSTBITEULTRA": new skill_FrostbiteUltra(),
+            "COOLINGWINDS": new skill_CoolingWinds(),
 
             // FDRAGON
             "CLAW": new skill_Claw(),
@@ -72,6 +80,11 @@ module RaidNight.Engine
             "ST_CAUTERIZE": () => {return new status_Cauterize();},
             "ST_FIREBARRIER": () => {return new status_FireBarrier();},
             "ST_HEATINGUP": () => {return new status_HeatingUp();},
+            
+            // EWIZARD
+            "ST_ICESHARDULTRA": () => {return new status_IceShardUltra();},
+            "ST_FROSTBITEULTRA": () => {return new status_FrostbiteUltra();},
+            "ST_OVERHEATING": () => {return new status_Overheating();},
 
             // DRAGON
             "ST_CLAW": () => {return new status_Claw();},
@@ -88,6 +101,7 @@ module RaidNight.Engine
             "PRIEST": ["GREATERHEAL", "FLASHHEAL", "REGEN", "HYMN", "DIVINEINTERVENTION"],
             "IWIZARD": ["ICESHARD", "ICESPEAR", "FROSTBITE", "WATERBARRIER", "DELUGE"],
             "FWIZARD": ["KINDLE", "FIREBALL", "SCORCH", "CAUTERIZE", "FIREBARRIER", "CREMATE"],
+            "EWIZARD": ["FIREBALLULTRA", "CREMATEULTRA", "ICESHARDULTRA", "ICESPEARULTRA", "FROSTBITEULTRA", "COOLINGWINDS"],
             "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],     
             "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],
             "DEVILVINE": ["WHIP", "BIND"],

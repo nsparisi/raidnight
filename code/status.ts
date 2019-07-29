@@ -11,6 +11,7 @@ module RaidNight.Engine
         maxStacks: integer = 1;
 
         healthPerTurn: integer = 0;
+        manaPerTurn: integer = 0;
         defense: integer = 0;
         power: integer = 0;
         taunt: boolean = false;
@@ -18,6 +19,7 @@ module RaidNight.Engine
 
         st_bindEffect: integer = 0;
         st_heatingUpEffect: boolean = false;
+        st_overheatingEffect: boolean = false;
     }
 
     // ********** 
@@ -128,7 +130,7 @@ module RaidNight.Engine
             
             this.type = StatusType.Good;
             this.name = "ST_IceShard";
-            this.duration = 5;
+            this.duration = 10;
             this.maxStacks = 3;
         }
     }
@@ -212,6 +214,48 @@ module RaidNight.Engine
             this.name = "ST_HeatingUp";
             this.duration = 1000;
             this.st_heatingUpEffect = true;
+        }
+    }
+    
+    // ********** 
+    // ELEMENTAL WIZARD
+    // ********** 
+    export class status_IceShardUltra extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Good;
+            this.name = "ST_IceShardUltra";
+            this.duration = 10;
+            this.maxStacks = 3;
+        }
+    }
+
+    export class status_FrostbiteUltra extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Good;
+            this.name = "ST_FrostbiteUltra";
+            this.duration = 5;
+            this.power = 20;
+            this.manaPerTurn = -10;
+        }
+    }
+    export class status_Overheating extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_Overheating";
+            this.duration = 1000;
+            this.st_overheatingEffect = true;
         }
     }
 

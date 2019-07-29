@@ -1313,8 +1313,6 @@ module RaidNight.Graphics
         }
     }
 
-    
-
     export class SpellEffect_FireBarrier extends SpellEffect
     {
         sprite: Phaser.GameObjects.Sprite;
@@ -1785,6 +1783,59 @@ module RaidNight.Graphics
             this.tween.stop();
             this.sprite.destroy();
             this.path.destroy();
+            this.gfx.destroy();
+        }
+    }
+
+    export class SpellEffect_CoolingWinds extends SpellEffect
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween: Phaser.Tweens.Tween;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite = this.scene.add.sprite(start.x, start.y, "assets/skill/wizard/sk_coolingwinds.png", 0).setDepth(DepthLayer.Med_Priority);
+            this.sprite.setBlendMode(Phaser.BlendModes.ADD);
+            this.sprite.setRotation(Math.random() * Math.PI * 2);
+
+            this.tween = this.scene.tweens.addCounter({
+                from: 40,
+                to: 8000,
+                duration: this.calculateDuration(1500),
+                ease: "Quart.easeIn"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tween.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+
+            this.sprite.setDisplaySize(this.tween.getValue(),this.tween.getValue());
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.fillStyle(0xFF0000, 1);
+            this.gfx.fillCircle(this.sprite.x, this.sprite.y, 5);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween.stop();
+            this.sprite.destroy();
             this.gfx.destroy();
         }
     }

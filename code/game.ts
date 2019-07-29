@@ -144,7 +144,7 @@ module RaidNight.Engine
         
         newGame3 = (allyActions: PlayerActions) =>
         {
-            this.setup1();
+            this.setup3();
 
             let boss = this.arena.enemies[0];
             boss.actionList = [];
@@ -268,8 +268,8 @@ module RaidNight.Engine
             let priest = new Character("Priest", 150, 400, 12, 6);
             let wizard = new Character("Wizard", 150, 100, 14, 8);
             wizard.mana = 0;
-            wizard.addStatus("ST_HEATINGUP", "Wizard");            
-            let boss1 = new Boss("Dragon", 5000, 100, 2, 7);
+            wizard.addStatus("ST_OVERHEATING", "Wizard");            
+            let boss1 = new Boss("TimeDragon", 5000, 100, 2, 7);
 
             boss1.actionList = [];
             knight.actionList = [];

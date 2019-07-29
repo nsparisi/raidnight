@@ -13,8 +13,9 @@ module RaidNight.Engine
         cooldown: integer = 0;
         allAllies: boolean = false;
 
-
         healthPerIceShard: integer = 0;
+        selfHealth: integer = 0;
+        useAllMana: boolean = false;
     }
 
     // ********** 
@@ -322,6 +323,90 @@ module RaidNight.Engine
             this.cooldown = 100;
             this.cremate = true;
             this.name = "Cremate";
+        }
+    }
+    
+    // ********** 
+    // ELEMENTAL WIZARD
+    // ********** 
+    export class skill_FireballUltra extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -50;
+            this.castTime = 1;
+            this.mana = 25;
+            this.name = "FireballUltra";
+        }
+    }
+
+    export class skill_CremateUltra extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -200;
+            this.selfHealth = -50;
+            this.mana = 50;
+            this.castTime = 1;
+            this.cremate = true;
+            this.name = "CremateUltra";
+        }
+    }
+    
+    export class skill_IceShardUltra extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -20;
+            this.mana = -10;
+            this.castTime = 1;
+            this.name = "IceShardUltra";
+            this.selfStatuses = ["ST_ICESHARD"];
+        }
+    }
+
+    export class skill_IceSpearUltra extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.healthPerIceShard = -50; 
+            this.castTime = 1;
+            this.mana = -20;
+            this.name = "IceSpearUltra";
+        }
+    }
+
+    export class skill_FrostbiteUltra extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.cooldown = 20;
+            this.name = "FrostbiteUltra";
+            this.selfOnly = true;
+            this.selfStatuses = ["ST_FROSTBITEULTRA"];
+        }
+    }
+    
+    export class skill_CoolingWinds extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 100;
+            this.useAllMana = true;
+            this.allAllies = true;
+            this.castTime = 1;
+            this.cooldown = 100;
+            this.name = "CoolingWinds";
         }
     }
 
