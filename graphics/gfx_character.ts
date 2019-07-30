@@ -116,6 +116,7 @@ module RaidNight.Graphics
                     this.character.isCastSuccessful)
                 {
                     let start = new Phaser.Math.Vector2(centerX, centerY);
+                    let stop = false;
 
                     for(let i = 0; i < this.character.currentAction.targets.length; i++)
                     {
@@ -124,6 +125,11 @@ module RaidNight.Graphics
                         let targetY = target.y * this.scene.tileHeight + this.sprite.height / 2;
                         let end = new Phaser.Math.Vector2(targetX, targetY);
                         let effect: SpellEffect = null;
+
+                        if (stop)
+                        {
+                            break;
+                        }
 
                         switch (this.character.currentAction.skill.toUpperCase())
                         {
@@ -257,6 +263,25 @@ module RaidNight.Graphics
 
                             case "COOLINGWINDS":
                             effect = new SpellEffect_CoolingWinds(this.scene, start);
+                            break;
+
+                            case "FASTFORWARD":
+                            effect = new SpellEffect_FastForward(this.scene, start);
+                            stop = true;
+                            break;
+
+                            case "REWIND":
+                            effect = new SpellEffect_Rewind(this.scene, start);
+                            stop = true;
+                            break;
+
+                            case "HALT":
+                            effect = new SpellEffect_Halt(this.scene, start);
+                            stop = true;
+                            break;
+
+                            case "BITE":
+                            effect = new SpellEffect_VenomousBite(this.scene, end);
                             break;
 
                             default:

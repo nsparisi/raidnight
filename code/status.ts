@@ -20,6 +20,7 @@ module RaidNight.Engine
         st_bindEffect: integer = 0;
         st_heatingUpEffect: boolean = false;
         st_overheatingEffect: boolean = false;
+        st_haltEffect: boolean = false;
     }
 
     // ********** 
@@ -345,6 +346,23 @@ module RaidNight.Engine
             this.duration = 100;
             this.healthPerTurn = -1;
             this.maxStacks = 100;
+        }
+    }
+
+    
+    // ********** 
+    // TDRAGON
+    // ********** 
+    export class status_Halt extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_Halt";
+            this.duration = 5;
+            this.st_haltEffect = true;
         }
     }
 }

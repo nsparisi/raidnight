@@ -106,6 +106,7 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_iceshardultra.png', 'assets/status/st_iceshardultra.png');
             this.load.image('assets/status/st_frostbiteultra.png', 'assets/status/st_frostbiteultra.png');
             this.load.image('assets/status/st_overheating.png', 'assets/status/st_overheating.png');
+            this.load.image('assets/status/st_halt.png', 'assets/status/st_halt.png');
 
             // skill round 2
             this.load.image('assets/skill/wizard/sk_firebarrier.png', 'assets/skill/wizard/sk_firebarrier.png');
@@ -123,6 +124,9 @@ module RaidNight.Graphics
             
             // skill round 3
             this.load.image('assets/skill/wizard/sk_coolingwinds.png', 'assets/skill/wizard/sk_coolingwinds.png');
+            this.load.image('assets/skill/dragon/sk_time_bg.png', 'assets/skill/dragon/sk_time_bg.png');
+            this.load.image('assets/skill/dragon/sk_time_hour.png', 'assets/skill/dragon/sk_time_hour.png');
+            this.load.image('assets/skill/dragon/sk_time_min.png', 'assets/skill/dragon/sk_time_min.png');
 
             // skill
             this.load.image('assets/skill/knight/sk_phalanx.png', 'assets/skill/knight/sk_phalanx.png');

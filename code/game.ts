@@ -148,45 +148,38 @@ module RaidNight.Engine
 
             let boss = this.arena.enemies[0];
             boss.actionList = [];
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Move(0, -1));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("FastForward", ["knight", "priest", "wizard"]));
             
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Move(0, -1));
-            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 5, 19,  7)));
-            
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Move(0, 1));
-            
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("HeatWave", ["knight", "priest", "wizard"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Skill("Claw", ["knight"]));
-            boss.actionList.push(new action_Move(0, 1));
-            boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 7, 19,  9)));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Rewind", ["knight", "priest", "wizard"]));
+
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Halt", ["knight", "priest", "wizard"]));
 
             let room = new Room1(20, 15);
             room.actionList = [];

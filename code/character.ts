@@ -11,6 +11,7 @@ module RaidNight.Engine
         defense: integer;
         power: integer;
         bindValue: integer;
+        isHalted: boolean;
 
         x: integer;
         y: integer;
@@ -97,6 +98,11 @@ module RaidNight.Engine
                     Debug.log(`${this.name} has ${this.mana} power gained and ${this.mana} defense reduced by overheating.`);
                 }
 
+                if (this.statuses[i].st_haltEffect)
+                {
+                    this.isHalted = true;
+                }
+
                 if (this.statuses[i].duration <= 0)
                 {
                     Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
@@ -116,7 +122,16 @@ module RaidNight.Engine
                 if (this.statuses[i].st_bindEffect > 0)
                 {
                     Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
+
+                    this.statuses[i].duration--;
                     this.addBindValue(this.statuses[i].st_bindEffect)
+                    
+                    if (this.statuses[i].duration <= 0)
+                    {
+                        Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
+                        this.statuses.splice(i, 1);
+                        i--;
+                    }
                 }
             }
         }
@@ -264,8 +279,11 @@ module RaidNight.Engine
 
         protected grabNewAction()
         {
-            this.currentAction = this.actionList[this.actionIndex];
-            this.actionIndex = (this.actionIndex + 1) % this.actionList.length;
+            if (!this.isHalted)
+            {
+                this.currentAction = this.actionList[this.actionIndex];
+                this.actionIndex = (this.actionIndex + 1) % this.actionList.length;
+            }
         }
         
         protected doMove()
@@ -330,6 +348,13 @@ module RaidNight.Engine
                 return;
             }
 
+            if (this.isHalted)
+            {
+                Debug.log(`⌛⌛ ${this.name} is frozen in time! ⌛⌛`);
+                this.isCastSuccessful = false;
+                return;
+            }
+
             if (this.safeGetCooldown(skill.name) > 0)
             {
                 Debug.log(`${this.name} failed to cast ${skill.name} because it is on cooldown.`);
@@ -361,6 +386,13 @@ module RaidNight.Engine
             if (this.bindValue > 0)
             {
                 Debug.log(`${this.name} could not finalize cast of ${skill.name} because they are bound by vines!`);
+                this.isCastSuccessful = false;
+                return;
+            }
+
+            if (this.isHalted)
+            {
+                Debug.log(`⌛⌛ ${this.name} could not finalize cast of ${skill.name} because they are frozen in time! ⌛⌛`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -403,6 +435,12 @@ module RaidNight.Engine
                     Debug.log(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
                     target.addStatus(skill.targetStatuses[j], this.name);
                 }
+
+                // special effect for time abilities
+                if (skill.fastforwardValue != 0)
+                {
+                    target.fastforwardByTime(skill.fastforwardValue);
+                }
             }
 
             // apply statues to self
@@ -423,6 +461,11 @@ module RaidNight.Engine
             this.isCasting = false;
             this.isCastSuccessful = true;
             // Debug.log(`${this.name} finished cast of ${skill.name}.`);
+        }
+
+        protected fastforwardByTime(time: integer)
+        {
+            this.actionIndex = ((this.actionList.length * 10) + (this.actionIndex + time)) % this.actionList.length;
         }
 
         protected countIceShardStacksAndConsumeStatus(skill: Skill)
@@ -463,6 +506,7 @@ module RaidNight.Engine
             this.defense = 0;
             this.power = 0;
             this.bindValue = 0;
+            this.isHalted = false;
         }
 
         protected addDefense(defense: integer)
@@ -582,6 +626,19 @@ module RaidNight.Engine
         resetTauntStatus()
         {
             this.isTaunted = false;
+        }
+    }
+
+    export class SandPrism extends Character
+    {
+        constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
+        { 
+            super(name, maxHealth, maxMana, x, y); 
+        }
+
+        grabNewAction ()
+        {
+            super.grabNewAction();
         }
     }
 }

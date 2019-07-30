@@ -53,6 +53,12 @@ module RaidNight.Engine
             "BIND": new skill_Bind(),
             "MIASMA": new skill_Miasma(),
 
+            // TDRAGON
+            "REWIND": new skill_Rewind(),
+            "FASTFORWARD": new skill_FastForward(),
+            "HALT": new skill_Halt(),
+            "BITE": new skill_Bite(),
+
             // ARENA
             "SPIKETRAP": new skill_SpikeTrap(),
             "FIRESTORM": new skill_FireStorm(),
@@ -94,6 +100,9 @@ module RaidNight.Engine
             "ST_VENOMOUSBITE": () => {return new status_VenomousBite();},
             "ST_BIND": () => {return new status_Bind();},
             "ST_MIASMA": () => {return new status_Miasma();},
+            
+            // TDRAGON
+            "ST_HALT": () => {return new status_Halt();},
         }
 
         classSkillLookup = {
@@ -103,7 +112,8 @@ module RaidNight.Engine
             "FWIZARD": ["KINDLE", "FIREBALL", "SCORCH", "CAUTERIZE", "FIREBARRIER", "CREMATE"],
             "EWIZARD": ["FIREBALLULTRA", "CREMATEULTRA", "ICESHARDULTRA", "ICESPEARULTRA", "FROSTBITEULTRA", "COOLINGWINDS"],
             "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],     
-            "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],
+            "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],  
+            "TIMEDRAGON": ["REWIND", "FASTFORWARD", "HALT", "BITE"],
             "DEVILVINE": ["WHIP", "BIND"],
             "CORPSEFLOWER": ["MIASMA"],
             "ROOM": ["SPIKETRAP", "FIRESTORM"]

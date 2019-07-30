@@ -2678,4 +2678,303 @@ module RaidNight.Graphics
             this.gfx.destroy();
         }
     }
+
+    export class SpellEffect_FastForward extends SpellEffect
+    {
+        sprite1: Phaser.GameObjects.Sprite;
+        spriteHour: Phaser.GameObjects.Sprite;
+        spriteMin: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        tweenMin: Phaser.Tweens.Tween;
+        tweenHour: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween
+        
+        path1: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite1 = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_bg.png", 0)
+                .setDepth(DepthLayer.Med_Priority).setScale(0.6);
+            this.spriteHour = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_hour.png", 0)
+                .setDepth(DepthLayer.High_Priority).setScale(0.6);
+            this.spriteMin = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_min.png", 0)
+                .setDepth(DepthLayer.High_Priority).setScale(0.6);
+
+                
+            this.path1 = new Phaser.Curves.Path(0, 0);
+            this.path1.lineTo(2, 2);
+            this.path1.lineTo(0, 0);
+
+            this.tweenMin = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1500,
+                duration: this.calculateDuration(5000),
+                ease: "Sine.easeInOut"
+            });
+
+            this.tweenHour = this.scene.tweens.addCounter({
+                from: 0,
+                to: 500,
+                duration: this.calculateDuration(5000),
+                ease: "Sine.easeInOut"
+            });
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(5000),
+                ease: "Quad.easeInOut"
+            });
+
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(5000),
+                ease: "Cubic.easeIn",
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            this.spriteHour.setRotation(Phaser.Math.DegToRad(this.tweenHour.getValue()));
+            this.spriteMin.setRotation(Phaser.Math.DegToRad(this.tweenMin.getValue()));
+
+            let alpha = this.path1.getPoint(this.tween1.getValue()).x;
+            this.sprite1.setAlpha(alpha);
+            this.spriteHour.setAlpha(alpha);
+            this.spriteMin.setAlpha(alpha);
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween1.stop();
+            this.tweenMin.stop();
+            this.tweenHour.stop();
+            this.tweenTimer.stop();
+            this.sprite1.destroy();
+            this.spriteMin.destroy();
+            this.spriteHour.destroy();
+            this.gfx.destroy();
+            this.path1.destroy();
+        }
+    }
+
+    export class SpellEffect_Rewind extends SpellEffect
+    {
+        sprite1: Phaser.GameObjects.Sprite;
+        spriteHour: Phaser.GameObjects.Sprite;
+        spriteMin: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        tweenMin: Phaser.Tweens.Tween;
+        tweenHour: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween
+        
+        path1: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite1 = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_bg.png", 0)
+                .setDepth(DepthLayer.Med_Priority).setScale(0.6);
+            this.spriteHour = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_hour.png", 0)
+                .setDepth(DepthLayer.High_Priority).setScale(0.6);
+            this.spriteMin = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_min.png", 0)
+                .setDepth(DepthLayer.High_Priority).setScale(0.6);
+
+                
+            this.path1 = new Phaser.Curves.Path(0, 0);
+            this.path1.lineTo(2, 2);
+            this.path1.lineTo(0, 0);
+
+            this.tweenMin = this.scene.tweens.addCounter({
+                from: 0,
+                to: -1500,
+                duration: this.calculateDuration(5000),
+                ease: "Sine.easeInOut"
+            });
+
+            this.tweenHour = this.scene.tweens.addCounter({
+                from: 0,
+                to: -500,
+                duration: this.calculateDuration(5000),
+                ease: "Sine.easeInOut"
+            });
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(5000),
+                ease: "Quad.easeInOut"
+            });
+
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(5000),
+                ease: "Cubic.easeIn",
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            this.spriteHour.setRotation(Phaser.Math.DegToRad(this.tweenHour.getValue()));
+            this.spriteMin.setRotation(Phaser.Math.DegToRad(this.tweenMin.getValue()));
+
+            let alpha = this.path1.getPoint(this.tween1.getValue()).x;
+            this.sprite1.setAlpha(alpha);
+            this.spriteHour.setAlpha(alpha);
+            this.spriteMin.setAlpha(alpha);
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween1.stop();
+            this.tweenMin.stop();
+            this.tweenHour.stop();
+            this.tweenTimer.stop();
+            this.sprite1.destroy();
+            this.spriteMin.destroy();
+            this.spriteHour.destroy();
+            this.gfx.destroy();
+            this.path1.destroy();
+        }
+    }
+    export class SpellEffect_Halt extends SpellEffect
+    {
+        sprite1: Phaser.GameObjects.Sprite;
+        spriteHour: Phaser.GameObjects.Sprite;
+        spriteMin: Phaser.GameObjects.Sprite;
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        tweenMin: Phaser.Tweens.Tween;
+        tweenHour: Phaser.Tweens.Tween;
+        tweenTimer: Phaser.Tweens.Tween
+        
+        path1: Phaser.Curves.Path;
+
+        constructor(scene: Scene_Arena, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+
+            this.sprite1 = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_bg.png", 0)
+                .setDepth(DepthLayer.Med_Priority).setScale(0.6);
+            this.spriteHour = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_hour.png", 0)
+                .setDepth(DepthLayer.High_Priority).setScale(0.6);
+            this.spriteMin = this.scene.add.sprite(end.x + 60, end.y, "assets/skill/dragon/sk_time_min.png", 0)
+                .setDepth(DepthLayer.High_Priority).setScale(0.6);
+
+                
+            this.path1 = new Phaser.Curves.Path(0, 0);
+            this.path1.lineTo(2, 2);
+            //this.path1.lineTo(0, 0);
+
+            this.tweenMin = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1080,
+                duration: this.calculateDuration(3000),
+                ease: "Cubic.easeOut"
+            });
+
+            this.tweenHour = this.scene.tweens.addCounter({
+                from: 0,
+                to: -350,
+                duration: this.calculateDuration(3000),
+                ease: "Cubic.easeOut"
+            });
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(5000),
+                ease: "Linear"
+            });
+
+            this.tweenTimer = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(5000),
+                ease: "Cubic.easeIn",
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        isFinished()
+        {
+            return this.tweenTimer.totalProgress >= 1;
+        }
+
+        update()
+        {
+            super.update();
+            
+            this.spriteHour.setRotation(Phaser.Math.DegToRad(this.tweenHour.getValue()));
+            this.spriteMin.setRotation(Phaser.Math.DegToRad(this.tweenMin.getValue()));
+
+            let alpha = this.path1.getPoint(this.tween1.getValue()).x;
+            this.sprite1.setAlpha(alpha);
+            this.spriteHour.setAlpha(alpha);
+            this.spriteMin.setAlpha(alpha);
+        }
+
+        debug()
+        {
+            this.gfx.clear();
+            this.gfx.lineStyle(2, 0xFF0000, 1);
+        }
+
+        destroy()
+        {
+            super.destroy();
+
+            this.tween1.stop();
+            this.tweenMin.stop();
+            this.tweenHour.stop();
+            this.tweenTimer.stop();
+            this.sprite1.destroy();
+            this.spriteMin.destroy();
+            this.spriteHour.destroy();
+            this.gfx.destroy();
+            this.path1.destroy();
+        }
+    }
 }

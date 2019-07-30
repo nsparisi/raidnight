@@ -16,6 +16,9 @@ module RaidNight.Engine
         healthPerIceShard: integer = 0;
         selfHealth: integer = 0;
         useAllMana: boolean = false;
+
+        fastforwardValue: integer = 0;
+        
     }
 
     // ********** 
@@ -539,6 +542,72 @@ module RaidNight.Engine
             this.castTime = 1;
             this.name = "Miasma";
             this.targetStatuses = ["ST_MIASMA"];
+        }
+    }
+    
+    // ********** 
+    // TIMEDRAGON
+    // ********** 
+    export class skill_Rewind extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -20;
+            this.mana = 0;
+            this.castTime = 1;
+            this.fastforwardValue = -5;
+            this.name = "Rewind";
+        }
+    }
+    
+    export class skill_FastForward extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -20;
+            this.mana = 0;
+            this.castTime = 1;
+            this.fastforwardValue = 5;
+            this.name = "FastForward";
+        }
+    }
+    
+    export class skill_Halt extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -20;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "Halt";
+            this.targetStatuses = ["ST_HALT"];
+        }
+    }
+    
+    export class skill_Bite extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -20;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "Bite";
+        }
+    }
+    
+    export class skill_SandPrism extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "SandPrism";
         }
     }
 }
