@@ -319,6 +319,10 @@ module RaidNight.Graphics
                             case "CREMATEULTRA":
                             effect = new SpellEffect_Cremate(this.scene, start, end);
                             break;
+
+                            case "TIMELASER":
+                            effect = new SpellEffect_TimeLaser(this.scene, start, end);
+                            break;
                         }
 
                         if(effect != null)
@@ -328,6 +332,21 @@ module RaidNight.Graphics
                     }
                 }
             }
+        }
+    }
+    
+    export class Prism extends Character
+    {
+        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, sprite: Phaser.GameObjects.Sprite, isBoss: boolean)
+        {
+            super(scene, char_reference, sprite, isBoss);
+
+            this.gfx_healthBlack.setVisible(false);
+            this.gfx_healthRed.setVisible(false);
+            this.gfx_healthGreen.setVisible(false);
+            this.gfx_manaBlack.setVisible(false);
+            this.gfx_manaBlue.setVisible(false);
+            this.buffPanel.destroy();
         }
     }
 

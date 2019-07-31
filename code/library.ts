@@ -58,6 +58,7 @@ module RaidNight.Engine
             "FASTFORWARD": new skill_FastForward(),
             "HALT": new skill_Halt(),
             "BITE": new skill_Bite(),
+            "TIMELASER": new skill_TimeLaser(),
 
             // ARENA
             "SPIKETRAP": new skill_SpikeTrap(),
@@ -113,7 +114,8 @@ module RaidNight.Engine
             "EWIZARD": ["FIREBALLULTRA", "CREMATEULTRA", "ICESHARDULTRA", "ICESPEARULTRA", "FROSTBITEULTRA", "COOLINGWINDS"],
             "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],     
             "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],  
-            "TIMEDRAGON": ["REWIND", "FASTFORWARD", "HALT", "BITE"],
+            "TIMEDRAGON": ["REWIND", "FASTFORWARD", "HALT", "BITE", "TIMELASER"],
+            "SANDPRISM": ["TIMELASER"],
             "DEVILVINE": ["WHIP", "BIND"],
             "CORPSEFLOWER": ["MIASMA"],
             "ROOM": ["SPIKETRAP", "FIRESTORM"]

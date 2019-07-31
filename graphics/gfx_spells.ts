@@ -2977,4 +2977,60 @@ module RaidNight.Graphics
             this.path1.destroy();
         }
     }
+
+    export class SpellEffect_TimeLaser extends SpellEffect
+    {
+        gfx: Phaser.GameObjects.Graphics;
+        tween1: Phaser.Tweens.Tween;
+        start: Phaser.Math.Vector2; 
+        end: Phaser.Math.Vector2;
+
+        constructor(scene: Scene_Arena, start: Phaser.Math.Vector2, end: Phaser.Math.Vector2)
+        {
+            super(scene);
+            this.start = start;
+            this.end = end;
+
+            this.tween1 = this.scene.tweens.addCounter({
+                from: 0,
+                to: 1,
+                duration: this.calculateDuration(1000),
+                ease: "Quad.easeIn"
+            });
+
+            this.gfx = this.scene.add.graphics().setDepth(DepthLayer.Med_Priority);
+        }
+
+        update()
+        {
+            this.gfx.clear();
+            
+            for(let i = this.start.y; i <= this.end.y; i+= this.scene.tileHeight)
+            {
+                this.gfx.fillStyle(0x44FF33, 0.4);
+                this.gfx.fillRect(this.start.x + 13, i, 14, 40);
+                this.gfx.fillStyle(0x22CC11, 0.4);
+                this.gfx.fillRect(this.start.x + 14, i, 12, 40);
+                this.gfx.fillStyle(0xFFFFFF, 1);
+                this.gfx.fillRect(this.start.x + 18, i, 4, 40);
+            }
+        }
+
+        debug()
+        {
+        }
+
+        destroy()
+        {
+            super.destroy();
+            this.tween1.stop();
+            this.gfx.destroy();
+        }
+        
+        isFinished()
+        {
+            return GLOBAL_GAME.arena.turn != this.startTurn && 
+                this.tween1.totalProgress >= 1;
+        }
+    }
 }

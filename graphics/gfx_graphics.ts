@@ -41,6 +41,7 @@ module RaidNight.Graphics
         corpseFlower: Character;
         timeDragon: Character;
         room: Room;
+        prism: Character;
 
         text_TurnCount: Phaser.GameObjects.Text;
         gfx_TurnBox: Phaser.GameObjects.Graphics;
@@ -77,6 +78,7 @@ module RaidNight.Graphics
             this.load.image('assets/dragon.png', 'assets/dragon.png');
             this.load.image('assets/devil_vine.png', 'assets/devil_vine.png');
             this.load.image('assets/corpse_flower.png', 'assets/corpse_flower.png');
+            this.load.image('assets/prism.png', 'assets/prism.png');
 
             // status
             this.load.image('assets/status/st_claw.png', 'assets/status/st_claw.png');
@@ -237,6 +239,7 @@ module RaidNight.Graphics
             if(this.devilVine){this.devilVine.destroy();}
             if(this.corpseFlower){this.corpseFlower.destroy();}
             if(this.timeDragon){this.timeDragon.destroy();}
+            if(this.prism){this.prism.destroy();}
             if(this.room){this.room.destroy();}
 
             let char_priest: RaidNight.Engine.Character = null;
@@ -247,6 +250,7 @@ module RaidNight.Graphics
             let char_devilVine: RaidNight.Engine.Character = null;
             let char_corpseFlower: RaidNight.Engine.Character = null;
             let char_timeDragon: RaidNight.Engine.Character = null;
+            let char_prism: RaidNight.Engine.Character = null;
             let char_room = GLOBAL_GAME.arena.room;
 
             let i = 0;
@@ -288,6 +292,10 @@ module RaidNight.Graphics
                 {
                     char_timeDragon = GLOBAL_GAME.arena.enemies[i];
                 }
+                else if(GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == "SANDPRISM")
+                {
+                    char_prism = GLOBAL_GAME.arena.enemies[i];
+                }
             }
 
             this.wizard = new Character(this, char_wizard, this.add.sprite(600, 100, 'assets/wizard.png'), false);
@@ -314,6 +322,7 @@ module RaidNight.Graphics
             {
                 this.timeDragon = new Character(this, char_timeDragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
                 this.timeDragon.sprite.setFlipX(true);
+                this.prism = new Prism(this, char_prism, this.add.sprite(100, 500, 'assets/prism.png'), true);
                 this.img_background = this.add.image(0, 0, 'assets/map3.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
             }
 
@@ -347,6 +356,7 @@ module RaidNight.Graphics
 
             if(this.devilVine){this.devilVine.update(isNewTurn);}
             if(this.corpseFlower){this.corpseFlower.update(isNewTurn);}
+            if(this.prism){this.prism.update(isNewTurn);}
             if (this.dragon)
             {
                 this.dragon.update(isNewTurn);

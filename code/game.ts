@@ -264,13 +264,18 @@ module RaidNight.Engine
             wizard.addStatus("ST_OVERHEATING", "Wizard");            
             let boss1 = new Boss("TimeDragon", 5000, 100, 2, 7);
 
+            let prism1 = new SandPrism("SandPrism", 1, 1, 5, 5);
+            prism1.actionList = [];
+            prism1.actionList.push(new action_Wait());
+            prism1.actionList.push(new action_AreaSkill("TimeLaser", new Area(5,  6, 5,  9)));
+
             boss1.actionList = [];
             knight.actionList = [];
             priest.actionList = [];
             wizard.actionList = [];
 
             this.arena.allies = [knight, priest, wizard];
-            this.arena.enemies = [boss1];
+            this.arena.enemies = [boss1, prism1];
 
             this.isShowingText = false;
             this.textToShow = [];
