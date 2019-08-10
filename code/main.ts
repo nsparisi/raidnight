@@ -44,7 +44,7 @@ var GLOBAL_deltaTimeMs = 0;
 const GLOBAL_INPUT_HELPER = new RaidNight.Engine.Input();
 const GLOBAL_GAME = new RaidNight.Engine.Game();
 GLOBAL_GAME.setup1();
-GLOBAL_GAME.step();
+//GLOBAL_GAME.step();
 
 const GLOBAL_MAIN = new Main();
 GLOBAL_MAIN.begin();

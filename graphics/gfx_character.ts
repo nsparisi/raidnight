@@ -44,7 +44,7 @@ module RaidNight.Graphics
             this.buffPanel.destroy();
         }
 
-        update = (newTurn: boolean) => 
+        update(newTurn: boolean)
         {
             let centerX = this.character.x * this.scene.tileWidth + this.sprite.width / 2;
             let centerY = this.character.y * this.scene.tileHeight + this.sprite.height / 2;
@@ -337,7 +337,7 @@ module RaidNight.Graphics
     
     export class Prism extends Character
     {
-        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, sprite: Phaser.GameObjects.Sprite, isBoss: boolean)
+        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.SandPrism, sprite: Phaser.GameObjects.Sprite, isBoss: boolean)
         {
             super(scene, char_reference, sprite, isBoss);
 
@@ -347,6 +347,13 @@ module RaidNight.Graphics
             this.gfx_manaBlack.setVisible(false);
             this.gfx_manaBlue.setVisible(false);
             this.buffPanel.destroy();
+        }
+
+        update(newTurn: boolean)
+        {
+            super.update(newTurn);
+
+            this.sprite.setVisible((this.character as RaidNight.Engine.SandPrism).visible);
         }
     }
 

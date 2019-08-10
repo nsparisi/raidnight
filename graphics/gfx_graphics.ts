@@ -41,7 +41,7 @@ module RaidNight.Graphics
         corpseFlower: Character;
         timeDragon: Character;
         room: Room;
-        prism: Character;
+        prisms: Character[] = [];
 
         text_TurnCount: Phaser.GameObjects.Text;
         gfx_TurnBox: Phaser.GameObjects.Graphics;
@@ -239,8 +239,10 @@ module RaidNight.Graphics
             if(this.devilVine){this.devilVine.destroy();}
             if(this.corpseFlower){this.corpseFlower.destroy();}
             if(this.timeDragon){this.timeDragon.destroy();}
-            if(this.prism){this.prism.destroy();}
             if(this.room){this.room.destroy();}
+            this.prisms.forEach((prism) => { if(prism){ prism.destroy(); } });
+            this.prisms = [];
+            this.clearSkillEffects();
 
             let char_priest: RaidNight.Engine.Character = null;
             let char_knight: RaidNight.Engine.Character = null;
@@ -250,7 +252,7 @@ module RaidNight.Graphics
             let char_devilVine: RaidNight.Engine.Character = null;
             let char_corpseFlower: RaidNight.Engine.Character = null;
             let char_timeDragon: RaidNight.Engine.Character = null;
-            let char_prism: RaidNight.Engine.Character = null;
+            let char_prisms: RaidNight.Engine.SandPrism[] = [];
             let char_room = GLOBAL_GAME.arena.room;
 
             let i = 0;
@@ -292,9 +294,9 @@ module RaidNight.Graphics
                 {
                     char_timeDragon = GLOBAL_GAME.arena.enemies[i];
                 }
-                else if(GLOBAL_GAME.arena.enemies[i].name.toUpperCase() == "SANDPRISM")
+                else if(GLOBAL_GAME.arena.enemies[i].name.toUpperCase().indexOf("SANDPRISM") >= 0)
                 {
-                    char_prism = GLOBAL_GAME.arena.enemies[i];
+                    char_prisms.push(GLOBAL_GAME.arena.enemies[i] as RaidNight.Engine.SandPrism);
                 }
             }
 
@@ -322,7 +324,11 @@ module RaidNight.Graphics
             {
                 this.timeDragon = new Character(this, char_timeDragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
                 this.timeDragon.sprite.setFlipX(true);
-                this.prism = new Prism(this, char_prism, this.add.sprite(100, 500, 'assets/prism.png'), true);
+                char_prisms.forEach((char_prism) =>
+                {
+                    this.prisms.push(new Prism(this, char_prism, this.add.sprite(100, 500, 'assets/prism.png'), true));
+                })
+
                 this.img_background = this.add.image(0, 0, 'assets/map3.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
             }
 
@@ -356,7 +362,8 @@ module RaidNight.Graphics
 
             if(this.devilVine){this.devilVine.update(isNewTurn);}
             if(this.corpseFlower){this.corpseFlower.update(isNewTurn);}
-            if(this.prism){this.prism.update(isNewTurn);}
+            this.prisms.forEach((prism)=>{prism.update(isNewTurn)});
+            
             if (this.dragon)
             {
                 this.dragon.update(isNewTurn);
@@ -400,6 +407,15 @@ module RaidNight.Graphics
             if (Debug.DebugEnabled)
             {
                 this.debug();
+            }
+        }
+
+        clearSkillEffects()
+        {
+            while (this.allSkillEffects.length != 0)
+            {
+                this.allSkillEffects[0].destroy();
+                this.allSkillEffects.splice(0,1);
             }
         }
 

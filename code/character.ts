@@ -629,16 +629,69 @@ module RaidNight.Engine
         }
     }
 
+    export class TimeDragon extends Boss
+    {
+        grabNewAction ()
+        {
+            super.grabNewAction();
+        }
+
+        finishSkill()
+        {
+            let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
+            if (skill.name.toUpperCase() == "SANDPRISM")
+            {
+                this.currentAction.targets.forEach((target) => {
+                    let prism = GLOBAL_GAME.arena.lookupTarget(target) as SandPrism;
+                    prism.makeVisibile();
+                })
+            }
+
+            super.finishSkill();
+        }
+    }
+
     export class SandPrism extends Character
     {
+        visible: boolean = false;
+        totalLifespan: integer = 3;
+        currentLifespan: integer = 0;
+
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
             super(name, maxHealth, maxMana, x, y); 
         }
 
-        grabNewAction ()
+        grabNewAction()
         {
+            if (this.currentLifespan == 0)
+            {
+                this.visible = false;
+            }
+            this.currentLifespan --;
+
+            if (!this.visible)
+            {
+                this.actionIndex = 0;
+            }
+
             super.grabNewAction();
+            
+            if (!this.visible)
+            {
+                this.actionIndex = 0;
+            }
+        }
+
+        makeVisibile()
+        {
+            this.visible = true;
+            this.currentLifespan = this.totalLifespan;
+        }
+
+        addHealth(health: integer, source: Character)
+        {
+            // do nothing
         }
     }
 }

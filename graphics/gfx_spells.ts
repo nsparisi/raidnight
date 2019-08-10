@@ -2994,7 +2994,7 @@ module RaidNight.Graphics
             this.tween1 = this.scene.tweens.addCounter({
                 from: 0,
                 to: 1,
-                duration: this.calculateDuration(1000),
+                duration: this.calculateDuration(500),
                 ease: "Quad.easeIn"
             });
 
@@ -3005,14 +3005,29 @@ module RaidNight.Graphics
         {
             this.gfx.clear();
             
-            for(let i = this.start.y; i <= this.end.y; i+= this.scene.tileHeight)
+            if (this.start.x == (this.end.x - this.scene.tileWidth))
             {
-                this.gfx.fillStyle(0x44FF33, 0.4);
-                this.gfx.fillRect(this.start.x + 13, i, 14, 40);
-                this.gfx.fillStyle(0x22CC11, 0.4);
-                this.gfx.fillRect(this.start.x + 14, i, 12, 40);
-                this.gfx.fillStyle(0xFFFFFF, 1);
-                this.gfx.fillRect(this.start.x + 18, i, 4, 40);
+                for(let i = this.start.y; i < this.end.y; i+= this.scene.tileHeight)
+                {
+                    this.gfx.fillStyle(0x44FF33, 0.4);
+                    this.gfx.fillRect(this.start.x + 13, i, 14, 40);
+                    this.gfx.fillStyle(0x22CC11, 0.4);
+                    this.gfx.fillRect(this.start.x + 14, i, 12, 40);
+                    this.gfx.fillStyle(0xFFFFFF, 1);
+                    this.gfx.fillRect(this.start.x + 18, i, 4, 40);
+                }
+            }
+            else 
+            {
+                for(let i = this.start.x; i < this.end.x; i+= this.scene.tileWidth)
+                {
+                    this.gfx.fillStyle(0x44FF33, 0.4);
+                    this.gfx.fillRect(i, this.start.y + 13, 40, 14);
+                    this.gfx.fillStyle(0x22CC11, 0.4);
+                    this.gfx.fillRect(i, this.start.y + 14, 40, 12);
+                    this.gfx.fillStyle(0xFFFFFF, 1);
+                    this.gfx.fillRect(i, this.start.y + 18, 40, 4);
+                }
             }
         }
 
@@ -3024,6 +3039,7 @@ module RaidNight.Graphics
         {
             super.destroy();
             this.tween1.stop();
+            this.gfx.clear();
             this.gfx.destroy();
         }
         

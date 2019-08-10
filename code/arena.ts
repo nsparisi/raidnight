@@ -9,7 +9,7 @@ module RaidNight.Engine
         allies: Character[];
         room: Room;
 
-        turn: integer = 0;
+        turn: integer = -2;
         maxTurns: integer = 10000;
         state: ArenaState = ArenaState.NotStarted;
 

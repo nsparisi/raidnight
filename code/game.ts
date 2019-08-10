@@ -9,7 +9,7 @@ module RaidNight.Engine
         library: Library;
         frameLengthMs: integer = 500;
         private elapsedTimeMs: number = 0;
-        private stepMode = false;
+        private stepMode = true;
         private stepPending = false;
 
         isShowingText: boolean;
@@ -150,10 +150,10 @@ module RaidNight.Engine
             boss.actionList = [];
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_1", "SandPrism_3", "SandPrism_5", "SandPrism_7", "SandPrism_9", "SandPrism_11", "SandPrism_13"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_2", "SandPrism_4", "SandPrism_6", "SandPrism_8", "SandPrism_10", "SandPrism_12"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
@@ -161,10 +161,10 @@ module RaidNight.Engine
             
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_14", "SandPrism_16", "SandPrism_18", "SandPrism_20"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_15", "SandPrism_17", "SandPrism_19", "SandPrism_21"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
@@ -175,10 +175,10 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_1", "SandPrism_3", "SandPrism_5", "SandPrism_7", "SandPrism_9", "SandPrism_11", "SandPrism_13"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_2", "SandPrism_4", "SandPrism_6", "SandPrism_8", "SandPrism_10", "SandPrism_12"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_14", "SandPrism_16", "SandPrism_18", "SandPrism_20"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_15", "SandPrism_17", "SandPrism_19", "SandPrism_21"]));
             boss.actionList.push(new action_Skill("Halt", ["knight", "priest", "wizard"]));
 
             let room = new Room1(20, 15);
@@ -262,12 +262,27 @@ module RaidNight.Engine
             let wizard = new Character("Wizard", 150, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_OVERHEATING", "Wizard");            
-            let boss1 = new Boss("TimeDragon", 5000, 100, 2, 7);
+            let boss1 = new TimeDragon("TimeDragon", 5000, 100, 2, 7);
 
-            let prism1 = new SandPrism("SandPrism", 1, 1, 5, 5);
-            prism1.actionList = [];
-            prism1.actionList.push(new action_Wait());
-            prism1.actionList.push(new action_AreaSkill("TimeLaser", new Area(5,  6, 5,  9)));
+            let prisms = [];
+            let nameIndex = 0;
+            for(let i = 4; i <= 16; i++)
+            {
+                let prism = new SandPrism("SandPrism_" + (++nameIndex), 1, 1, i, 3);
+                prism.actionList = [];
+                prism.actionList.push(new action_Wait());
+                prism.actionList.push(new action_AreaSkill("TimeLaser", new Area(i,  4, i,  14)));
+                prisms.push(prism);
+            }
+            
+            for(let i = 4; i <= 11; i++)
+            {
+                let prism = new SandPrism("SandPrism_" + (++nameIndex), 1, 1, 19, i);
+                prism.actionList = [];
+                prism.actionList.push(new action_Wait());
+                prism.actionList.push(new action_AreaSkill("TimeLaser", new Area(0,  i, 18,  i)));
+                prisms.push(prism);
+            }
 
             boss1.actionList = [];
             knight.actionList = [];
@@ -275,7 +290,8 @@ module RaidNight.Engine
             wizard.actionList = [];
 
             this.arena.allies = [knight, priest, wizard];
-            this.arena.enemies = [boss1, prism1];
+            this.arena.enemies = [boss1];
+            this.arena.enemies = this.arena.enemies.concat(prisms);
 
             this.isShowingText = false;
             this.textToShow = [];
