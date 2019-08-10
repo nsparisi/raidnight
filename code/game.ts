@@ -181,7 +181,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("SandPrism",["SandPrism_15", "SandPrism_17", "SandPrism_19", "SandPrism_21"]));
             boss.actionList.push(new action_Skill("Halt", ["knight", "priest", "wizard"]));
 
-            let room = new Room1(20, 15);
+            let room = new Room3(20, 15);
             room.actionList = [];
             room.actionList.push(new action_Wait());
 

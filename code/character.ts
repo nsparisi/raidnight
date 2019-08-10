@@ -18,6 +18,7 @@ module RaidNight.Engine
 
         actionList: Action[];
         actionIndex: integer;
+        actionsLoop: boolean;
 
         currentAction: Action;
 
@@ -40,6 +41,7 @@ module RaidNight.Engine
             this.y = y;
             this.actionList = [];
             this.cooldowns = new Map();
+            this.actionsLoop = false;
             this.resetState();
             this.resetBonuses();
         }
@@ -279,13 +281,42 @@ module RaidNight.Engine
 
         protected grabNewAction()
         {
-            if (!this.isHalted)
+            if (this.isHalted)
             {
-                this.currentAction = this.actionList[this.actionIndex];
-                this.actionIndex = (this.actionIndex + 1) % this.actionList.length;
+                return;
+            }
+
+            if (this.actionIndex >= this.actionList.length)
+            {
+                this.currentAction = new action_Wait();
+                return;
+            }
+
+            this.currentAction = this.actionList[this.actionIndex];
+            this.actionIndex++;
+
+            if (this.actionsLoop)
+            {
+                this.actionIndex = this.actionIndex % this.actionList.length;
             }
         }
         
+        reverseActions()
+        {
+            // Reverse expects that the last action taken will happen again
+            // A->B reverse B->A
+            //
+            // 0 1 2 3 4 5 6 7 8 9
+            // ^ ^
+            // Last action taken was '0', but actionIndex is set to 1.
+            //
+            // 9 8 7 6 5 4 3 2 1 0
+            //                   ^
+            // So, place actionIndex at 0.
+            this.actionList.reverse();
+            this.actionIndex = this.actionList.length - this.actionIndex;
+        }
+
         protected doMove()
         {
             let x = this.currentAction.x
@@ -392,7 +423,7 @@ module RaidNight.Engine
 
             if (this.isHalted)
             {
-                Debug.log(`⌛⌛ ${this.name} could not finalize cast of ${skill.name} because they are frozen in time! ⌛⌛`);
+                Debug.log(`🕙🕙 ${this.name} could not finalize cast of ${skill.name} because they are frozen in time! 🕙🕙`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -465,7 +496,7 @@ module RaidNight.Engine
 
         protected fastforwardByTime(time: integer)
         {
-            this.actionIndex = ((this.actionList.length * 10) + (this.actionIndex + time)) % this.actionList.length;
+            this.actionIndex = Math.max(this.actionIndex + time, 0);
         }
 
         protected countIceShardStacksAndConsumeStatus(skill: Skill)
@@ -567,6 +598,7 @@ module RaidNight.Engine
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
             super(name, maxHealth, maxMana, x, y); 
+            this.actionsLoop = true;
         }
 
         grabNewAction ()
@@ -631,6 +663,8 @@ module RaidNight.Engine
 
     export class TimeDragon extends Boss
     {
+        phase2: boolean = false;
+
         grabNewAction ()
         {
             super.grabNewAction();
@@ -648,6 +682,16 @@ module RaidNight.Engine
             }
 
             super.finishSkill();
+            
+            if (!this.phase2 && GLOBAL_GAME.arena.enemies[0].health <= GLOBAL_GAME.arena.enemies[0].maxHealth / 3)
+            //if (!this.phase2 && GLOBAL_GAME.arena.turn == 2)
+            {
+                this.phase2 = true;
+                GLOBAL_GAME.arena.allies.forEach((ally)=>ally.reverseActions());
+
+                Debug.log("⌛⌛ TIMEDRAGON is reversing time! ⌛⌛");
+                GLOBAL_GAME.startText("TIMEDRAGON is reversing time!");
+            }
         }
     }
 
@@ -660,6 +704,7 @@ module RaidNight.Engine
         constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
             super(name, maxHealth, maxMana, x, y); 
+            this.actionsLoop = true;
         }
 
         grabNewAction()

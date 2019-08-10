@@ -14,6 +14,7 @@ module RaidNight.Engine
             this.width = width;
             this.height = height;
             this.phase2 = false;
+            this.actionsLoop = true;
 
             this.floorplan = [
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -146,7 +147,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 12, 3,  13)));
                 this.actionList.push(new action_Wait());
 
-                Debug.log("DRAGON has called down a FIRESTORM!");
+                Debug.log("🔥🔥 DRAGON has called down a FIRESTORM! 🔥🔥");
                 GLOBAL_GAME.startText("DRAGON has called down a FIRESTORM!");
             }
             
@@ -175,6 +176,38 @@ module RaidNight.Engine
                 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+            ];
+        }
+        
+        grabNewAction ()
+        {
+            super.grabNewAction();
+        }
+    }
+    
+
+    export class Room3 extends Room
+    {
+        constructor(width: integer, height: integer)
+        {
+            super(width, height);
+
+            this.floorplan = [
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
             ];
         }
