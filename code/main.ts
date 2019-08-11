@@ -43,7 +43,7 @@ var GLOBAL_deltaTimeMs = 0;
 
 const GLOBAL_INPUT_HELPER = new RaidNight.Engine.Input();
 const GLOBAL_GAME = new RaidNight.Engine.Game();
-GLOBAL_GAME.setup1();
+//GLOBAL_GAME.setup1();
 //GLOBAL_GAME.step();
 
 const GLOBAL_MAIN = new Main();
@@ -51,34 +51,39 @@ GLOBAL_MAIN.begin();
 
 const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
 
-var GameAction_New1 = function (){
+var GameAction_ReadInput1 = function (){
     GLOBAL_GAME.stop();
     let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight1);
     if (team)
     {
-        GLOBAL_GAME.newGame1(team);
+        GLOBAL_GAME.readInput(team);
         GLOBAL_GAME.start();
     }
 }
 
-var GameAction_New2 = function (){
+var GameAction_ReadInput2 = function (){
     GLOBAL_GAME.stop();
     let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight2);
     if (team)
     {
-        GLOBAL_GAME.newGame2(team);
+        GLOBAL_GAME.readInput(team);
         GLOBAL_GAME.start();
     }
 }
 
-var GameAction_New3 = function (){
+var GameAction_ReadInput3 = function (){
     GLOBAL_GAME.stop();
     let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight3);
     if (team)
     {
-        GLOBAL_GAME.newGame3(team);
+        GLOBAL_GAME.readInput(team);
         GLOBAL_GAME.start();
     }
+}
+
+var GameAction_NewGame = function (){
+    GLOBAL_GAME.newGame();
+    GLOBAL_GAME.start();
 }
 
 var GameAction_Step = function (){

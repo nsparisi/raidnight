@@ -15,8 +15,45 @@ module RaidNight.Engine
         isShowingText: boolean;
         textToShow: string[];
         fightType: FightType;
+        allyActions: PlayerActions;
 
-        newGame1 = (allyActions: PlayerActions) =>
+        readInput = (allyActions: PlayerActions) =>
+        {
+            this.allyActions = allyActions;
+            Debug.log(`readinput: ${this.fightType}`);
+
+            if(this.fightType == FightType.Fight1)
+            {
+                this.setup1();
+            }
+            else if(this.fightType == FightType.Fight2)
+            {
+                this.setup2();
+            }
+            else if(this.fightType == FightType.Fight3)
+            {
+                this.setup3();
+            }
+        }
+
+        newGame = () =>
+        {
+            Debug.log(`newGame: ${this.fightType}`);
+            if(this.fightType == FightType.Fight1)
+            {
+                this.newGame1();
+            }
+            else if(this.fightType == FightType.Fight2)
+            {
+                this.newGame2();
+            }
+            else if(this.fightType == FightType.Fight3)
+            {
+                this.newGame3();
+            }
+        }
+
+        newGame1 = () =>
         {
             this.setup1();
 
@@ -67,12 +104,12 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
 
             this.arena.room = room;
-            this.arena.allies[0].actionList = allyActions.knight;
-            this.arena.allies[1].actionList = allyActions.priest;
-            this.arena.allies[2].actionList = allyActions.wizard;
+            this.arena.allies[0].actionList = this.allyActions.knight;
+            this.arena.allies[1].actionList = this.allyActions.priest;
+            this.arena.allies[2].actionList = this.allyActions.wizard;
         }
 
-        newGame2 = (allyActions: PlayerActions) =>
+        newGame2 = () =>
         {
             this.setup2();
 
@@ -137,12 +174,12 @@ module RaidNight.Engine
 
 
             this.arena.room = room;
-            this.arena.allies[0].actionList = allyActions.knight;
-            this.arena.allies[1].actionList = allyActions.priest;
-            this.arena.allies[2].actionList = allyActions.wizard;
+            this.arena.allies[0].actionList = this.allyActions.knight;
+            this.arena.allies[1].actionList = this.allyActions.priest;
+            this.arena.allies[2].actionList = this.allyActions.wizard;
         }
         
-        newGame3 = (allyActions: PlayerActions) =>
+        newGame3 = () =>
         {
             this.setup3();
 
@@ -186,9 +223,9 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
 
             this.arena.room = room;
-            this.arena.allies[0].actionList = allyActions.knight;
-            this.arena.allies[1].actionList = allyActions.priest;
-            this.arena.allies[2].actionList = allyActions.wizard;
+            this.arena.allies[0].actionList = this.allyActions.knight;
+            this.arena.allies[1].actionList = this.allyActions.priest;
+            this.arena.allies[2].actionList = this.allyActions.wizard;
         }
 
         setup1 = () =>

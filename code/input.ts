@@ -118,6 +118,12 @@ module RaidNight.Engine
 
             if (isValid)
             {
+                // clear out the text boxes
+                for (let i = 0; i < inputs.length; i++)
+                {
+                    inputs[i].value = "";
+                }
+
                 return playerActions;
             }
             else 

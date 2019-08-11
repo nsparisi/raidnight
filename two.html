@@ -87,9 +87,10 @@
         <div style="text-align:center;">
             <div id="Game"></div>
             <div style="width: 100%; padding: 15px; background: #ddddff;">
-                <button onclick="GameAction_New2();">New Game</button>
+                <button onclick="GameAction_ReadInput1();">Read Input</button> -- 
+                <button onclick="GameAction_NewGame();">Reset</button>
+                <button onclick="GameAction_Resume();">Play</button>
                 <button onclick="GameAction_Step();">Step</button>
-                <button onclick="GameAction_Resume();">Auto-Play</button>
                 <input type="radio" name="speed" value="1000" checked> Slow
                 <input type="radio" name="speed" value="500"> Fast
                 <input type="radio" name="speed" value="100"> Fastest
@@ -190,26 +191,26 @@
 
                 <h4>Kindle</h4>
                 <ul>
-                    <li>Mana: Gain 20 fervor</li>
+                    <li>Mana: Gain 20 mana</li>
                     <li>Cast Time: 2 turns</li>
                     <li class="description">Deals 10 damage and builds fervor, making subsequent attacks stronger</li>
                 </ul>
                 <h4>Fireball</h4>
                 <ul>
-                    <li>Mana: Costs 30 fervor</li>
+                    <li>Mana: Costs 30 mana</li>
                     <li>Cast Time: 3 turns</li>
                     <li class="description">Deals 100 damage</li>
                 </ul>
                 <h4>Scorch</h4>
                 <ul>
-                    <li>Mana: Costs 10 fervor</li>
+                    <li>Mana: Costs 10 mana</li>
                     <li>Cast Time: Instant</li>
                     <li>Cooldown: Cannot be cast again for 5 turns</li>
                     <li class="description">Deals 20 damage over 10 turns. Stacks accumulate damage</li>
                 </ul>
                 <h4>Cauterize</h4>
                 <ul>
-                    <li>Mana: Costs 20 fervor</li>
+                    <li>Mana: Costs 20 mana</li>
                     <li>Cast Time: Instant</li>
                     <li>Cooldown: Cannot be cast again for 20 turns</li>
                     <li class="description">Deals 50 damage then heals the target for 100 health over 2 turns</li>
