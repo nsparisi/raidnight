@@ -129,13 +129,13 @@ document.body.addEventListener("keydown", (event) =>
         case 39: //right
             GameAction_Resume();
             break;
-        case 65: //A
+        case 81: //Q
             GameAction_NewGame();
             break;
-        case 83: //S
+        case 87: //W
             GameAction_Step();
             break;
-        case 68: //D
+        case 69: //E
             GameAction_Resume();
             break;
     }
