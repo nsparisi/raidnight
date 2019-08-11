@@ -57,9 +57,10 @@ var GameAction_ReadInput1 = function (){
     if (team)
     {
         GLOBAL_GAME.readInput(team);
+        GLOBAL_GAME.newGame();
         GLOBAL_GAME.start();
     }
-}
+};
 
 var GameAction_ReadInput2 = function (){
     GLOBAL_GAME.stop();
@@ -67,9 +68,10 @@ var GameAction_ReadInput2 = function (){
     if (team)
     {
         GLOBAL_GAME.readInput(team);
+        GLOBAL_GAME.newGame();
         GLOBAL_GAME.start();
     }
-}
+};
 
 var GameAction_ReadInput3 = function (){
     GLOBAL_GAME.stop();
@@ -77,25 +79,64 @@ var GameAction_ReadInput3 = function (){
     if (team)
     {
         GLOBAL_GAME.readInput(team);
+        GLOBAL_GAME.newGame();
         GLOBAL_GAME.start();
     }
-}
+};
 
 var GameAction_NewGame = function (){
+    if(GLOBAL_GAME.allyActions == null)
+    {
+        console.log("Please read a valid input before beginning a new game.");
+        return;
+    }
+
     GLOBAL_GAME.newGame();
     GLOBAL_GAME.start();
-}
+};
 
 var GameAction_Step = function (){
     GLOBAL_GAME.step();
-}
+};
 
 var GameAction_Resume = function (){
     GLOBAL_GAME.resume();
-}
+};
 
 var GameAction_Debug = function (){
     let element = <HTMLInputElement>document.getElementById("debug_checkbox");
     RaidNight.Debug.DebugEnabled = element.checked;
-}
+};
 GameAction_Debug();
+
+document.body.addEventListener("keydown", (event) =>
+{
+    //console.log(`key: ${event.code} ${event.keyCode}`);
+
+    // prevent arrow keys from manipulating the page
+    if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+        event.preventDefault();
+    }
+
+    switch(event.keyCode)
+    {
+        case 37: // left
+            GameAction_NewGame();
+            break;
+        case 40: //down
+            GameAction_Step();
+            break;
+        case 39: //right
+            GameAction_Resume();
+            break;
+        case 65: //A
+            GameAction_NewGame();
+            break;
+        case 83: //S
+            GameAction_Step();
+            break;
+        case 68: //D
+            GameAction_Resume();
+            break;
+    }
+});

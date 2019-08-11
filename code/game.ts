@@ -20,7 +20,6 @@ module RaidNight.Engine
         readInput = (allyActions: PlayerActions) =>
         {
             this.allyActions = allyActions;
-            Debug.log(`readinput: ${this.fightType}`);
 
             if(this.fightType == FightType.Fight1)
             {
@@ -38,7 +37,6 @@ module RaidNight.Engine
 
         newGame = () =>
         {
-            Debug.log(`newGame: ${this.fightType}`);
             if(this.fightType == FightType.Fight1)
             {
                 this.newGame1();
