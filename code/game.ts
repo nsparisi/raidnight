@@ -266,8 +266,8 @@ module RaidNight.Engine
             wizard.mana = 0;
             wizard.addStatus("ST_HEATINGUP", "Wizard");            
             let boss1 = new Boss("MossDragon", 5000, 100, 2, 7);
-            let boss2 = new Boss("DevilVine", 1000, 100, 4, 4);
-            let boss3 = new Boss("CorpseFlower", 1000, 100, 4, 10);
+            let boss2 = new DevilVine("DevilVine", 1000, 100, 4, 4);
+            let boss3 = new CorpseFlower("CorpseFlower", 1000, 100, 4, 10);
 
             boss1.actionList = [];
             boss2.actionList = [];

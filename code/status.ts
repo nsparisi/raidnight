@@ -330,8 +330,21 @@ module RaidNight.Engine
             
             this.type = StatusType.Bad;
             this.name = "ST_Bind";
-            this.duration = 20;
+            this.duration = 5;
             this.st_bindEffect = 100;
+        }
+    }
+
+    export class status_EnhancedBind extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_EnhancedBind";
+            this.duration = 5;
+            this.st_bindEffect = 200;
         }
     }
 
@@ -346,6 +359,21 @@ module RaidNight.Engine
             this.duration = 100;
             this.healthPerTurn = -1;
             this.maxStacks = 100;
+        }
+    }
+
+    export class status_Miasmata extends Status
+    {
+        constructor()
+        {
+            super();
+            
+            this.type = StatusType.Bad;
+            this.name = "ST_Miasma";
+            this.duration = 100;
+            this.healthPerTurn = -1;
+            this.maxStacks = 100;
+            this.stacks = 2;
         }
     }
 

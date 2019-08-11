@@ -519,6 +519,18 @@ module RaidNight.Engine
         }
     }
 
+    export class skill_EnhancedWhip extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = -15;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "EnhancedWhip";
+        }
+    }
+
     export class skill_Bind extends Skill
     {
         constructor()
@@ -532,6 +544,19 @@ module RaidNight.Engine
         }
     }
 
+    export class skill_EnhancedBind extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "EnhancedBind";
+            this.targetStatuses = ["ST_ENHANCEDBIND"];
+        }
+    }
+
     export class skill_Miasma extends Skill
     {
         constructor()
@@ -542,6 +567,19 @@ module RaidNight.Engine
             this.castTime = 1;
             this.name = "Miasma";
             this.targetStatuses = ["ST_MIASMA"];
+        }
+    }
+
+    export class skill_Miasmata extends Skill
+    {
+        constructor()
+        {
+            super();
+            this.health = 0;
+            this.mana = 0;
+            this.castTime = 1;
+            this.name = "Miasmata";
+            this.targetStatuses = ["ST_MIASMATA"];
         }
     }
     

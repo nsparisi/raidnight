@@ -121,7 +121,7 @@ module RaidNight.Engine
                 // clear out the text boxes
                 for (let i = 0; i < inputs.length; i++)
                 {
-                    inputs[i].value = "";
+                    //inputs[i].value = "";
                 }
 
                 return playerActions;

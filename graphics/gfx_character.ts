@@ -136,7 +136,11 @@ module RaidNight.Graphics
  
             if(this.isBoss)
             {
-                if(this.character.name == "Dragon")
+                if(this.character.health <= 0)
+                {
+                    this.gfx_manaBlue.clear();
+                }
+                else if(this.character.name == "Dragon")
                 {
                     let rgb = this.rgbToNumber(108, 44, 171);
                     blueWidth = redWidth * ((((GLOBAL_GAME.arena.turn - 1) % 20) + 1) / 20);
@@ -361,11 +365,23 @@ module RaidNight.Graphics
                             effect = new SpellEffect_Whip(this.scene, start);
                             break;
 
+                            case "ENHANCEDWHIP":
+                            effect = new SpellEffect_Whip(this.scene, start);
+                            break;
+
                             case "BIND":
                             effect = new SpellEffect_Bind(this.scene, end);
                             break;
 
+                            case "ENHANCEDBIND":
+                            effect = new SpellEffect_Bind(this.scene, end);
+                            break;
+
                             case "MIASMA":
+                            effect = new SpellEffect_Miasma(this.scene, start, end);
+                            break;
+
+                            case "MIASMATA":
                             effect = new SpellEffect_Miasma(this.scene, start, end);
                             break;
 

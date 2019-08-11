@@ -201,13 +201,13 @@ module RaidNight.Engine
                 let blocked = health * -this.defense / 100;
                 let empowered = health * source.power / 100;
 
-                health = Math.min(0, health + blocked + empowered);
+                health = Math.min(0, original + blocked + empowered);
 
                 // Priest took -100 total damage from Dragon. 100 (20) [20] (20 def) [20 pow]
                 Debug.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) [${source.power} pow]`);
 
-                // Damage the vines
-                this.addBindValue(health);
+                // Damage the vines - ignore defense
+                this.addBindValue(original + empowered);
             }
             else if(health > 0)
             {
@@ -246,7 +246,7 @@ module RaidNight.Engine
             {
                 if (this.statuses[i].name.toUpperCase() == status.name.toUpperCase())
                 {
-                    status.stacks = Math.min(status.maxStacks, this.statuses[i].stacks + 1);
+                    status.stacks = Math.min(status.maxStacks, this.statuses[i].stacks + status.stacks);
                     this.statuses[i] = status;
                     alreadyApplied = true;
                     Debug.log(`Refreshing status ${status.name} on ${this.name}`);
@@ -692,6 +692,78 @@ module RaidNight.Engine
                 Debug.log("⌛⌛ TIMEDRAGON is reversing time! ⌛⌛");
                 GLOBAL_GAME.startText("TIMEDRAGON is reversing time!");
             }
+        }
+    }
+
+    export class CorpseFlower extends Boss
+    {
+        phase2: boolean = false;
+
+        grabNewAction ()
+        {
+            // when devilvine dies
+            if (!this.phase2 && GLOBAL_GAME.arena.enemies[1].health <= 0)
+            //if (!this.phase2 && GLOBAL_GAME.arena.turn == 100)
+            {
+                this.phase2 = true;
+                this.actionList = [];
+                this.actionList.push(new action_Skill("Miasmata", ["knight", "priest", "wizard"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+
+                Debug.log("🌿🌿 CORPSEFLOWER grows stronger! 🌿🌿");
+                GLOBAL_GAME.startText("CORPSEFLOWER grows stronger!");
+            }
+
+            super.grabNewAction();
+        }
+    }
+
+    export class DevilVine extends Boss
+    {
+        phase2: boolean = false;
+
+        grabNewAction ()
+        {
+            // when corpseflower dies
+            if (!this.phase2 && GLOBAL_GAME.arena.enemies[2].health <= 0)
+            //if (!this.phase2 && GLOBAL_GAME.arena.turn == 5)
+            {
+                this.phase2 = true;
+                this.actionList = [];                
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
+                this.actionList.push(new action_Skill("EnhancedBind", ["knight"]));
+
+                Debug.log("🌿🌿 DEVILVINE grows stronger! 🌿🌿");
+                GLOBAL_GAME.startText("DEVILVINE grows stronger!");
+            }
+
+            super.grabNewAction();
         }
     }
 

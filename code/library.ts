@@ -50,8 +50,11 @@ module RaidNight.Engine
             "TAILSWIPE": new skill_TailSwipe(),
             "VENOMOUSBITE": new skill_VenomousBite(),
             "WHIP": new skill_Whip(),
+            "ENHANCEDWHIP": new skill_EnhancedWhip(),
             "BIND": new skill_Bind(),
+            "ENHANCEDBIND": new skill_EnhancedBind(),
             "MIASMA": new skill_Miasma(),
+            "MIASMATA": new skill_Miasmata(),
 
             // TDRAGON
             "REWIND": new skill_Rewind(),
@@ -101,7 +104,9 @@ module RaidNight.Engine
             // MDRAGON
             "ST_VENOMOUSBITE": () => {return new status_VenomousBite();},
             "ST_BIND": () => {return new status_Bind();},
+            "ST_ENHANCEDBIND": () => {return new status_EnhancedBind();},
             "ST_MIASMA": () => {return new status_Miasma();},
+            "ST_MIASMATA": () => {return new status_Miasmata();},
             
             // TDRAGON
             "ST_HALT": () => {return new status_Halt();},
@@ -117,8 +122,8 @@ module RaidNight.Engine
             "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],  
             "TIMEDRAGON": ["REWIND", "FASTFORWARD", "HALT", "BITE", "TIMELASER", "SANDPRISM"],
             "SANDPRISM": ["TIMELASER"],
-            "DEVILVINE": ["WHIP", "BIND"],
-            "CORPSEFLOWER": ["MIASMA"],
+            "DEVILVINE": ["WHIP", "ENHANCEDWHIP", "BIND", "ENHANCEDBIND"],
+            "CORPSEFLOWER": ["MIASMA", "MIASMATA"],
             "ROOM": ["SPIKETRAP", "FIRESTORM"]
         }
 
