@@ -12,14 +12,19 @@ module RaidNight.Graphics
         
         gfx_manaBlack: Phaser.GameObjects.Graphics;
         gfx_manaBlue: Phaser.GameObjects.Graphics;
+        energyTweenR: Phaser.Tweens.Tween;
+        energyTweenG: Phaser.Tweens.Tween;
+        energyTweenB: Phaser.Tweens.Tween;
 
         buffPanel: BuffPanel;
+        isBoss: boolean;
 
         constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.Character, sprite: Phaser.GameObjects.Sprite, isBoss: boolean)
         {
             this.scene = scene;
             this.character = char_reference;
             this.sprite = sprite;
+            this.isBoss = isBoss;
 
             this.sprite.setDepth(DepthLayer.Med_Priority);
             
@@ -31,6 +36,34 @@ module RaidNight.Graphics
             this.gfx_manaBlue = this.scene.add.graphics().setDepth(DepthLayer.High_Priority);
 
             this.buffPanel = new BuffPanel(this.scene, this.character, isBoss);
+
+            if(isBoss)
+            {
+                this.energyTweenR = this.scene.tweens.addCounter({
+                    from: 108,
+                    to: 255,
+                    duration: 800,
+                    ease: "Sine.easeInOut",
+                    yoyo: true,
+                    repeat: -1
+                });
+                this.energyTweenG = this.scene.tweens.addCounter({
+                    from: 44,
+                    to: 255,
+                    duration: 800,
+                    ease: "Sine.easeInOut",
+                    yoyo: true,
+                    repeat: -1
+                });
+                this.energyTweenB = this.scene.tweens.addCounter({
+                    from: 171,
+                    to: 255,
+                    duration: 800,
+                    ease: "Sine.easeInOut",
+                    yoyo: true,
+                    repeat: -1
+                });
+            }
         }
 
         destroy = () =>
@@ -42,7 +75,15 @@ module RaidNight.Graphics
             this.gfx_manaBlue.destroy();
             this.sprite.destroy();
             this.buffPanel.destroy();
+            if(this.energyTweenR){this.energyTweenR.stop()};
+            if(this.energyTweenG){this.energyTweenG.stop()};
+            if(this.energyTweenB){this.energyTweenB.stop()};
         }
+          
+        rgbToNumber(r, g, b) {
+            return r * 256 * 256 + g * 256 + b;
+        }
+
 
         update(newTurn: boolean)
         {
@@ -92,14 +133,101 @@ module RaidNight.Graphics
                 centerY + manaYOffset - blackPadding, 
                 redWidth + (blackPadding*2), 
                 colorHeight + (blackPadding*2));
-
-            this.gfx_manaBlue.clear();
-            this.gfx_manaBlue.fillStyle(0x2255CC, 1.0);
-            this.gfx_manaBlue.fillRect(
-                centerX - (redWidth / 2), 
-                centerY + manaYOffset, 
-                blueWidth, 
-                colorHeight);
+ 
+            if(this.isBoss)
+            {
+                if(this.character.name == "Dragon")
+                {
+                    let rgb = this.rgbToNumber(108, 44, 171);
+                    blueWidth = redWidth * ((((GLOBAL_GAME.arena.turn - 1) % 20) + 1) / 20);
+                    if (GLOBAL_GAME.arena.turn % 20 == 0)
+                    {
+                        rgb = this.rgbToNumber( 
+                            Math.floor(this.energyTweenR.getValue()),
+                            Math.floor(this.energyTweenG.getValue()),
+                            Math.floor(this.energyTweenB.getValue()));
+                    }
+                    this.gfx_manaBlue.clear();
+                    this.gfx_manaBlue.fillStyle(rgb, 1);
+                    this.gfx_manaBlue.fillRect(
+                        centerX - (redWidth / 2), 
+                        centerY + manaYOffset, 
+                        blueWidth, 
+                        colorHeight);
+                }
+                else if(this.character.name == "DevilVine")
+                {
+                    let rgb = this.rgbToNumber(108, 44, 171);
+                    blueWidth = redWidth * ((((GLOBAL_GAME.arena.turn - 1) % 20) + 1) / 20);
+                    if (GLOBAL_GAME.arena.turn % 20 == 0)
+                    {
+                        rgb = this.rgbToNumber( 
+                            Math.floor(this.energyTweenR.getValue()),
+                            Math.floor(this.energyTweenG.getValue()),
+                            Math.floor(this.energyTweenB.getValue()));
+                    }
+                    this.gfx_manaBlue.clear();
+                    this.gfx_manaBlue.fillStyle(rgb, 1);
+                    this.gfx_manaBlue.fillRect(
+                        centerX - (redWidth / 2), 
+                        centerY + manaYOffset, 
+                        blueWidth, 
+                        colorHeight);
+                }
+                else if(this.character.name == "CorpseFlower")
+                {
+                    let rgb = this.rgbToNumber(108,44,171);
+                    blueWidth = redWidth * ((((GLOBAL_GAME.arena.turn + 8) % 10) + 1) / 10);
+                    if ((GLOBAL_GAME.arena.turn - 1) % 10 == 0)
+                    {
+                        rgb = this.rgbToNumber( 
+                            Math.floor(this.energyTweenR.getValue()),
+                            Math.floor(this.energyTweenG.getValue()),
+                            Math.floor(this.energyTweenB.getValue()));
+                    }
+                    this.gfx_manaBlue.clear();
+                    this.gfx_manaBlue.fillStyle(rgb, 1);
+                    this.gfx_manaBlue.fillRect(
+                        centerX - (redWidth / 2), 
+                        centerY + manaYOffset, 
+                        blueWidth, 
+                        colorHeight);
+                }
+                else if(this.character.name == "TimeDragon")
+                {
+                    let rgb = this.rgbToNumber(108,44,171);
+                    blueWidth = redWidth * ((((GLOBAL_GAME.arena.turn - 1) % 10) + 1) / 10);
+                    if ((GLOBAL_GAME.arena.turn) % 10 == 0)
+                    {
+                        rgb = this.rgbToNumber( 
+                            Math.floor(this.energyTweenR.getValue()),
+                            Math.floor(this.energyTweenG.getValue()),
+                            Math.floor(this.energyTweenB.getValue()));
+                    }
+                    this.gfx_manaBlue.clear();
+                    this.gfx_manaBlue.fillStyle(rgb, 1);
+                    this.gfx_manaBlue.fillRect(
+                        centerX - (redWidth / 2), 
+                        centerY + manaYOffset, 
+                        blueWidth, 
+                        colorHeight);
+                }
+                else 
+                {
+                    this.gfx_manaBlack.clear();
+                    this.gfx_manaBlue.clear();
+                }
+            }
+            else 
+            {
+                this.gfx_manaBlue.clear();
+                this.gfx_manaBlue.fillStyle(0x2255CC, 1.0);
+                this.gfx_manaBlue.fillRect(
+                    centerX - (redWidth / 2), 
+                    centerY + manaYOffset, 
+                    blueWidth, 
+                    colorHeight);
+            }
 
             this.buffPanel.update(newTurn);
 
