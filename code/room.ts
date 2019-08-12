@@ -289,7 +289,10 @@ module RaidNight.Engine
         
         public logMessageForFloorEffect(name: string)
         {
-            Debug.log(`${name} is taking damage from the quicksand!`);
+            if (name.toUpperCase().indexOf("SANDPRISM") < 0)
+            {
+                Debug.log(`${name} is taking damage from the quicksand!`);
+            }
         }
         
         grabNewAction ()

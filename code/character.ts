@@ -162,6 +162,12 @@ module RaidNight.Engine
                 return;
             }
 
+            if (this.isHalted)
+            {
+                Debug.log(`⌛⌛ ${this.name} is frozen in time! ⌛⌛`);
+                return;
+            }
+
             this.castTimeRemaining--;
 
             // check current action
@@ -294,11 +300,6 @@ module RaidNight.Engine
 
         protected grabNewAction()
         {
-            if (this.isHalted)
-            {
-                return;
-            }
-
             if (this.actionIndex >= this.actionList.length)
             {
                 this.currentAction = new action_Wait();
@@ -355,7 +356,7 @@ module RaidNight.Engine
             this.castTimeRemaining = 0;
             this.isCasting = false;
 
-            if (this.name.toUpperCase() != "ROOM")
+            if (this.name.toUpperCase() != "ROOM" && this.name.toUpperCase().indexOf("SANDPRISM") < 0)
             {
                 Debug.log(`${this.name} chose to wait.`);
             }
@@ -388,13 +389,6 @@ module RaidNight.Engine
             if (this.bindValue > 0)
             {
                 Debug.log(`${this.name} is bound by vines and cannot use ${skill.name}!`);
-                this.isCastSuccessful = false;
-                return;
-            }
-
-            if (this.isHalted)
-            {
-                Debug.log(`⌛⌛ ${this.name} is frozen in time! ⌛⌛`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -434,13 +428,6 @@ module RaidNight.Engine
                 return;
             }
 
-            if (this.isHalted)
-            {
-                Debug.log(`🕙🕙 ${this.name} could not finalize cast of ${skill.name} because they are frozen in time! 🕙🕙`);
-                this.isCastSuccessful = false;
-                return;
-            }
-
             // spend mana
             this.addMana(skill.mana);
 
@@ -467,11 +454,15 @@ module RaidNight.Engine
             this.countIceShardStacksAndConsumeStatus(skill);
 
             // cast on multiple targets
-            for(let i = 0; i < targets.length; i++)
+            for (let i = 0; i < targets.length; i++)
             {
                 let target = targets[i];
 
-                Debug.log(`${this.name} used ${skill.name} on ${target.name}`);
+                if (target.name.toUpperCase().indexOf("SANDPRISM") < 0)
+                {
+                    Debug.log(`${this.name} used ${skill.name} on ${target.name}`);
+                }
+
                 target.addHealth(skill.health, this);
 
                 for (let j = 0; j < skill.targetStatuses.length; j++)
