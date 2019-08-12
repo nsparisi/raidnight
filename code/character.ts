@@ -60,6 +60,19 @@ module RaidNight.Engine
 
             // process bad effects last, so they can be protected by defense.
             this.resolveStatusesOfType(StatusType.Bad);
+
+            // process damage taken from the floor/room
+            this.resolveDamageFromFloorEffects();
+        }
+
+        protected resolveDamageFromFloorEffects()
+        {
+            let damage = GLOBAL_GAME.arena.room.damageFromFloorEffect(this.x, this.y);
+            if (damage)
+            {
+                GLOBAL_GAME.arena.room.logMessageForFloorEffect(this.name);
+                this.addHealth(-damage, GLOBAL_GAME.arena.room);
+            }
         }
 
         protected resolveStatusesOfType(type: StatusType)

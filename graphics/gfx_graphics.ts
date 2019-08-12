@@ -31,6 +31,7 @@ module RaidNight.Graphics
         }
         
         img_background: Phaser.GameObjects.Image;
+        overgrowths: Overgrowth_Sprite[];
         
         priest: Character;
         knight: Character;
@@ -125,6 +126,7 @@ module RaidNight.Graphics
             this.load.image('assets/skill/dragon/sk_whip.png', 'assets/skill/dragon/sk_whip.png');
             this.load.image('assets/skill/dragon/sk_bind.png', 'assets/skill/dragon/sk_bind.png');
             this.load.image('assets/skill/dragon/sk_miasma.png', 'assets/skill/dragon/sk_miasma.png');
+            this.load.image('assets/overgrowth.png', 'assets/overgrowth.png');
             
             // skill round 3
             this.load.image('assets/skill/wizard/sk_coolingwinds.png', 'assets/skill/wizard/sk_coolingwinds.png');
@@ -162,6 +164,7 @@ module RaidNight.Graphics
             this.load.spritesheet('assets/ss_fire.png', 'assets/ss_fire.png', {frameWidth:39, frameHeight: 40});
 
             this.allSkillEffects = [];
+            this.overgrowths = [];
         }
 
         create ()
@@ -244,6 +247,8 @@ module RaidNight.Graphics
             if(this.room){this.room.destroy();}
             this.prisms.forEach((prism) => { if(prism){ prism.destroy(); } });
             this.prisms = [];
+            this.overgrowths.forEach((growth) => { if(growth){ growth.destroy(); } });
+            this.overgrowths = [];
             this.clearSkillEffects();
 
             let char_priest: RaidNight.Engine.Character = null;
@@ -321,6 +326,18 @@ module RaidNight.Graphics
                 this.corpseFlower = new Character(this, char_corpseFlower, this.add.sprite(100, 500, 'assets/corpse_flower.png'), true);
                 this.corpseFlower.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map2.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+
+                for(let x = 0; x < GLOBAL_GAME.arena.room.width; x++)
+                {
+                    for(let y = 0; y < GLOBAL_GAME.arena.room.height; y++)
+                    {
+                        let overgrowthsprite = this.add.sprite(
+                            x * this.tileWidth + this.tileWidth / 2, 
+                            y * this.tileHeight + this.tileHeight / 2, 
+                            'assets/overgrowth.png');
+                        this.overgrowths.push(new Overgrowth_Sprite(overgrowthsprite, x, y));
+                    }
+                }
             }
             else if (GLOBAL_GAME.fightType == Engine.FightType.Fight3)
             {
@@ -365,6 +382,7 @@ module RaidNight.Graphics
             if(this.devilVine){this.devilVine.update(isNewTurn);}
             if(this.corpseFlower){this.corpseFlower.update(isNewTurn);}
             this.prisms.forEach((prism)=>{prism.update(isNewTurn)});
+            this.overgrowths.forEach((growth)=>{growth.update(isNewTurn)});
             
             if (this.dragon)
             {
@@ -432,6 +450,37 @@ module RaidNight.Graphics
             {
                 this.allSkillEffects[i].debug();
             }
+        }
+    }
+
+    class Overgrowth_Sprite
+    {
+        sprite: Phaser.GameObjects.Sprite;
+        tileX: integer;
+        tileY: integer;
+
+        constructor(sprite: Phaser.GameObjects.Sprite, tileX: integer, tileY: integer)
+        {
+            this.sprite = sprite;
+            this.tileX = tileX;
+            this.tileY = tileY;
+            
+            this.sprite.setDepth(DepthLayer.Low_Priority);
+            this.sprite.setVisible(false);
+        }
+
+        update(newTurn: boolean)
+        {
+            if(newTurn)
+            {
+                this.sprite.setVisible(
+                    GLOBAL_GAME.arena.room.damageFromFloorEffect(this.tileX, this.tileY) != 0);
+            }
+        }
+
+        destroy()
+        {
+            this.sprite.destroy();
         }
     }
 }

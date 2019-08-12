@@ -287,7 +287,7 @@ module RaidNight.Engine
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.room = new Room2(20, 15);
+            this.arena.room = new Room3(20, 15);
             
             this.fightType = FightType.Fight3;
             
