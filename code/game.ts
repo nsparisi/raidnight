@@ -246,10 +246,10 @@ module RaidNight.Engine
             
             this.fightType = FightType.Fight1;
             
-            let knight = new Character("Knight", 350, 100, 9, 7);
+            let knight = new Character("Knight", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 150, 400, 11, 6);
-            let wizard = new Character("Wizard", 150, 400, 13, 8);
+            let priest = new Character("Priest", 200, 400, 11, 6);
+            let wizard = new Character("Wizard", 200, 400, 13, 8);
             let boss = new Boss("Dragon", 10000, 100, 3, 8);
             boss.actionList = [];
             knight.actionList = [];
@@ -271,10 +271,10 @@ module RaidNight.Engine
             
             this.fightType = FightType.Fight2;
             
-            let knight = new Character("Knight", 350, 100, 9, 7);
+            let knight = new Character("Knight", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 150, 400, 12, 6);
-            let wizard = new Character("Wizard", 150, 100, 14, 8);
+            let priest = new Character("Priest", 200, 400, 12, 6);
+            let wizard = new Character("Wizard", 200, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_HEATINGUP", "Wizard");            
             let boss1 = new Boss("MossDragon", 5000, 100, 2, 7);
@@ -303,10 +303,10 @@ module RaidNight.Engine
             
             this.fightType = FightType.Fight3;
             
-            let knight = new Character("Knight", 350, 100, 9, 7);
+            let knight = new Character("Knight", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 150, 400, 12, 6);
-            let wizard = new Character("Wizard", 150, 100, 14, 8);
+            let priest = new Character("Priest", 200, 400, 12, 6);
+            let wizard = new Character("Wizard", 200, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_OVERHEATING", "Wizard");            
             let boss1 = new TimeDragon("TimeDragon", 5000, 100, 2, 7);

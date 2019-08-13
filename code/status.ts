@@ -273,7 +273,7 @@ module RaidNight.Engine
             this.type = StatusType.Bad;
             this.name = "ST_Claw";
             this.duration = 3;
-            this.healthPerTurn = -5;
+            this.healthPerTurn = -4;
             this.maxStacks = 5;
         }
     }
