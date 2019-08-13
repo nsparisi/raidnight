@@ -88,13 +88,14 @@
             <div id="Game"></div>
             <div style="width: 100%; padding: 15px; background: #ddddff;">
                 <button onclick="GameAction_ReadInput1();">Read Input</button> -- 
-                <button onclick="GameAction_NewGame();">Reset</button>
-                <button onclick="GameAction_Step();">Step</button>
-                <button onclick="GameAction_Resume();">Play</button>
+                <button onclick="GameAction_NewGame();">Reset <br />◀️</button>
+                <button onclick="GameAction_Step();">Step <br />🔽</button>
+                <button onclick="GameAction_Resume();">Play<br />▶️</button>
                 <input type="radio" name="speed" value="1000" checked> Slow
                 <input type="radio" name="speed" value="500"> Fast
                 <input type="radio" name="speed" value="100"> Fastest
-                <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br />
+                <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br /><br />
+                Hotkeys: Use Left/Down/Right arrow keys or 'Q' 'W' 'E' for Reset/Step/Play respectively
             </div>
 
             <div style="width: 30%; float: left; padding: 0 15px;">
