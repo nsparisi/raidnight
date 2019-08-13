@@ -327,7 +327,8 @@ module RaidNight.Engine
             // 9 8 7 6 5 4 3 2 1 0
             //                   ^
             // So, place actionIndex at 0.
-            this.actionList.reverse();
+            let clone = this.actionList.slice(0);
+            this.actionList = clone.reverse(); // this is to prevent a new game from retaining the reversed values
             this.actionIndex = this.actionList.length - this.actionIndex;
         }
 
@@ -500,7 +501,7 @@ module RaidNight.Engine
 
         protected fastforwardByTime(time: integer)
         {
-            this.actionIndex = Math.max(this.actionIndex + time, 0);
+            this.actionIndex = Math.min(Math.max(this.actionIndex + time, 0), this.actionList.length);
         }
 
         protected countIceShardStacksAndConsumeStatus(skill: Skill)

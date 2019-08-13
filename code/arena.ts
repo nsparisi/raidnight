@@ -70,7 +70,12 @@ module RaidNight.Engine
             let i = 0;
             for (i = 0; i < this.enemies.length; i++)
             {
-                if(this.enemies[i].health > 0)
+                if (this.enemies[i].name.toUpperCase().indexOf("SANDPRISM") >= 0)
+                {
+                    continue;
+                }
+
+                if (this.enemies[i].health > 0)
                 {
                     isWon = false;
                     break;

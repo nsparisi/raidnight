@@ -200,8 +200,8 @@ module RaidNight.Graphics
                 else if(this.character.name == "TimeDragon")
                 {
                     let rgb = this.rgbToNumber(108,44,171);
-                    blueWidth = redWidth * ((((GLOBAL_GAME.arena.turn - 1) % 10) + 1) / 10);
-                    if ((GLOBAL_GAME.arena.turn) % 10 == 0)
+                    blueWidth = Phaser.Math.Clamp(redWidth * ((((GLOBAL_GAME.arena.turn + 4) % 40) + 6) / 40), 0, redWidth);
+                    if (blueWidth == redWidth)
                     {
                         rgb = this.rgbToNumber( 
                             Math.floor(this.energyTweenR.getValue()),

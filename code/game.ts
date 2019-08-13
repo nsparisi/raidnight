@@ -188,7 +188,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("SandPrism",["SandPrism_1", "SandPrism_3", "SandPrism_5", "SandPrism_7", "SandPrism_9", "SandPrism_11", "SandPrism_13"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_2", "SandPrism_4", "SandPrism_6", "SandPrism_8", "SandPrism_10", "SandPrism_12"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_14", "SandPrism_16", "SandPrism_18", "SandPrism_20"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
@@ -196,7 +196,7 @@ module RaidNight.Engine
             
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
-            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_14", "SandPrism_16", "SandPrism_18", "SandPrism_20"]));
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_2", "SandPrism_4", "SandPrism_6", "SandPrism_8", "SandPrism_10", "SandPrism_12"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("SandPrism",["SandPrism_15", "SandPrism_17", "SandPrism_19", "SandPrism_21"]));
@@ -215,6 +215,18 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("SandPrism",["SandPrism_14", "SandPrism_16", "SandPrism_18", "SandPrism_20"]));
             boss.actionList.push(new action_Skill("SandPrism",["SandPrism_15", "SandPrism_17", "SandPrism_19", "SandPrism_21"]));
             boss.actionList.push(new action_Skill("Halt", ["knight", "priest", "wizard"]));
+
+            
+            boss.actionList.push(new action_Wait());
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_1", "SandPrism_2", "SandPrism_3",  "SandPrism_4", "SandPrism_5", "SandPrism_6", "SandPrism_7", "SandPrism_8", "SandPrism_9", "SandPrism_10", "SandPrism_11",  "SandPrism_12", "SandPrism_13" ]));
+            boss.actionList.push(new action_Wait());
+            boss.actionList.push(new action_Skill("SandPrism",["SandPrism_14", "SandPrism_15", "SandPrism_16", "SandPrism_17", "SandPrism_18", "SandPrism_19", "SandPrism_20", "SandPrism_21"]));
+            boss.actionList.push(new action_Wait());
+            boss.actionList.push(new action_Wait());
+            boss.actionList.push(new action_Wait());
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));
+            boss.actionList.push(new action_Skill("Bite", ["knight"]));            
 
             let room = new Room3(20, 15);
             room.actionList = [];
