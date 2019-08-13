@@ -409,7 +409,7 @@ module RaidNight.Graphics
             this.text_knightMana.setText(`${this.knight.character.mana.toFixed(0)} / ${this.knight.character.maxMana} MANA`);
             this.text_priestMana.setText(`${this.priest.character.mana.toFixed(0)} / ${this.priest.character.maxMana} MANA`);
 
-            this.text_TurnCount.setText(`${GLOBAL_GAME.arena.turn}`);
+            this.text_TurnCount.setText(`${GLOBAL_GAME.arena.turn >= 0 ? GLOBAL_GAME.arena.turn : ""}`);
 
             // do new stuff
             for (let i = 0; i < this.allSkillEffects.length; i++)
