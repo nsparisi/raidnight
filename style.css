@@ -22,3 +22,11 @@
     background-color: rgb(169, 216, 238)
 }
 
+.spellbook a {
+    margin-bottom: 5px;
+    line-height: 20px;
+    background-color: rgb(169, 216, 238);
+    display: inline-block;
+    
+}
+

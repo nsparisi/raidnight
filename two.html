@@ -82,6 +82,7 @@
             throne.<br /><br />
             In the dungeon, a MOSS DRAGON has imprisioned the King and Queen. Save them!<br /><br />
             The Wizard has been infused with a fiery power after defeating the fire dragon.<br /><br />
+            <a href="./assets/Dungeon Template.xlsx">Download Boss Moveset</a> <br /><br />
             <a href="#instructions">See Instructions</a>
         </p>
         <div style="text-align:center;">
@@ -99,8 +100,7 @@
 
             <div style="width: 30%; float: left; padding: 0 15px;">
                 <h2>KNIGHT</h2>
-                <textarea cols="40" rows="10" id="knight_input">taunt:mossdragon
-                    taunt:devilvine</textarea>
+                <textarea cols="40" rows="10" id="knight_input">taunt:mossdragon taunt:devilvine pierce:corpseflower</textarea>
                 <h3>KNIGHT SKILLS</h3>
 
                 <h4>Taunt</h4>
@@ -145,7 +145,7 @@
             </div>
             <div style="width: 30%; float: left; padding: 0 15px;">
                 <h2>PRIEST</h2>
-                <textarea cols="40" rows="10" id="priest_input">flashheal:knight</textarea>
+                <textarea cols="40" rows="10" id="priest_input">regen:knight flashheal:knight flashheal:knight</textarea>
                 <h3>PRIEST SKILLS</h3>
 
                 <h4>GreaterHeal</h4>
@@ -182,11 +182,7 @@
             </div>
             <div style="width: 30%; float: left; padding: 0 15px;">
                 <h2>WIZARD</h2>
-                <textarea cols="40" rows="10" id="wizard_input">
-                    kindle:corpseflower
-                    scorch:corpseflower
-                    kindle:corpseflower
-                    kindle:corpseflower</textarea>
+                <textarea cols="40" rows="10" id="wizard_input">kindle:corpseflower scorch:corpseflower</textarea>
                 <h3>WIZARD SKILLS</h3>
 
                 <h4>Kindle</h4>
@@ -235,6 +231,7 @@
                 <hr />
                 <div>
                     <h3>MOSSDRAGON SKILLS</h3>
+                    <div><a href="./assets/Dungeon Template.xlsx">Download Boss Moveset</a></div>
                     <div style="width: 22%; float: left; padding: 0 10px;">
                         <h4>TailSwipe</h4>
                         <ul>
@@ -256,9 +253,9 @@
                         </ul>
                     </div>
                     <div style="width: 22%; float: left; padding: 0 10px;">
-                        <h4>Overgrowth</h4>
+                        <h4>Overgrowth (Ultimate)</h4>
                         <ul>
-                            <li class="description">Deadly flora emerge from the walls, dealing 100 damage.
+                            <li class="description">Deadly flora emerge from the walls, dealing 100 damage. Activates if both minions die.
                             </li>
                         </ul>
                     </div>
@@ -285,6 +282,20 @@
                             </li>
                         </ul>
                     </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Whip (Enhanced)</h4>
+                        <ul>
+                            <li class="description">Gains power if CORPSEFLOWER dies. Deals 15 damage</li>
+                        </ul>
+                    </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Bind (Enhanced)</h4>
+                        <ul>
+                            <li class="description">Gains power if CORPSEFLOWER dies. Binds the target, preventing them from performing any action 
+                                until they receive 200 direct damage from any source
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div style="clear: both;">
                 </div>
@@ -299,6 +310,13 @@
                         <ul>
                             <li class="description">Enshrouds the party in a deadly fog. 
                                 Deals 1 damage per turn. Stacks once every 10 turns.</li>
+                        </ul>
+                    </div>
+                    <div style="width: 22%; float: left; padding: 0 10px;">
+                        <h4>Miasmata (Enhanced)</h4>
+                        <ul>
+                            <li class="description">Gains power if DEVILVINE dies. Stacks accumulate twice per 10 turns.
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -319,7 +337,7 @@
                     <li>move:up|down|left|right</li>
                     <li>wait</li>
                     <h3>Tip:</h3>
-                    <li>Check out the F12 Developer Tools console logs in your browser for detailed information.</li>
+                    <li>Open the F12 Developer Tools console logs in your browser for detailed information.</li>
                 </ul>
             </div>
             <script src="./out/raidnight.js"></script>
