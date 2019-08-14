@@ -54,6 +54,10 @@ module RaidNight.Graphics
         text_knightMana: Phaser.GameObjects.Text;
         text_wizardMana: Phaser.GameObjects.Text;
         text_dragonHealth: Phaser.GameObjects.Text;
+        text_cFlowerName: Phaser.GameObjects.Text;
+        text_cFlowerHealth: Phaser.GameObjects.Text;
+        text_dVineName: Phaser.GameObjects.Text;
+        text_dVineHealth: Phaser.GameObjects.Text;
 
         gfx_upperHealthBox: Phaser.GameObjects.Graphics;
         gfx_lowerHealthBox: Phaser.GameObjects.Graphics;
@@ -171,8 +175,6 @@ module RaidNight.Graphics
         {
             this.textManager = new TextManager(this);
 
-            this.newGame();
-
             this.gfx_upperHealthBox = this.add.graphics().setDepth(DepthLayer.HUD);
             this.gfx_upperHealthBox.fillStyle(0x000000, 0.7);
             this.gfx_upperHealthBox.fillRoundedRect(35, 40, 490, 70);
@@ -187,13 +189,20 @@ module RaidNight.Graphics
             this.add.text(45,65, "PRIEST:", nameStyle).setDepth(DepthLayer.HUD);
             this.add.text(45,85, "WIZARD:", nameStyle).setDepth(DepthLayer.HUD);
             this.add.text(45,530, "DRAGON:", nameStyle).setDepth(DepthLayer.HUD);
+            this.text_dVineName = this.add.text(305,530, "DVINE:", nameStyle).setDepth(DepthLayer.HUD);
+            this.text_cFlowerName = this.add.text(543,530, "CFLOWER:", nameStyle).setDepth(DepthLayer.HUD);
             this.text_knightHealth = this.add.text(285,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_priestHealth =  this.add.text(285,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_wizardHealth =  this.add.text(285,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_dragonHealth =  this.add.text(280,530, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_dVineHealth =  this.add.text(498,530, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+            this.text_cFlowerHealth =  this.add.text(756,530, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_knightMana = this.add.text(500,45, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_priestMana =  this.add.text(500,65, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
             this.text_wizardMana =  this.add.text(500,85, "", healthStyle).setOrigin(1, 0).setDepth(DepthLayer.HUD);
+
+            // start a new set of graphics
+            this.newGame();
 
             // upper-right turn box
             this.gfx_TurnBox = this.add.graphics().setDepth(DepthLayer.HUD);
@@ -316,6 +325,10 @@ module RaidNight.Graphics
                 this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
                 this.dragon.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+                this.text_cFlowerHealth.setVisible(false);
+                this.text_cFlowerName.setVisible(false);
+                this.text_dVineHealth.setVisible(false);
+                this.text_dVineName.setVisible(false);
             }
             else if (GLOBAL_GAME.fightType == Engine.FightType.Fight2)
             {
@@ -326,6 +339,13 @@ module RaidNight.Graphics
                 this.corpseFlower = new Character(this, char_corpseFlower, this.add.sprite(100, 500, 'assets/corpse_flower.png'), true);
                 this.corpseFlower.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map2.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+                this.text_cFlowerHealth.setVisible(true);
+                this.text_cFlowerName.setVisible(true);
+                this.text_dVineHealth.setVisible(true);
+                this.text_dVineName.setVisible(true);
+                this.text_dragonHealth.setPosition(255, 530);
+                this.gfx_lowerHealthBox.clear();
+                this.gfx_lowerHealthBox.fillRect(36, 527, 728, 25);
 
                 for(let x = 0; x < GLOBAL_GAME.arena.room.width; x++)
                 {
@@ -349,6 +369,10 @@ module RaidNight.Graphics
                 })
 
                 this.img_background = this.add.image(0, 0, 'assets/map3.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
+                this.text_cFlowerHealth.setVisible(false);
+                this.text_cFlowerName.setVisible(false);
+                this.text_dVineHealth.setVisible(false);
+                this.text_dVineName.setVisible(false);
             }
 
             this.room = new Room(this, char_room);
@@ -393,6 +417,8 @@ module RaidNight.Graphics
             {
                 this.mossDragon.update(isNewTurn);
                 this.text_dragonHealth.setText(`${this.mossDragon.character.health.toFixed(0)}/${this.mossDragon.character.maxHealth}`);
+                this.text_dVineHealth.setText(`${this.devilVine.character.health.toFixed(0)}/${this.devilVine.character.maxHealth}`);
+                this.text_cFlowerHealth.setText(`${this.corpseFlower.character.health.toFixed(0)}/${this.corpseFlower.character.maxHealth}`);
             }
             else if (this.timeDragon)
             {
