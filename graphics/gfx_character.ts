@@ -561,12 +561,12 @@ module RaidNight.Graphics
                 this.buff_counts.push(
                     scene.add.text(
                         -100, 
-                        -100, "1", countStyle).setDepth(DepthLayer.HUD));
+                        -100, "1", countStyle).setDepth(DepthLayer.High_Priority));
                         
                 this.debuff_counts.push(
                     scene.add.text(
                         -100, 
-                        -100, "2", countStyle).setDepth(DepthLayer.HUD));
+                        -100, "2", countStyle).setDepth(DepthLayer.High_Priority));
             }
 
         }

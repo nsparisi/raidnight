@@ -89,9 +89,17 @@ module RaidNight.Engine
                     continue;
                 }
 
-                Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 this.statuses[i].duration--;
+
+                if (this.statuses[i].duration < 0)
+                {
+                    Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
+                    this.statuses.splice(i, 1);
+                    i--;
+                    continue;
+                }
                 
+                Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 let source = GLOBAL_GAME.arena.lookupTarget(this.statuses[i].source);
                 this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks, source);
                 this.addMana(this.statuses[i].manaPerTurn * this.statuses[i].stacks);
@@ -116,13 +124,6 @@ module RaidNight.Engine
                 if (this.statuses[i].st_haltEffect)
                 {
                     this.isHalted = true;
-                }
-
-                if (this.statuses[i].duration <= 0)
-                {
-                    Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
-                    this.statuses.splice(i, 1);
-                    i--;
                 }
             }
             
@@ -276,6 +277,12 @@ module RaidNight.Engine
             if(!alreadyApplied)
             {
                 this.statuses.push(status);
+                
+                if(status.defense > 0)
+                {
+                    Debug.log(`${this.name} has gained ${status.defense} defense.`);
+                    this.defense += status.defense;
+                }
             }
         }
 
