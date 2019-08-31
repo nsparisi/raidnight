@@ -278,9 +278,9 @@ module RaidNight.Engine
             {
                 this.statuses.push(status);
                 
-                if(status.defense > 0)
+                if(status.defense != 0)
                 {
-                    Debug.log(`${this.name} has gained ${status.defense} defense.`);
+                    Debug.log(`${this.name} has ${status.defense > 0 ? "gained" : "lost"} ${status.defense} defense.`);
                     this.defense += status.defense;
                 }
             }

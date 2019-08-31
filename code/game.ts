@@ -248,9 +248,9 @@ module RaidNight.Engine
             
             let knight = new Character("Knight", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 200, 400, 11, 6);
-            let wizard = new Character("Wizard", 200, 400, 13, 8);
-            let boss = new Boss("Dragon", 10000, 100, 3, 8);
+            let priest = new Character("Priest", 200, 300, 11, 6);
+            let wizard = new Character("Wizard", 200, 200, 13, 8);
+            let boss = new Boss("Dragon", 5000, 100, 3, 8);
             boss.actionList = [];
             knight.actionList = [];
             priest.actionList = [];
@@ -273,7 +273,7 @@ module RaidNight.Engine
             
             let knight = new Character("Knight", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 200, 400, 12, 6);
+            let priest = new Character("Priest", 200, 300, 12, 6);
             let wizard = new Character("Wizard", 200, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_HEATINGUP", "Wizard");            
@@ -305,7 +305,7 @@ module RaidNight.Engine
             
             let knight = new Character("Knight", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 200, 400, 12, 6);
+            let priest = new Character("Priest", 200, 300, 12, 6);
             let wizard = new Character("Wizard", 200, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_OVERHEATING", "Wizard");            

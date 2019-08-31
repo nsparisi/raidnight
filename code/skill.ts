@@ -43,7 +43,7 @@ module RaidNight.Engine
         {
             super();
             this.health = -10;
-            this.mana = 10;
+            this.mana = 20;
             this.castTime = 1;
             this.name = "Strike";
         }
@@ -55,7 +55,7 @@ module RaidNight.Engine
         {
             super();
             this.health = 0;
-            this.mana = -20;
+            this.mana = -50;
             this.castTime = 1;
             this.name = "ShieldWall";
             this.selfOnly = true;
@@ -68,8 +68,8 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = -5;
-            this.mana = 20;
+            this.health = -10;
+            this.mana = -20;
             this.castTime = 1;
             this.cooldown = 5;
             this.name = "Pierce";
@@ -82,8 +82,8 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = -5;
-            this.mana = -20;
+            this.health = -10;
+            this.mana = -50;
             this.castTime = 1;
             this.name = "ShieldBash";
             this.targetStatuses = ["ST_SHIELDBASH"];
@@ -96,7 +96,7 @@ module RaidNight.Engine
         {
             super();
             this.health = 0;
-            this.mana = -100;
+            this.mana = 0;
             this.castTime = 1;
             this.cooldown = 100;
             this.name = "Phalanx";

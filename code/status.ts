@@ -48,7 +48,7 @@ module RaidNight.Engine
             this.type = StatusType.Good;
             this.name = "ST_ShieldWall";
             this.duration = 5;
-            this.defense = 20;
+            this.defense = 50;
         }
     }
 
@@ -61,7 +61,7 @@ module RaidNight.Engine
             this.type = StatusType.Bad;
             this.name = "ST_Pierce";
             this.duration = 5;
-            this.healthPerTurn = -5;
+            this.healthPerTurn = -10;
         }
     }
 
@@ -74,7 +74,7 @@ module RaidNight.Engine
             this.type = StatusType.Bad;
             this.name = "ST_ShieldBash";
             this.duration = 5;
-            this.defense = -20;
+            this.defense = -50;
         }
     }
 
@@ -273,7 +273,7 @@ module RaidNight.Engine
             this.type = StatusType.Bad;
             this.name = "ST_Claw";
             this.duration = 3;
-            this.healthPerTurn = -4;
+            this.healthPerTurn = -5;
             this.maxStacks = 5;
         }
     }
