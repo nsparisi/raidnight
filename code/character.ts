@@ -56,10 +56,12 @@ module RaidNight.Engine
             this.resetBonuses();
 
             // process good effects first (like defense)
-            this.resolveStatusesOfType(StatusType.Good);
+            this.resolveStatusesOfType(StatusType.Good, PriorityType.High);
+            this.resolveStatusesOfType(StatusType.Good, PriorityType.Low);
 
             // process bad effects last, so they can be protected by defense.
-            this.resolveStatusesOfType(StatusType.Bad);
+            this.resolveStatusesOfType(StatusType.Bad, PriorityType.High);
+            this.resolveStatusesOfType(StatusType.Bad, PriorityType.Low);
 
             // process damage taken from the floor/room
             this.resolveDamageFromFloorEffects();
@@ -75,11 +77,11 @@ module RaidNight.Engine
             }
         }
 
-        protected resolveStatusesOfType(type: StatusType)
+        protected resolveStatusesOfType(type: StatusType, priority: PriorityType)
         {
             for(let i = 0; i < this.statuses.length; i++)
             {
-                if (this.statuses[i].type != type)
+                if (this.statuses[i].type != type || this.statuses[i].priority != priority)
                 {
                     continue;
                 }
@@ -130,7 +132,7 @@ module RaidNight.Engine
             // process bind last, so it's not affected by DoT damage
             for(let i = 0; i < this.statuses.length; i++)
             {
-                if (this.statuses[i].type != type)
+                if (this.statuses[i].type != type || this.statuses[i].priority != priority)
                 {
                     continue;
                 }

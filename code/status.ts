@@ -2,6 +2,8 @@ module RaidNight.Engine
 {
     export enum StatusType {Good, Bad}
 
+    export enum PriorityType {High, Low}
+
     export class Status
     {
         type: StatusType;
@@ -16,6 +18,7 @@ module RaidNight.Engine
         power: integer = 0;
         taunt: boolean = false;
         source: string = null;
+        priority: PriorityType = PriorityType.Low;
 
         st_bindEffect: integer = 0;
         st_heatingUpEffect: boolean = false;
@@ -75,6 +78,7 @@ module RaidNight.Engine
             this.name = "ST_ShieldBash";
             this.duration = 5;
             this.defense = -50;
+            this.priority = PriorityType.High;
         }
     }
 
