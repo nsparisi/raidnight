@@ -3,6 +3,7 @@ module RaidNight.Engine
     export class Character 
     {
         name: string;
+        icon: string;
 
         maxHealth: integer;
         maxMana: integer;
@@ -30,9 +31,10 @@ module RaidNight.Engine
 
         cooldowns: Map<string, integer> = new Map();
         
-        constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
+        constructor(name: string, icon: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         {
             this.name = name;
+            this.icon = icon;
             this.maxHealth = maxHealth;
             this.maxMana = maxMana;
             this.health = maxHealth;
@@ -44,6 +46,11 @@ module RaidNight.Engine
             this.actionsLoop = false;
             this.resetState();
             this.resetBonuses();
+        }
+
+        public focusedName()
+        {
+            return `${this.icon} ${this.name}`;
         }
 
         public resolveStatus()
@@ -72,8 +79,8 @@ module RaidNight.Engine
             let damage = GLOBAL_GAME.arena.room.damageFromFloorEffect(this.x, this.y);
             if (damage)
             {
-                GLOBAL_GAME.arena.room.logMessageForFloorEffect(this.name);
-                this.addHealth(-damage, GLOBAL_GAME.arena.room);
+                let source = GLOBAL_GAME.arena.room.logMessageForFloorEffect(this.name);
+                this.addHealth(-damage, GLOBAL_GAME.arena.room, source);
             }
         }
 
@@ -95,15 +102,15 @@ module RaidNight.Engine
 
                 if (this.statuses[i].duration < 0)
                 {
-                    Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
+                    Debug.logVerbose(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
                     this.statuses.splice(i, 1);
                     i--;
                     continue;
                 }
                 
-                Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
+                Debug.logVerbose(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
                 let source = GLOBAL_GAME.arena.lookupTarget(this.statuses[i].source);
-                this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks, source);
+                this.addHealth(this.statuses[i].healthPerTurn * this.statuses[i].stacks, source, this.statuses[i].name);
                 this.addMana(this.statuses[i].manaPerTurn * this.statuses[i].stacks);
                 this.addDefense(this.statuses[i].defense * this.statuses[i].stacks);
                 this.addPower(this.statuses[i].power * this.statuses[i].stacks);
@@ -112,7 +119,7 @@ module RaidNight.Engine
                 if (this.statuses[i].st_heatingUpEffect)
                 {
                     this.addPower(this.mana);
-                    Debug.log(`${this.name} has ${this.mana} power gained from fervor.`);
+                    Debug.logCondensed(`${this.name} has ${this.mana} power gained from fervor.`);
                 }
                 
                 // special status Overheating
@@ -120,7 +127,7 @@ module RaidNight.Engine
                 {
                     this.addPower(this.mana);
                     this.addDefense(-this.mana);
-                    Debug.log(`${this.name} has ${this.mana} power gained and ${this.mana} defense reduced by overheating.`);
+                    Debug.logCondensed(`${this.name} has ${this.mana} power gained and ${this.mana} defense reduced by overheating.`);
                 }
 
                 if (this.statuses[i].st_haltEffect)
@@ -139,14 +146,14 @@ module RaidNight.Engine
 
                 if (this.statuses[i].st_bindEffect > 0)
                 {
-                    Debug.log(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
+                    Debug.logVerbose(`Status ${this.statuses[i].name} is being processed on ${this.name}`);
 
                     this.statuses[i].duration--;
                     this.addBindValue(this.statuses[i].st_bindEffect)
                     
                     if (this.statuses[i].duration <= 0)
                     {
-                        Debug.log(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
+                        Debug.logVerbose(`Status ${this.statuses[i].name} on ${this.name} wore off.`);
                         this.statuses.splice(i, 1);
                         i--;
                     }
@@ -167,7 +174,7 @@ module RaidNight.Engine
 
             if (this.isHalted)
             {
-                Debug.log(`⌛⌛ ${this.name} is frozen in time! ⌛⌛`);
+                Debug.logCondensed(`⌛⌛ ${this.name} is frozen in time! ⌛⌛`);
                 return;
             }
 
@@ -176,6 +183,7 @@ module RaidNight.Engine
             // check current action
             if (this.isCasting && this.castTimeRemaining > 0)
             {
+                Debug.logCondensed(`${this.focusedName()} continues to cast ${this.currentAction.skill}.`);
                 return;
             }
             
@@ -210,7 +218,7 @@ module RaidNight.Engine
             return this.health <= 0;
         }
 
-        public addHealth(health: integer, source: Character)
+        public addHealth(health: integer, source: Character, sourceSkillName: string)
         {
             if (this.isDead())
             {
@@ -226,7 +234,7 @@ module RaidNight.Engine
                 health = Math.min(0, original + blocked + empowered);
 
                 // Priest took -100 total damage from Dragon. 100 (20) [20] (20 def) [20 pow]
-                Debug.log(`${this.name} took ${health} total damage from ${source.name}. ${original} (${blocked}) [${empowered}] (${this.defense} def) [${source.power} pow]`);
+                Debug.logCondensed(`${this.name} took ${health} damage from ${source.name}'s ${sourceSkillName}. ${original} (${blocked}) [${empowered}] (${this.defense} def) [${source.power} pow]`);
 
                 // Damage the vines - ignore defense
                 this.addBindValue(original + empowered);
@@ -239,9 +247,9 @@ module RaidNight.Engine
                 health = Math.max(0, original + empowered);
 
                 // Knight healed for 100 total health from Priest. 100 [20] [20 pow]
-                let log = `${this.name} healed for ${health} total health from ${source.name}.`;
+                let log = `${this.name} healed ${health} damage from ${source.name}'s ${sourceSkillName}.`;
                 if(source.power != 0){log += ` ${original} [${empowered}] [${source.power} pow]`;}
-                Debug.log(log);
+                Debug.logCondensed(log);
             }
 
             this.health = Math.max(0, this.health + health);
@@ -271,7 +279,7 @@ module RaidNight.Engine
                     status.stacks = Math.min(status.maxStacks, this.statuses[i].stacks + status.stacks);
                     this.statuses[i] = status;
                     alreadyApplied = true;
-                    Debug.log(`Refreshing status ${status.name} on ${this.name}`);
+                    Debug.logVerbose(`Refreshing status ${status.name} on ${this.name}`);
                 }
             }
 
@@ -282,7 +290,7 @@ module RaidNight.Engine
                 
                 if(status.defense != 0)
                 {
-                    Debug.log(`${this.name} has ${status.defense > 0 ? "gained" : "lost"} ${status.defense} defense.`);
+                    Debug.logCondensed(`${this.name} has ${status.defense > 0 ? "gained" : "lost"} ${status.defense} defense.`);
                     this.defense += status.defense;
                 }
             }
@@ -350,11 +358,11 @@ module RaidNight.Engine
             {
                 this.x += x;
                 this.y += y;
-                Debug.log(`${this.name} moved to ${this.x},${this.y}`);
+                Debug.logCondensed(`${this.focusedName()} moved to ${this.x},${this.y}`);
             }
             else 
             {
-                Debug.log(`${this.name} was unable to move to ${this.x + x},${this.y + y}`);
+                Debug.logCondensed(`${this.focusedName()} was unable to move to ${this.x + x},${this.y + y}`);
             }
 
             this.castTimeRemaining = 0;
@@ -366,9 +374,9 @@ module RaidNight.Engine
             this.castTimeRemaining = 0;
             this.isCasting = false;
 
-            if (this.name.toUpperCase() != "ROOM" && this.name.toUpperCase().indexOf("SANDPRISM") < 0)
+            if (this.name.toUpperCase().indexOf("SANDPRISM") < 0)
             {
-                Debug.log(`${this.name} chose to wait.`);
+                Debug.logCondensed(`${this.focusedName()} chose to wait.`);
             }
         }
 
@@ -391,21 +399,21 @@ module RaidNight.Engine
 
             if (this.mana + skill.mana < 0)
             {
-                Debug.log(`${this.name} has not enough mana to cast ${skill.name}`);
+                Debug.logCondensed(`${this.focusedName()} has not enough mana to cast ${skill.name}`);
                 this.isCastSuccessful = false;
                 return;
             }
             
             if (this.bindValue > 0)
             {
-                Debug.log(`${this.name} is bound by vines and cannot use ${skill.name}!`);
+                Debug.logCondensed(`${this.focusedName()} is bound by vines and cannot use ${skill.name}!`);
                 this.isCastSuccessful = false;
                 return;
             }
 
             if (this.safeGetCooldown(skill.name) > 0)
             {
-                Debug.log(`${this.name} failed to cast ${skill.name} because it is on cooldown.`);
+                Debug.logCondensed(`${this.focusedName()} failed to cast ${skill.name} because it is on cooldown.`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -416,7 +424,7 @@ module RaidNight.Engine
 
             if (skill.castTime > 1)
             {
-                Debug.log(`${this.name} started cast of ${skill.name}.`);
+                Debug.logCondensed(`${this.focusedName()} started cast of ${skill.name}.`);
             }
         }
 
@@ -426,14 +434,14 @@ module RaidNight.Engine
             let skill = GLOBAL_GAME.library.lookupSkill(this.currentAction.skill);
             if (this.mana + skill.mana < 0)
             {
-                Debug.log(`${this.name} could not finalize cast of ${skill.name} because they ran out of mana.`);
+                Debug.logCondensed(`${this.focusedName()} could not finalize cast of ${skill.name} because they ran out of mana.`);
                 this.isCastSuccessful = false;
                 return;
             }
             
             if (this.bindValue > 0)
             {
-                Debug.log(`${this.name} could not finalize cast of ${skill.name} because they are bound by vines!`);
+                Debug.logCondensed(`${this.focusedName()} could not finalize cast of ${skill.name} because they are bound by vines!`);
                 this.isCastSuccessful = false;
                 return;
             }
@@ -463,21 +471,28 @@ module RaidNight.Engine
             // special attack of ice wizard
             this.countIceShardStacksAndConsumeStatus(skill);
 
+            // log handling for "Source -> Target(s)"
+            let targetNames = [];
+            targets.forEach((t)=>{if(t.name.toUpperCase().indexOf("SANDPRISM") < 0){targetNames.push(t.name)}});
+            if(targetNames.length > 0)
+            {
+                Debug.logCondensed(`${this.focusedName()} used ${skill.name} on ${targetNames.join(", ")}`);
+            }
+            else 
+            {
+                Debug.logCondensed(`${this.focusedName()} used ${skill.name}.`);
+            }
+
             // cast on multiple targets
             for (let i = 0; i < targets.length; i++)
             {
                 let target = targets[i];
 
-                if (target.name.toUpperCase().indexOf("SANDPRISM") < 0)
-                {
-                    Debug.log(`${this.name} used ${skill.name} on ${target.name}`);
-                }
-
-                target.addHealth(skill.health, this);
+                target.addHealth(skill.health, this, skill.name);
 
                 for (let j = 0; j < skill.targetStatuses.length; j++)
                 {
-                    Debug.log(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
+                    Debug.logVerbose(`${this.name} applied status ${skill.targetStatuses[j]} to ${target.name}`);
                     target.addStatus(skill.targetStatuses[j], this.name);
                 }
 
@@ -491,14 +506,14 @@ module RaidNight.Engine
             // apply statues to self
             for (let i = 0; i < skill.selfStatuses.length; i++)
             {
-                Debug.log(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
+                Debug.logVerbose(`${this.name} applied status ${skill.selfStatuses[i]} to self.`);
                 this.addStatus(skill.selfStatuses[i], this.name);
             }
             
             // hurt self if applicable
             if (skill.selfHealth != 0)
             {
-                this.addHealth(skill.selfHealth, this);
+                this.addHealth(skill.selfHealth, this, skill.name);
             }
             
             // post-skill wrap up
@@ -532,7 +547,7 @@ module RaidNight.Engine
             }
 
             skill.health = skill.healthPerIceShard * stacks;
-            Debug.log(`${this.name} is consuming ${stacks} stacks of ICE SHARD for ${skill.health} total damage.`);
+            Debug.logVerbose(`${this.name} is consuming ${stacks} stacks of ICE SHARD for ${skill.health} total damage.`);
         }
 
         protected addMana(manaToAdd: integer)
@@ -574,7 +589,7 @@ module RaidNight.Engine
             {
                 this.bindValue += bind;
                 this.bindValue = Math.max(0, this.bindValue);
-                Debug.log(`${this.name}'s bind effect was reduced by ${bind}. Total bind left: ${this.bindValue}.`);
+                Debug.logCondensed(`${this.name}'s bind effect was reduced by ${bind}. Total bind left: ${this.bindValue}.`);
 
                 for (let i = 0; i < this.statuses.length; i++)
                 {
@@ -583,7 +598,7 @@ module RaidNight.Engine
                         this.statuses[i].st_bindEffect = this.bindValue;
                         if (this.bindValue == 0)
                         {
-                            Debug.log(`${this.name}'s bind effect wore off!`);
+                            Debug.logCondensed(`${this.name}'s bind effect wore off!`);
                             this.statuses.splice(i, 1);
                             i--;
                         }
@@ -609,9 +624,9 @@ module RaidNight.Engine
         tauntOrder = ["Knight", "Priest", "Wizard"];
         untauntOrder = ["Wizard", "Priest", "Knight"];
 
-        constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
+        constructor(name: string, icon: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
-            super(name, maxHealth, maxMana, x, y); 
+            super(name, icon, maxHealth, maxMana, x, y); 
             this.actionsLoop = true;
         }
 
@@ -703,7 +718,7 @@ module RaidNight.Engine
                 this.phase2 = true;
                 GLOBAL_GAME.arena.allies.forEach((ally)=>ally.reverseActions());
 
-                Debug.log("⌛⌛ TIMEDRAGON is reversing time! ⌛⌛");
+                Debug.logCondensed("⌛⌛ TIMEDRAGON is reversing time! ⌛⌛");
                 GLOBAL_GAME.startText("TIMEDRAGON is reversing time!");
             }
         }
@@ -732,7 +747,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Wait());
 
-                Debug.log("🌿🌿 CORPSEFLOWER grows stronger! 🌿🌿");
+                Debug.logCondensed("🌿🌿 CORPSEFLOWER grows stronger! 🌿🌿");
                 GLOBAL_GAME.startText("CORPSEFLOWER grows stronger!");
             }
 
@@ -773,7 +788,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
                 this.actionList.push(new action_Skill("EnhancedBind", ["knight"]));
 
-                Debug.log("🌿🌿 DEVILVINE grows stronger! 🌿🌿");
+                Debug.logCondensed("🌿🌿 DEVILVINE grows stronger! 🌿🌿");
                 GLOBAL_GAME.startText("DEVILVINE grows stronger!");
             }
 
@@ -787,9 +802,9 @@ module RaidNight.Engine
         totalLifespan: integer = 3;
         currentLifespan: integer = 0;
 
-        constructor(name: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
+        constructor(name: string, icon: string, maxHealth: integer, maxMana: integer, x: integer, y: integer)
         { 
-            super(name, maxHealth, maxMana, x, y); 
+            super(name, icon, maxHealth, maxMana, x, y); 
             this.actionsLoop = true;
         }
 
@@ -820,7 +835,7 @@ module RaidNight.Engine
             this.currentLifespan = this.totalLifespan;
         }
 
-        addHealth(health: integer, source: Character)
+        addHealth(health: integer, source: Character, sourceSkillName: string)
         {
             // do nothing
         }

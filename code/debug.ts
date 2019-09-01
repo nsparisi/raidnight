@@ -3,7 +3,12 @@ module RaidNight.Debug
 {
     export var DebugEnabled: boolean = true;
     
-    export var log = (message) =>
+    export var logVerbose = (message) =>
+    {
+        //console.log(message);
+    }
+
+    export var logCondensed = (message) =>
     {
         console.log(message);
     }

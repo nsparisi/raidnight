@@ -97,7 +97,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Move(0, 1));
             boss.actionList.push(new action_AreaSkill("Flamethrower", new Area(4, 7, 19,  9)));
 
-            let room = new Room1(20, 15);
+            let room = new Room1("Dragon", "🐉",  20, 15);
             room.actionList = [];
             room.actionList.push(new action_Wait());
 
@@ -159,7 +159,7 @@ module RaidNight.Engine
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());
 
-            let room = new Room2(20, 15);
+            let room = new Room2("Dungeon", "💣",  20, 15);
             room.actionList = [];
             for(let i = 0; i < 24; i++){room.actionList.push(new action_Wait());}
             room.actionList.push(new action_AreaSkill("SpikeTrap", new Area(1,  1, 9,  7)));
@@ -228,7 +228,7 @@ module RaidNight.Engine
             boss.actionList.push(new action_Skill("Bite", ["knight"]));
             boss.actionList.push(new action_Skill("Bite", ["knight"]));            
 
-            let room = new Room3(20, 15);
+            let room = new Room3("TimeDragon", "", 20, 15);
             room.actionList = [];
             room.actionList.push(new action_Wait());
 
@@ -242,15 +242,15 @@ module RaidNight.Engine
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.room = new Room1(20, 15);
+            this.arena.room = new Room1("Dragon", "🐉", 20, 15);
             
             this.fightType = FightType.Fight1;
             
-            let knight = new Character("Knight", 400, 100, 9, 7);
+            let knight = new Character("Knight", "🛡️", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 200, 300, 11, 6);
-            let wizard = new Character("Wizard", 200, 200, 13, 8);
-            let boss = new Boss("Dragon", 5000, 100, 3, 8);
+            let priest = new Character("Priest", "🙏", 200, 300, 11, 6);
+            let wizard = new Character("Wizard", "❄️", 200, 200, 13, 8);
+            let boss = new Boss("Dragon", "🐉", 5000, 100, 3, 8);
             boss.actionList = [];
             knight.actionList = [];
             priest.actionList = [];
@@ -267,19 +267,19 @@ module RaidNight.Engine
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.room = new Room2(20, 15);
+            this.arena.room = new Room2("Dungeon", "💣",  20, 15);
             
             this.fightType = FightType.Fight2;
             
-            let knight = new Character("Knight", 400, 100, 9, 7);
+            let knight = new Character("Knight", "🛡️", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 200, 300, 12, 6);
-            let wizard = new Character("Wizard", 200, 100, 14, 8);
+            let priest = new Character("Priest","🙏", 200, 300, 12, 6);
+            let wizard = new Character("Wizard", "🔥", 200, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_HEATINGUP", "Wizard");            
-            let boss1 = new Boss("MossDragon", 5000, 100, 2, 7);
-            let boss2 = new DevilVine("DevilVine", 1000, 100, 4, 4);
-            let boss3 = new CorpseFlower("CorpseFlower", 1000, 100, 4, 10);
+            let boss1 = new Boss("MossDragon", "🐉", 5000, 100, 2, 7);
+            let boss2 = new DevilVine("DevilVine", "🟩", 1000, 100, 4, 4);
+            let boss3 = new CorpseFlower("CorpseFlower", "🟢", 1000, 100, 4, 10);
 
             boss1.actionList = [];
             boss2.actionList = [];
@@ -299,23 +299,23 @@ module RaidNight.Engine
         {
             this.library = new Library();
             this.arena = new Arena();
-            this.arena.room = new Room3(20, 15);
+            this.arena.room = new Room3("TimeDragon", "", 20, 15);
             
             this.fightType = FightType.Fight3;
             
-            let knight = new Character("Knight", 400, 100, 9, 7);
+            let knight = new Character("Knight", "🛡️", 400, 100, 9, 7);
             knight.mana = 0;
-            let priest = new Character("Priest", 200, 300, 12, 6);
-            let wizard = new Character("Wizard", 200, 100, 14, 8);
+            let priest = new Character("Priest", "🙏",200, 300, 12, 6);
+            let wizard = new Character("Wizard", "🧊",200, 100, 14, 8);
             wizard.mana = 0;
             wizard.addStatus("ST_OVERHEATING", "Wizard");            
-            let boss1 = new TimeDragon("TimeDragon", 5000, 100, 2, 7);
+            let boss1 = new TimeDragon("TimeDragon", "🐉", 5000, 100, 2, 7);
 
             let prisms = [];
             let nameIndex = 0;
             for(let i = 4; i <= 16; i++)
             {
-                let prism = new SandPrism("SandPrism_" + (++nameIndex), 1, 1, i, 3);
+                let prism = new SandPrism("SandPrism_" + (++nameIndex), "💎", 1, 1, i, 3);
                 prism.actionList = [];
                 prism.actionList.push(new action_Wait());
                 prism.actionList.push(new action_AreaSkill("TimeLaser", new Area(i,  4, i,  14)));
@@ -324,7 +324,7 @@ module RaidNight.Engine
             
             for(let i = 4; i <= 11; i++)
             {
-                let prism = new SandPrism("SandPrism_" + (++nameIndex), 1, 1, 19, i);
+                let prism = new SandPrism("SandPrism_" + (++nameIndex), "💎", 1, 1, 19, i);
                 prism.actionList = [];
                 prism.actionList.push(new action_Wait());
                 prism.actionList.push(new action_AreaSkill("TimeLaser", new Area(0,  i, 18,  i)));

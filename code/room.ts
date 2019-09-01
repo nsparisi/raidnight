@@ -9,9 +9,9 @@ module RaidNight.Engine
 
         phase2: boolean;
 
-        constructor(width: integer, height: integer)
+        constructor(name: string, icon: string, width: integer, height: integer)
         {
-            super("Room", 10000, 10000, 0, 0);
+            super(name, icon, 10000, 10000, 0, 0);
             this.width = width;
             this.height = height;
             this.phase2 = false;
@@ -63,9 +63,10 @@ module RaidNight.Engine
                     this.floorplan[x + y * this.width] == 0;
         }
 
-        public logMessageForFloorEffect(name: string)
+        public logMessageForFloorEffect(name: string): string
         {
-            Debug.log(`${name} is taking damage from the floor!`);
+            Debug.logVerbose(`${name} is taking damage from the floor!`);
+            return "";
         }
 
         public damageFromFloorEffect(x: integer, y: integer): integer
@@ -97,13 +98,21 @@ module RaidNight.Engine
         {
             super.grabNewAction();
         }
+        
+        protected doWait()
+        {
+            this.castTimeRemaining = 0;
+            this.isCasting = false;
+            
+            // do not log anything
+        }
     }
     
     export class Room1 extends Room
     {
-        constructor(width: integer, height: integer)
+        constructor(name: string, icon: string, width: integer, height: integer)
         {
-            super(width, height);
+            super(name, icon, width, height);
 
             this.floorplan = [
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -175,7 +184,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 12, 3,  13)));
                 this.actionList.push(new action_Wait());
 
-                Debug.log("🔥🔥 DRAGON has called down a FIRESTORM! 🔥🔥");
+                Debug.logCondensed("🔥🔥 DRAGON has called down a FIRESTORM! 🔥🔥");
                 GLOBAL_GAME.startText("DRAGON has called down a FIRESTORM!");
             }
             
@@ -190,9 +199,9 @@ module RaidNight.Engine
         growthDamage: integer = 20;
         growthRate: integer = 10;
 
-        constructor(width: integer, height: integer)
+        constructor(name: string, icon: string, width: integer, height: integer)
         {
-            super(width, height);
+            super(name, icon, width, height);
 
             this.floorplan = [
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -213,9 +222,11 @@ module RaidNight.Engine
             ];
         }
         
-        public logMessageForFloorEffect(name: string)
+        public logMessageForFloorEffect(name: string): string
         {
-            Debug.log(`${name} is taking damage from the overgrowth!`);
+            Debug.logVerbose(`${name} is taking damage from the overgrowth!`);
+            
+            return "Overgrowth";
         }
 
         grabNewAction ()
@@ -229,7 +240,7 @@ module RaidNight.Engine
                 this.growthCounter = this.growthRate-1;
                 this.growthTier = 0;
 
-                Debug.log("🌿🌿 MOSSDRAGON is consuming the dungeon in overgrowth! 🌿🌿");
+                Debug.logCondensed("🌿🌿 MOSSDRAGON is consuming the dungeon in overgrowth! 🌿🌿");
                 GLOBAL_GAME.startText("MOSSDRAGON is consuming the dungeon in overgrowth!");
             }
 
@@ -264,9 +275,9 @@ module RaidNight.Engine
 
     export class Room3 extends Room
     {
-        constructor(width: integer, height: integer)
+        constructor(name: string, icon: string, width: integer, height: integer)
         {
-            super(width, height);
+            super(name, icon, width, height);
 
             this.floorEffects = [
                 10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
@@ -287,12 +298,14 @@ module RaidNight.Engine
             ];
         }
         
-        public logMessageForFloorEffect(name: string)
+        public logMessageForFloorEffect(name: string): string
         {
             if (name.toUpperCase().indexOf("SANDPRISM") < 0)
             {
-                Debug.log(`${name} is taking damage from the quicksand!`);
+                Debug.logVerbose(`${name} is taking damage from the quicksand!`);
             }
+
+            return "Quicksand";
         }
         
         grabNewAction ()

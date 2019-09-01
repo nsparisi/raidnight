@@ -32,7 +32,7 @@ module RaidNight.Engine
 
             if (this.state != ArenaState.InProgress)
             {
-                Debug.log(`Game is not running, cannot execute turn. '${this.state}'`);
+                Debug.logError(`Game is not running, cannot execute turn. '${this.state}'`);
             }
 
             // resolve allies status + action
@@ -84,7 +84,7 @@ module RaidNight.Engine
 
             if (isWon)
             {
-                Debug.log(`WON! Enemies are dead.`);
+                Debug.logCondensed(`WON! Enemies are dead.`);
                 this.state = ArenaState.Win;
 
                 GLOBAL_GAME.startText("NICE WORK!\r\n\r\nTHE DRAGON HAS FALLEN");
@@ -95,7 +95,7 @@ module RaidNight.Engine
         {
             if(this.turn >= this.maxTurns)
             {
-                Debug.log(`LOSE! Took too long.`);
+                Debug.logCondensed(`LOSE! Took too long.`);
                 this.state = ArenaState.Lose;
                 return;
             }
@@ -113,7 +113,7 @@ module RaidNight.Engine
 
             if (isLose)
             {
-                Debug.log(`LOSE! All allies are dead!`);
+                Debug.logCondensed(`LOSE! All allies are dead!`);
                 this.state = ArenaState.Lose;
             }
         }
@@ -137,7 +137,7 @@ module RaidNight.Engine
                 }
             }
 
-            Debug.log(`ERROR: Lookup target failed ${targetName}`);
+            Debug.logError(`ERROR: Lookup target failed ${targetName}`);
             return null;
         }
         
