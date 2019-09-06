@@ -7,6 +7,7 @@ module RaidNight.Engine
     } 
 
     export interface PlayerActions {
+        fight: FightType;
         knight: Action[];
         priest: Action[];
         wizard: Action[];
@@ -47,6 +48,7 @@ module RaidNight.Engine
             let isValid = true;
             let wizardName = ""
             let playerActions = {
+                fight: fightType,
                 knight: [],
                 priest: [],
                 wizard: [],
