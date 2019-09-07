@@ -8,6 +8,7 @@ module RaidNight.Engine
         enemies: Character[];
         allies: Character[];
         room: Room;
+        winTexts = ["NICE WORK!\r\n\r\nTHE DRAGON HAS FALLEN"];
 
         turn: integer = -2;
         maxTurns: integer = 10000;
@@ -87,7 +88,7 @@ module RaidNight.Engine
                 Debug.logCondensed(`WON! Enemies are dead.`);
                 this.state = ArenaState.Win;
 
-                GLOBAL_GAME.startText("NICE WORK!\r\n\r\nTHE DRAGON HAS FALLEN");
+                GLOBAL_GAME.startText(...this.winTexts);
             }
         }
         

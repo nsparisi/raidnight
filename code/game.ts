@@ -243,7 +243,8 @@ module RaidNight.Engine
             this.library = new Library();
             this.arena = new Arena();
             this.arena.room = new Room1("Dragon", "🐉", 20, 15);
-            
+            this.arena.winTexts.push("To advance, use passcode: FIREBALL ROBERTS");
+
             this.fightType = FightType.Fight1;
             
             let knight = new Character("Knight", "🛡️", 400, 100, 9, 7);
