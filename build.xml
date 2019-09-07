@@ -2,18 +2,21 @@
 
 <project default="drawbridge">
     <target name="drawbridge">
-        <delete file="raid_night.zip"/>
         <exec dir="." executable="/usr/local/bin/tsc" failonerror="true">
             <arg value="-b"/>
         </exec>
-        <zip destfile="out/raid_night.zip">
+        <delete dir="out/raid_night"/>
+        <copy todir="out/raid_night/">
+            <fileset dir="production/drawbridge"/>
+            <fileset dir=".">
+                <include name="assets/**/*"/>
+                <include name="one.html"/>
+                <include name="out/raidnight.js"/>
+            </fileset>
             <mappedresources>
-                <zipfileset file="one.html"/>
+                <fileset file="one.html"/>
                 <mergemapper to="puzzle.html"/>
             </mappedresources>
-            <zipfileset file="out/raidnight.js" prefix="out"/>
-            <zipfileset dir="production/drawbridge" prefix="."/>
-            <zipfileset dir="assets" prefix="assets"/>
-        </zip>
+        </copy>
     </target>
 </project>
