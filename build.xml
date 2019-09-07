@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project default="drawbridge">
+    <target name="drawbridge">
+        <delete file="puzzle_drawbridge.zip"/>
+        <exec dir="." executable="/usr/local/bin/tsc" failonerror="true">
+            <arg value="-b"/>
+        </exec>
+        <zip destfile="out/puzzle_drawbridge.zip">
+            <mappedresources>
+                <zipfileset file="one.html"/>
+                <mergemapper to="puzzle.html"/>
+            </mappedresources>
+            <zipfileset file="out/raidnight.js" prefix="out"/>
+            <zipfileset dir="production/drawbridge" prefix="."/>
+            <zipfileset dir="assets" prefix="assets"/>
+        </zip>
+    </target>
+</project>
