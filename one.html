@@ -4,7 +4,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=1200, initial-scale=0">
-    <title>Raid Night</title>
     <style>
         .flavor {
             font-family: serif;
@@ -74,209 +73,204 @@
 </head>
 
 <body>
-    <nav id="tlo-menubar">NO MAP &nbsp; NO USEFUL LINKS &nbsp; <input name="tlo-guess" id="tlo-guess" value=""
-            placeholder="guess and press Enter"> <span id="tlo-response"></span> </nav>
-    <div id="tlo-framela">
-        <h1>Raid Night</h1>
-        <p class="flavor">Oh No! Dragons have taken over the castle and it's up to our heroes to reclaim the
-            throne.<br /><br />
-            They arrive at the castle drawbridge, where a FIRE DRAGON awaits.<br /><br />
-            <a href="./assets/Fight Template.xlsx">Download Boss Moveset</a> <br /><br />
-            <a href="#instructions">See Instructions</a>
-        </p>
-        <div style="text-align:center;">
-            <div id="Game"></div>
-            <div style="width: 100%; padding: 15px; background: #ddddff;">
-                <button onclick="GameAction_ReadInput1();">Read Input</button> -- 
-                <button onclick="GameAction_NewGame();">Reset <br />◀️</button>
-                <button onclick="GameAction_Step();">Step <br />🔽</button>
-                <button onclick="GameAction_Resume();">Play<br />▶️</button>
-                <input type="radio" name="speed" value="1000" checked> Slow
-                <input type="radio" name="speed" value="500"> Fast
-                <input type="radio" name="speed" value="100"> Fastest
-                <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br /><br />
-                Hotkeys: Use Left/Down/Right arrow keys or 'Q' 'W' 'E' for Reset/Step/Play respectively
-            </div>
-
-            <div style="width: 30%; float: left; padding: 0 15px;">
-                <h2>KNIGHT</h2>
-                <textarea cols="40" rows="10" id="knight_input">taunt:dragon strike:dragon pierce:dragon</textarea>
-                <h3>KNIGHT SKILLS</h3>
-
-                <h4>Taunt</h4>
-                <ul>
-                    <li>Mana: 0 cost</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Taunts the target, forcing attacks to be directed towards the knight for 5
-                        turns</li>
-                </ul>
-                <h4>Strike</h4>
-                <ul>
-                    <li>Mana: Recovers 20 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Deals 10 damage</li>
-                </ul>
-                <h4>Pierce</h4>
-                <ul>
-                    <li>Mana: Costs 20 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Deals 10 damage and an additional 50 damage over 5 turns</li>
-                </ul>
-                <h4>ShieldWall</h4>
-                <ul>
-                    <li>Mana: Costs 50 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">The knight gains 50% defense for 5 turns</li>
-                </ul>
-                <h4>ShieldBash</h4>
-                <ul>
-                    <li>Mana: Costs 50 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Deals 10 damage and reduces the target's defense by 50% for 5 turns</li>
-                </ul>
-                <h4>Phalanx (Ultimate)</h4>
-                <ul>
-                    <li>Mana: Costs 0 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li>Cooldown: Cannot be cast again for 100 turns</li>
-                    <li class="description">The knight gains 100% defense for 5 turns</li>
-                </ul>
-            </div>
-            <div style="width: 30%; float: left; padding: 0 15px;">
-                <h2>PRIEST</h2>
-                <textarea cols="40" rows="10" id="priest_input">regen:knight regen:priest regen:wizard</textarea>
-                <h3>PRIEST SKILLS</h3>
-
-                <h4>GreaterHeal</h4>
-                <ul>
-                    <li>Mana: Costs 4 mana</li>
-                    <li>Cast Time: 3 turns</li>
-                    <li class="description">Heals the target for 75 health</li>
-                </ul>
-                <h4>FlashHeal</h4>
-                <ul>
-                    <li>Mana: Costs 5 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Heals the target for 35 health</li>
-                </ul>
-                <h4>Regen</h4>
-                <ul>
-                    <li>Mana: Costs 2 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Heals the target for 5 health and additional 50 health over 10 turns</li>
-                </ul>
-                <h4>Hymn</h4>
-                <ul>
-                    <li>Mana: Recovers 10 mana</li>
-                    <li>Cast Time: 2 turns</li>
-                    <li class="description">Heals the party for 20 health each and recovers 10 mana for the priest</li>
-                </ul>
-                <h4>DivineIntervention (Ultimate)</h4>
-                <ul>
-                    <li>Mana: Costs 10 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li>Cooldown: Cannot be cast again for 100 turns</li>
-                    <li class="description">Heals the party for 500 health over 5 turns</li>
-                </ul>
-            </div>
-            <div style="width: 30%; float: left; padding: 0 15px;">
-                <h2>WIZARD</h2>
-                <textarea cols="40" rows="10" id="wizard_input">iceshard:dragon iceshard:dragon iceshard:dragon icespear:dragon</textarea>
-                <h3>WIZARD SKILLS</h3>
-
-                <h4>IceShard</h4>
-                <ul>
-                    <li>Mana: Costs 4 mana</li>
-                    <li>Cast Time: 2 turns</li>
-                    <li class="description">Deals 20 damage and builds a stack of ICESHARD increasing the damage done by
-                        IceSpear. (Max 3 stacks)</li>
-                </ul>
-                <h4>IceSpear</h4>
-                <ul>
-                    <li>Mana: Costs 5 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li class="description">Consumes all stacks of IceShards dealing 50 damage per stack</li>
-                </ul>
-                <h4>Frostbite</h4>
-                <ul>
-                    <li>Mana: Costs 5 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li>Cooldown: Cannot be cast again for 20 turns</li>
-                    <li class="description">The wizard gains 20% power for 10 turns</li>
-                </ul>
-                <h4>WaterBarrier</h4>
-                <ul>
-                    <li>Mana: Recovers 5 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li>Cooldown: Cannot be cast again for 20 turns</li>
-                    <li class="description">The target gains 20% defense for 5 turns</li>
-                </ul>
-                <h4>Deluge (Ultimate)</h4>
-                <ul>
-                    <li>Mana: Recovers 20 mana</li>
-                    <li>Cast Time: Instant</li>
-                    <li>Cooldown: Cannot be cast again for 100 turns</li>
-                    <li class="description">Deals 200 damage</li>
-                </ul>
-            </div>
-
-            <div style="clear: both;">
-                <hr />
-                <div>
-                    <h3>FIRE DRAGON SKILLS</h3>
-                    <div><a href="./assets/Fight Template.xlsx">Download Boss Moveset</a></div>
-                    <div style="width: 22%; float: left; padding: 0 10px;">
-                        <h4>Claw</h4>
-                        <ul>
-                            <li class="description">Deals 20 damage and builds a stack of CLAW dealing 15 damage over 3
-                                turns. (Max 5 stacks)</li>
-                        </ul>
-                    </div>
-                    <div style="width: 22%; float: left; padding: 0 10px;">
-                        <h4>HeatWave</h4>
-                        <ul>
-                            <li class="description">Deals 5 damage to the party and an additional 60 damage over 3 turns
-                            </li>
-                        </ul>
-                    </div>
-                    <div style="width: 22%; float: left; padding: 0 10px;">
-                        <h4>FlameThrower</h4>
-                        <ul>
-                            <li class="description">Breathes a line of fire dealing 100 damage</li>
-                        </ul>
-                    </div>
-                    <div style="width: 22%; float: left; padding: 0 10px;">
-                        <h4>FireStorm</h4>
-                        <ul>
-                            <li class="description">At 50% health, fire rains from the sky dealing 100 damage.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div style="clear: both;">
-                </div>
-            </div>
-
-            <div id="instructions">
-                <hr />
-                <h3>INPUT INSTRUCTIONS</h3>
-                <ul>
-                    <li>Provide input to the game system by specifying any number of skill:target pairs into the text
-                        boxes. For example, issuing the commands for the knight to strike the dragon twice then wait
-                        would be <strong>STRIKE:DRAGON STRIKE:DRAGON WAIT</strong>. Skills without a target or with multiple targets can
-                        optionally leave the target text empty such as with <strong>HYMN</strong>.</li>
-                    <h3>Valid Inputs:</h3>
-                    <li>skill:target</li>
-                    <li>move:up|down|left|right</li>
-                    <li>wait</li>
-                    <h3>Tip:</h3>
-                    <li>Open the F12 Developer Tools console logs in your browser for detailed information.</li>
-                </ul>
-            </div>
-            <script src="./out/raidnight.js"></script>
-            <script type="text/javascript">
-                GLOBAL_GAME.setup1();
-            </script>
+    <p class="flavor">Oh No! Dragons have taken over the castle and it's up to our heroes to reclaim the
+        throne.<br /><br />
+        They arrive at the castle drawbridge, where a FIRE DRAGON awaits.<br /><br />
+        <a href="./assets/Fight Template.xlsx">Download Boss Moveset</a> <br /><br />
+        <a href="#instructions">See Instructions</a>
+    </p>
+    <div style="text-align:center;">
+        <div id="Game"></div>
+        <div style="width: 100%; padding: 15px; background: #ddddff;">
+            <button onclick="GameAction_ReadInput1();">Read Input</button> --
+            <button onclick="GameAction_NewGame();">Reset <br />◀️</button>
+            <button onclick="GameAction_Step();">Step <br />🔽</button>
+            <button onclick="GameAction_Resume();">Play<br />▶️</button>
+            <input type="radio" name="speed" value="1000" checked> Slow
+            <input type="radio" name="speed" value="500"> Fast
+            <input type="radio" name="speed" value="100"> Fastest
+            <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br /><br />
+            Hotkeys: Use Left/Down/Right arrow keys or 'Q' 'W' 'E' for Reset/Step/Play respectively
         </div>
+
+        <div style="width: 30%; float: left; padding: 0 15px;">
+            <h2>KNIGHT</h2>
+            <textarea cols="40" rows="10" id="knight_input">taunt:dragon strike:dragon pierce:dragon</textarea>
+            <h3>KNIGHT SKILLS</h3>
+
+            <h4>Taunt</h4>
+            <ul>
+                <li>Mana: 0 cost</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Taunts the target, forcing attacks to be directed towards the knight for 5
+                    turns</li>
+            </ul>
+            <h4>Strike</h4>
+            <ul>
+                <li>Mana: Recovers 20 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Deals 10 damage</li>
+            </ul>
+            <h4>Pierce</h4>
+            <ul>
+                <li>Mana: Costs 20 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Deals 10 damage and an additional 50 damage over 5 turns</li>
+            </ul>
+            <h4>ShieldWall</h4>
+            <ul>
+                <li>Mana: Costs 50 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">The knight gains 50% defense for 5 turns</li>
+            </ul>
+            <h4>ShieldBash</h4>
+            <ul>
+                <li>Mana: Costs 50 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Deals 10 damage and reduces the target's defense by 50% for 5 turns</li>
+            </ul>
+            <h4>Phalanx (Ultimate)</h4>
+            <ul>
+                <li>Mana: Costs 0 mana</li>
+                <li>Cast Time: Instant</li>
+                <li>Cooldown: Cannot be cast again for 100 turns</li>
+                <li class="description">The knight gains 100% defense for 5 turns</li>
+            </ul>
+        </div>
+        <div style="width: 30%; float: left; padding: 0 15px;">
+            <h2>PRIEST</h2>
+            <textarea cols="40" rows="10" id="priest_input">regen:knight regen:priest regen:wizard</textarea>
+            <h3>PRIEST SKILLS</h3>
+
+            <h4>GreaterHeal</h4>
+            <ul>
+                <li>Mana: Costs 4 mana</li>
+                <li>Cast Time: 3 turns</li>
+                <li class="description">Heals the target for 75 health</li>
+            </ul>
+            <h4>FlashHeal</h4>
+            <ul>
+                <li>Mana: Costs 5 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Heals the target for 35 health</li>
+            </ul>
+            <h4>Regen</h4>
+            <ul>
+                <li>Mana: Costs 2 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Heals the target for 5 health and additional 50 health over 10 turns</li>
+            </ul>
+            <h4>Hymn</h4>
+            <ul>
+                <li>Mana: Recovers 10 mana</li>
+                <li>Cast Time: 2 turns</li>
+                <li class="description">Heals the party for 20 health each and recovers 10 mana for the priest</li>
+            </ul>
+            <h4>DivineIntervention (Ultimate)</h4>
+            <ul>
+                <li>Mana: Costs 10 mana</li>
+                <li>Cast Time: Instant</li>
+                <li>Cooldown: Cannot be cast again for 100 turns</li>
+                <li class="description">Heals the party for 500 health over 5 turns</li>
+            </ul>
+        </div>
+        <div style="width: 30%; float: left; padding: 0 15px;">
+            <h2>WIZARD</h2>
+            <textarea cols="40" rows="10" id="wizard_input">iceshard:dragon iceshard:dragon iceshard:dragon icespear:dragon</textarea>
+            <h3>WIZARD SKILLS</h3>
+
+            <h4>IceShard</h4>
+            <ul>
+                <li>Mana: Costs 4 mana</li>
+                <li>Cast Time: 2 turns</li>
+                <li class="description">Deals 20 damage and builds a stack of ICESHARD increasing the damage done by
+                    IceSpear. (Max 3 stacks)</li>
+            </ul>
+            <h4>IceSpear</h4>
+            <ul>
+                <li>Mana: Costs 5 mana</li>
+                <li>Cast Time: Instant</li>
+                <li class="description">Consumes all stacks of IceShards dealing 50 damage per stack</li>
+            </ul>
+            <h4>Frostbite</h4>
+            <ul>
+                <li>Mana: Costs 5 mana</li>
+                <li>Cast Time: Instant</li>
+                <li>Cooldown: Cannot be cast again for 20 turns</li>
+                <li class="description">The wizard gains 20% power for 10 turns</li>
+            </ul>
+            <h4>WaterBarrier</h4>
+            <ul>
+                <li>Mana: Recovers 5 mana</li>
+                <li>Cast Time: Instant</li>
+                <li>Cooldown: Cannot be cast again for 20 turns</li>
+                <li class="description">The target gains 20% defense for 5 turns</li>
+            </ul>
+            <h4>Deluge (Ultimate)</h4>
+            <ul>
+                <li>Mana: Recovers 20 mana</li>
+                <li>Cast Time: Instant</li>
+                <li>Cooldown: Cannot be cast again for 100 turns</li>
+                <li class="description">Deals 200 damage</li>
+            </ul>
+        </div>
+
+        <div style="clear: both;">
+            <hr />
+            <div>
+                <h3>FIRE DRAGON SKILLS</h3>
+                <div><a href="./assets/Fight Template.xlsx">Download Boss Moveset</a></div>
+                <div style="width: 22%; float: left; padding: 0 10px;">
+                    <h4>Claw</h4>
+                    <ul>
+                        <li class="description">Deals 20 damage and builds a stack of CLAW dealing 15 damage over 3
+                            turns. (Max 5 stacks)</li>
+                    </ul>
+                </div>
+                <div style="width: 22%; float: left; padding: 0 10px;">
+                    <h4>HeatWave</h4>
+                    <ul>
+                        <li class="description">Deals 5 damage to the party and an additional 60 damage over 3 turns
+                        </li>
+                    </ul>
+                </div>
+                <div style="width: 22%; float: left; padding: 0 10px;">
+                    <h4>FlameThrower</h4>
+                    <ul>
+                        <li class="description">Breathes a line of fire dealing 100 damage</li>
+                    </ul>
+                </div>
+                <div style="width: 22%; float: left; padding: 0 10px;">
+                    <h4>FireStorm</h4>
+                    <ul>
+                        <li class="description">At 50% health, fire rains from the sky dealing 100 damage.</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both;">
+            </div>
+        </div>
+
+        <div id="instructions">
+            <hr />
+            <h3>INPUT INSTRUCTIONS</h3>
+            <ul>
+                <li>Provide input to the game system by specifying any number of skill:target pairs into the text
+                    boxes. For example, issuing the commands for the knight to strike the dragon twice then wait
+                    would be <strong>STRIKE:DRAGON STRIKE:DRAGON WAIT</strong>. Skills without a target or with multiple targets can
+                    optionally leave the target text empty such as with <strong>HYMN</strong>.</li>
+                <h3>Valid Inputs:</h3>
+                <li>skill:target</li>
+                <li>move:up|down|left|right</li>
+                <li>wait</li>
+                <h3>Tip:</h3>
+                <li>Open the F12 Developer Tools console logs in your browser for detailed information.</li>
+            </ul>
+        </div>
+        <script src="./out/raidnight.js"></script>
+        <script type="text/javascript">
+            GLOBAL_GAME.setup1();
+        </script>
     </div>
 </body>
 
