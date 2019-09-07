@@ -1,8 +1,8 @@
 # only lowercase, number, _ (no spaces)
-shortname: raid_night_drawbridge
+shortname: raid_night
 
 # Display version of title. No HTML <tags>
-title: Raid Night: Drawbridge
+title: Raid Night
 
 #  Who to call in emergency. Make sure you're in roster!
 oncall: nsparisi@gmail.com
