@@ -113,8 +113,8 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = 75;
-            this.mana = -4;
+            this.health = 100;
+            this.mana = -5;
             this.castTime = 3;
             this.name = "GreaterHeal";
         }
@@ -150,7 +150,7 @@ module RaidNight.Engine
         constructor()
         {
             super();
-            this.health = 20;
+            this.health = 15;
             this.mana = 10;
             this.castTime = 2;
             this.allAllies = true;
