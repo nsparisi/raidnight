@@ -9,13 +9,13 @@
         <copy todir="out/raid_night/">
             <fileset dir="production/drawbridge"/>
             <fileset dir=".">
-                <include name="assets/**/*"/>
-                <include name="one.html"/>
+                <include name="assets/**/*.png"/>
+                <include name="assets/**/*.jpg"/>
                 <include name="out/raidnight.js"/>
             </fileset>
             <mappedresources>
                 <fileset file="one.html"/>
-                <mergemapper to="puzzle.html"/>
+                <mergemapper to="fight.html"/>
             </mappedresources>
         </copy>
     </target>
