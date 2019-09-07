@@ -2,11 +2,11 @@
 
 <project default="drawbridge">
     <target name="drawbridge">
-        <delete file="puzzle_drawbridge.zip"/>
+        <delete file="raid_night.zip"/>
         <exec dir="." executable="/usr/local/bin/tsc" failonerror="true">
             <arg value="-b"/>
         </exec>
-        <zip destfile="out/puzzle_drawbridge.zip">
+        <zip destfile="out/raid_night.zip">
             <mappedresources>
                 <zipfileset file="one.html"/>
                 <mergemapper to="puzzle.html"/>
