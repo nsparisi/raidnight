@@ -72,6 +72,7 @@ module RaidNight.Graphics
 
         preload ()
         {
+            if (typeof(PUZZ_BASE_DIR)=="string") this.load.setBaseURL(PUZZ_BASE_DIR);
             this.load.image('assets/map1.png', 'assets/map1.png');
             this.load.image('assets/map2.png', 'assets/map2.png');
             this.load.image('assets/map3.png', 'assets/map3.png');

@@ -16,7 +16,7 @@
             </fileset>
             <mappedresources>
                 <fileset file="one.html"/>
-                <mergemapper to="fight.html"/>
+                <mergemapper to="puzzle.html"/>
             </mappedresources>
         </copy>
     </target>
