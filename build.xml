@@ -2,6 +2,9 @@
 
 <project default="drawbridge">
     <target name="drawbridge">
+        <delete dir="out/raid_night"/>
+        <delete file="out/raidnight.js"/>
+        <delete file="out/raidnight-obfuscated.js"/>
         <exec dir="." executable="/usr/local/bin/tsc" failonerror="true">
             <arg value="-b"/>
         </exec>
@@ -9,7 +12,6 @@
             <arg value="out/raidnight.js"/>
             <arg value="--string-array-encoding"/><arg value="rc4"/>
         </exec>
-        <delete dir="out/raid_night"/>
         <copy todir="out/raid_night/">
             <fileset dir="production/drawbridge"/>
             <fileset dir=".">
