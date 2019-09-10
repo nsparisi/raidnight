@@ -116,29 +116,15 @@ document.body.addEventListener("keydown", (event) =>
 {
     //console.log(`key: ${event.code} ${event.keyCode}`);
 
-    // prevent arrow keys from manipulating the page
-    if([37, 38, 39, 40].indexOf(event.keyCode) > -1) {
-        event.preventDefault();
-    }
-
     switch(event.keyCode)
     {
-        case 37: // left
+        case 49: // 1
             GameAction_NewGame();
             break;
-        case 40: //down
+        case 50: // 2
             GameAction_Step();
             break;
-        case 39: //right
-            GameAction_Resume();
-            break;
-        case 81: //Q
-            GameAction_NewGame();
-            break;
-        case 87: //W
-            GameAction_Step();
-            break;
-        case 69: //E
+        case 51: // 3
             GameAction_Resume();
             break;
     }
