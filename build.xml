@@ -5,6 +5,10 @@
         <exec dir="." executable="/usr/local/bin/tsc" failonerror="true">
             <arg value="-b"/>
         </exec>
+        <exec dir="." executable="/usr/local/bin/javascript-obfuscator" failonerror="true">
+            <arg value="out/raidnight.js"/>
+            <arg value="--string-array-encoding"/><arg value="rc4"/>
+        </exec>
         <delete dir="out/raid_night"/>
         <copy todir="out/raid_night/">
             <fileset dir="production/drawbridge"/>
@@ -12,11 +16,14 @@
                 <include name="assets/**/*.xlsx"/>
                 <include name="assets/**/*.png"/>
                 <include name="assets/**/*.jpg"/>
-                <include name="out/raidnight.js"/>
             </fileset>
             <mappedresources>
                 <fileset file="one.html"/>
                 <mergemapper to="puzzle.html"/>
+            </mappedresources>
+            <mappedresources>
+                <fileset file="out/raidnight-obfuscated.js"/>
+                <mergemapper to="out/raidnight.js"/>
             </mappedresources>
         </copy>
     </target>

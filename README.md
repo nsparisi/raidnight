@@ -27,4 +27,6 @@ node "path-to-file.js"
 
 # Prepare production package folders (e.g. out/raid_night), suitable to pass into preview_dir.py
 
+Setup (run once): npm install javascript-obfuscator -g
+
 ant
