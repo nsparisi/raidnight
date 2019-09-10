@@ -1,3 +1,5 @@
+var PUZZ_BASE_DIR;
+
 module RaidNight.Graphics
 {
     export class Game_RaidNight extends Phaser.Game
