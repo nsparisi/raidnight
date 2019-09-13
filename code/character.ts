@@ -213,6 +213,58 @@ module RaidNight.Engine
             }
         }
 
+        public runAI2(currTurnAction)
+        {
+            // cds should always update
+            this.updateCooldowns();
+
+            if (this.isDead())
+            {
+                this.resetState();
+                return;
+            }
+
+            if (this.isHalted)
+            {
+                Debug.logCondensed(`⌛⌛ ${this.name} is frozen in time! ⌛⌛`);
+                return;
+            }
+
+            this.castTimeRemaining--;
+
+            // check current action
+            if (this.isCasting && this.castTimeRemaining > 0)
+            {
+                Debug.logCondensed(`${this.focusedName()} continues to cast ${this.currentAction.skill}.`);
+                return;
+            }
+
+            // prepare new action
+            else if (!this.isCasting)
+            {
+                this.currentAction = currTurnAction;
+
+                if (this.currentAction.type == ActionType.Move)
+                {
+                    this.doMove();
+                }
+                else if (this.currentAction.type == ActionType.Skill)
+                {
+                    this.startSkill();
+                }
+                else if(this.currentAction.type == ActionType.Wait)
+                {
+                    this.doWait();
+                }
+            }
+
+            // finalize action
+            if (this.isCasting && this.castTimeRemaining == 0)
+            {
+                this.finishSkill();
+            }
+        }
+
         public isDead()
         {
             return this.health <= 0;
@@ -331,7 +383,7 @@ module RaidNight.Engine
                 this.actionIndex = this.actionIndex % this.actionList.length;
             }
         }
-        
+
         reverseActions()
         {
             // Reverse expects that the last action taken will happen again

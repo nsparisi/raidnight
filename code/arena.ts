@@ -1,3 +1,5 @@
+var actions;
+var hot;
 
 module RaidNight.Engine
 {
@@ -18,6 +20,7 @@ module RaidNight.Engine
         {
             this.state = ArenaState.InProgress;
             this.turn = 0;
+            hot.render();
         }
 
         stop = () =>
@@ -44,7 +47,11 @@ module RaidNight.Engine
 
             for (i = 0; i < this.allies.length; i++)
             {
-                this.allies[i].runAI();
+                let currTurnAction = null;
+                if (this.turn<actions.length) currTurnAction = actions[this.turn][i+2];
+                if (!currTurnAction) currTurnAction = new action_Wait();
+
+                this.allies[i].runAI2(currTurnAction);
             }
 
             // resolve boss status + action
@@ -60,7 +67,7 @@ module RaidNight.Engine
 
             // resolve room actions
             this.room.runAI();
-
+            hot.render();
             this.checkWinCondition();
             this.checkLoseCondition();
         }

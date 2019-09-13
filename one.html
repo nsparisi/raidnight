@@ -22,6 +22,8 @@
     </style>
 
     <script src="phaser-arcade-physics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable@7.1.1/dist/handsontable.full.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/handsontable@7.1.1/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
 </head>
 
 <body id="puzz">
@@ -32,7 +34,7 @@
     <div style="text-align:center;">
         <div id="Game"></div>
         <div style="width: 100%; padding: 15px; background: #ddddff;">
-            <button onclick="GameAction_ReadInput1();">Read Input</button> --
+            <!--<button onclick="GameAction_ReadInput1();">Read Input</button> -->
             <button onclick="GameAction_NewGame();">Reset <br />🔁️</button>
             <button onclick="GameAction_Step();">Step <br />➡️</button>
             <button onclick="GameAction_Resume();">Play<br />▶️</button>
@@ -42,44 +44,45 @@
             <input type="checkbox" id="debug_checkbox" onclick="GameAction_Debug();" style="display:none"><br /><br />
             Hotkeys: Use 1/2/3 for Reset/Step/Play respectively
         </div>
+        <div id="moveTable"></div>
 
         <div style="width: 30%; float: left; padding: 0 15px;">
-            <h2>KNIGHT</h2>
-            <textarea cols="40" rows="10" id="knight_input">taunt:dragon strike:dragon pierce:dragon</textarea>
+            <!--<h2>KNIGHT</h2>-->
+            <!--<textarea cols="40" rows="10" id="knight_input">taunt:dragon strike:dragon pierce:dragon</textarea>-->
             <h3>KNIGHT SKILLS</h3>
 
-            <h4>Taunt</h4>
+            <h4>Taunt <img src="assets/dragon.png" width="20px" onclick="fillKnight('taunt:dragon')"/></h4>
             <ul>
                 <li>Mana: 0 cost</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Taunts the target, forcing attacks to be directed towards the knight for 5
                     turns</li>
             </ul>
-            <h4>Strike</h4>
+            <h4>Strike <img src="assets/dragon.png" width="20px" onclick="fillKnight('strike:dragon')"/></h4>
             <ul>
                 <li>Mana: Recovers 20 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Deals 10 damage</li>
             </ul>
-            <h4>Pierce</h4>
+            <h4>Pierce <img src="assets/dragon.png" width="20px" onclick="fillKnight('pierce:dragon')"/></h4>
             <ul>
                 <li>Mana: Costs 20 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Deals 10 damage and an additional 50 damage over 5 turns</li>
             </ul>
-            <h4>ShieldWall</h4>
+            <h4>ShieldWall <img src="assets/status/st_shieldwall.png" width="20px" onclick="fillKnight('shieldwall')"/></h4>
             <ul>
                 <li>Mana: Costs 50 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">The knight gains 50% defense for 5 turns</li>
             </ul>
-            <h4>ShieldBash</h4>
+            <h4>ShieldBash <img src="assets/dragon.png" width="20px" onclick="fillKnight('shieldbash:dragon')"/></h4>
             <ul>
                 <li>Mana: Costs 50 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Deals 10 damage and reduces the target's defense by 50% for 5 turns</li>
             </ul>
-            <h4>Phalanx (Ultimate)</h4>
+            <h4>Phalanx (Ultimate) <img src="assets/status/st_phalanx.png" width="20px" onclick="fillKnight('phalanx')"/></h4>
             <ul>
                 <li>Mana: Costs 0 mana</li>
                 <li>Cast Time: Instant</li>
@@ -88,35 +91,50 @@
             </ul>
         </div>
         <div style="width: 30%; float: left; padding: 0 15px;">
-            <h2>PRIEST</h2>
-            <textarea cols="40" rows="10" id="priest_input">regen:knight regen:priest regen:wizard</textarea>
+            <!--<h2>PRIEST</h2>-->
+            <!--<textarea cols="40" rows="10" id="priest_input">regen:knight regen:priest regen:wizard</textarea>-->
             <h3>PRIEST SKILLS</h3>
 
-            <h4>GreaterHeal</h4>
+            <h4>
+                GreaterHeal
+                <img src="assets/knight.png" width="20px" onclick="fillPriest('greaterheal:knight','-','-')"/>
+                <img src="assets/priest.png" width="20px" onclick="fillPriest('greaterheal:priest','-','-')"/>
+                <img src="assets/wizard.png" width="20px" onclick="fillPriest('greaterheal:wizard','-','-')"/>
+            </h4>
             <ul>
                 <li>Mana: Costs 5 mana</li>
                 <li>Cast Time: 3 turns</li>
                 <li class="description">Heals the target for 100 health</li>
             </ul>
-            <h4>FlashHeal</h4>
+            <h4>
+                FlashHeal
+                <img src="assets/knight.png" width="20px" onclick="fillPriest('flashheal:knight')"/>
+                <img src="assets/priest.png" width="20px" onclick="fillPriest('flashheal:priest')"/>
+                <img src="assets/wizard.png" width="20px" onclick="fillPriest('flashheal:wizard')"/>
+            </h4>
             <ul>
                 <li>Mana: Costs 5 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Heals the target for 35 health</li>
             </ul>
-            <h4>Regen</h4>
+            <h4>
+                Regen
+                <img src="assets/knight.png" width="20px" onclick="fillPriest('regen:knight')"/>
+                <img src="assets/priest.png" width="20px" onclick="fillPriest('regen:priest')"/>
+                <img src="assets/wizard.png" width="20px" onclick="fillPriest('regen:wizard')"/>
+            </h4>
             <ul>
                 <li>Mana: Costs 2 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Heals the target for 5 health and additional 50 health over 10 turns</li>
             </ul>
-            <h4>Hymn</h4>
+            <h4>Hymn <img src="assets/skill/priest/sk_hymn.png" width="20px" onclick="fillPriest('hymn', '-')"/></h4>
             <ul>
                 <li>Mana: Recovers 10 mana</li>
                 <li>Cast Time: 2 turns</li>
                 <li class="description">Heals the party for 15 health each and recovers 10 mana for the priest</li>
             </ul>
-            <h4>DivineIntervention (Ultimate)</h4>
+            <h4>DivineIntervention (Ultimate) <img src="assets/skill/priest/sk_divineintervention.png" width="20px" onclick="fillPriest('divineintervention')"/></h4>
             <ul>
                 <li>Mana: Costs 10 mana</li>
                 <li>Cast Time: Instant</li>
@@ -125,38 +143,43 @@
             </ul>
         </div>
         <div style="width: 30%; float: left; padding: 0 15px;">
-            <h2>WIZARD</h2>
-            <textarea cols="40" rows="10" id="wizard_input">iceshard:dragon iceshard:dragon iceshard:dragon icespear:dragon</textarea>
+            <!--<h2>WIZARD</h2>-->
+            <!--<textarea cols="40" rows="10" id="wizard_input">iceshard:dragon iceshard:dragon iceshard:dragon icespear:dragon</textarea>-->
             <h3>WIZARD SKILLS</h3>
 
-            <h4>IceShard</h4>
+            <h4>IceShard <img src="assets/dragon.png" width="20px" onclick="fillWizard('iceshard:dragon', '-')"/></h4>
             <ul>
                 <li>Mana: Costs 4 mana</li>
                 <li>Cast Time: 2 turns</li>
                 <li class="description">Deals 20 damage and builds a stack of ICESHARD increasing the damage done by
                     IceSpear. (Max 3 stacks)</li>
             </ul>
-            <h4>IceSpear</h4>
+            <h4>IceSpear <img src="assets/dragon.png" width="20px" onclick="fillWizard('icespear:dragon')"/></h4>
             <ul>
                 <li>Mana: Costs 5 mana</li>
                 <li>Cast Time: Instant</li>
                 <li class="description">Consumes all stacks of IceShards dealing 50 damage per stack</li>
             </ul>
-            <h4>Frostbite</h4>
+            <h4>Frostbite <img src="assets/status/st_frostbite.png" width="20px" onclick="fillWizard('frostbite')"/></h4>
             <ul>
                 <li>Mana: Costs 5 mana</li>
                 <li>Cast Time: Instant</li>
                 <li>Cooldown: Cannot be cast again for 20 turns</li>
                 <li class="description">The wizard gains 20% power for 10 turns</li>
             </ul>
-            <h4>WaterBarrier</h4>
+            <h4>
+                WaterBarrier
+                <img src="assets/knight.png" width="20px" onclick="fillWizard('waterbarrier:knight')"/>
+                <img src="assets/priest.png" width="20px" onclick="fillWizard('waterbarrier:priest')"/>
+                <img src="assets/wizard.png" width="20px" onclick="fillWizard('waterbarrier:wizard')"/>
+            </h4>
             <ul>
                 <li>Mana: Recovers 5 mana</li>
                 <li>Cast Time: Instant</li>
                 <li>Cooldown: Cannot be cast again for 20 turns</li>
                 <li class="description">The target gains 20% defense for 5 turns</li>
             </ul>
-            <h4>Deluge (Ultimate)</h4>
+            <h4>Deluge (Ultimate) <img src="assets/dragon.png" width="20px" onclick="fillWizard('deluge:dragon')"/></h4>
             <ul>
                 <li>Mana: Recovers 20 mana</li>
                 <li>Cast Time: Instant</li>
@@ -169,7 +192,7 @@
             <hr />
             <div>
                 <h3>FIRE DRAGON SKILLS</h3>
-                <div><a href="assets/Move List.xlsx">Download Boss Move List</a></div>
+                <!--<div><a href="assets/Move List.xlsx">Download Boss Move List</a></div>-->
                 <div style="width: 22%; float: left; padding: 0 10px;">
                     <h4>Claw</h4>
                     <ul>
@@ -222,6 +245,106 @@
         <script src="out/raidnight.js"></script>
         <script type="text/javascript">
             GLOBAL_GAME.setup1();
+
+var tableData = [
+  ['', 'Dragon', 'Knight', 'Priest', 'Wizard', ''],
+  ['1', 'Claw', 'taunt:dragon', 'regen:knight', 'iceshard:dragon', ''],
+  ['2', 'Heatwave', 'strike:dragon', 'greaterheal:knight', '-', ''],
+  ['3', 'Claw', 'pierce:dragon', '-', 'iceshard:dragon', ''],
+  ['4', 'Claw', '', '-', '-', ''],
+  ['5', 'Claw', '', '', 'icespear:dragon', ''],
+  ['6', 'Claw', '', '', '', ''],
+  ['7', 'Claw', '', '', '', ''],
+  ['8', 'Claw', '', '', '', ''],
+  ['9', 'Claw', '', '', '', ''],
+  ['10', 'Claw', '', '', '', ''],
+  ['11', 'Heatwave', '', '', '', ''],
+  ['12', 'Claw', '', '', '', ''],
+  ['13', 'Claw', '', '', '', ''],
+  ['14', 'Claw', '', '', '', '']
+];
+
+var nextFillRow = [4, 5, 6];
+
+function cellRenderer(instance, td, row, col, prop, value, cellProperties) {
+  Handsontable.renderers.TextRenderer.apply(this, arguments);
+  if (row==Math.max(0, GLOBAL_GAME.arena.turn)) td.style["border-bottom"] = '2px solid red';
+  if (actions[row][col]!=null) td.style["font-weight"] = 'bold';
+  if ((col==2 || col==3 || col==4) && row==nextFillRow[col-2]) td.style.background = '#FFFFDD';
+}
+
+var actions = [];
+tableData.forEach((x) => {actions.push([]);});
+
+function syncActionFromTableData(row, col) {
+  try {
+    var parsedActions = GLOBAL_INPUT_HELPER.parse(["", "", "KNIGHT", "PRIEST", "IWIZARD"][col], tableData[row][col]);
+    if (parsedActions.length!=1) throw 'found '+parsedActions.length+' actions';
+    actions[row][col] = parsedActions[0];
+    //console.log(parsedActions[0]);
+  } catch (e) {
+    actions[row][col] = null;
+    //console.log('invalid action because '+e);
+  }
+}
+
+for (let row = 0; row<tableData.length; row++) {
+  for (let col = 0; col<tableData[row].length; col++) {
+    syncActionFromTableData(row, col);
+  }
+}
+
+var hot = new Handsontable(document.getElementById('moveTable'), {
+  data: tableData,
+  rowHeaders: false,
+  colHeaders: false,
+  stretchH: 'last',
+  licenseKey: 'non-commercial-and-evaluation',
+  cells: function (row, col) {
+    const cellProperties = {'renderer':cellRenderer};
+    if (row==0 || col<=1) cellProperties.readOnly = true;
+    return cellProperties;
+  },
+  afterChange: (changes) => {
+    if (changes!=null) changes.forEach(([row, prop, oldValue, newValue]) => {syncActionFromTableData(row, prop);});
+    if (hot) hot.render();
+  },
+  afterSelectionEnd: (row, col, row2, col2, level) => {
+    if (row>0 && (col==2 || col==3 || col==4)) {
+      nextFillRow[col-2] = row;
+      if (hot) hot.render();
+    }
+  }
+});
+
+function fillKnight(...texts) {
+  for (text of texts) {
+    hot.setDataAtCell(nextFillRow[0], 2, text);
+    if (nextFillRow[0]==tableData.length-1) break;
+    nextFillRow[0]++;
+  }
+  hot.render();
+}
+
+function fillPriest(...texts) {
+  for (text of texts) {
+    hot.setDataAtCell(nextFillRow[1], 3, text);
+    if (nextFillRow[1]==tableData.length-1) break;
+    nextFillRow[1]++;
+  }
+  hot.render();
+}
+
+function fillWizard(...texts) {
+  for (text of texts) {
+    hot.setDataAtCell(nextFillRow[2], 4, text);
+    if (nextFillRow[2]==tableData.length-1) break;
+    nextFillRow[2]++;
+  }
+  hot.render();
+}
+
+GameAction_NewGame();
         </script>
     </div>
 </body>

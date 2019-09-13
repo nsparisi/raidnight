@@ -102,9 +102,9 @@ module RaidNight.Engine
             room.actionList.push(new action_Wait());
 
             this.arena.room = room;
-            this.arena.allies[0].actionList = this.allyActions.knight;
-            this.arena.allies[1].actionList = this.allyActions.priest;
-            this.arena.allies[2].actionList = this.allyActions.wizard;
+            this.arena.allies[0].actionList = [];
+            this.arena.allies[1].actionList = [];
+            this.arena.allies[2].actionList = [];
         }
 
         newGame2 = () =>

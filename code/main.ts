@@ -53,14 +53,9 @@ const GLOBAL_GAME_PHASER = new RaidNight.Graphics.Game_RaidNight();
 
 var GameAction_ReadInput1 = function (){
     GLOBAL_GAME.stop();
-    console.log("Reading new input...");
-    let team = GLOBAL_INPUT_HELPER.parseInputCreateTeam(RaidNight.Engine.FightType.Fight1);
-    if (team)
-    {
-        GLOBAL_GAME.readInput(team);
-        GLOBAL_GAME.newGame();
-        GLOBAL_GAME.start();
-    }
+    GLOBAL_GAME.readInput(null);
+    GLOBAL_GAME.newGame();
+    GLOBAL_GAME.start();
 };
 
 var GameAction_ReadInput2 = function (){
@@ -88,12 +83,8 @@ var GameAction_ReadInput3 = function (){
 };
 
 var GameAction_NewGame = function (){
-    if(GLOBAL_GAME.allyActions == null)
-    {
-        console.log("Please read a valid input before beginning a new game.");
-        return;
-    }
-
+    GLOBAL_GAME.stop();
+    GLOBAL_GAME.readInput(null);
     GLOBAL_GAME.newGame();
     GLOBAL_GAME.start();
 };
