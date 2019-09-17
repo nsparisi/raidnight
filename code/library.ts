@@ -34,11 +34,11 @@ module RaidNight.Engine
             "CREMATE": new skill_Cremate(),
             
             // EWIZARD
-            "FIREBALLULTRA": new skill_FireballUltra(),
-            "CREMATEULTRA": new skill_CremateUltra(),
-            "ICESHARDULTRA": new skill_IceShardUltra(),
-            "ICESPEARULTRA": new skill_IceSpearUltra(),
-            "FROSTBITEULTRA": new skill_FrostbiteUltra(),
+            "FIREBOLT": new skill_Firebolt(),
+            "HELLFIRE": new skill_Hellfire(),
+            "GLACIALSHARD": new skill_GlacialShard(),
+            "GLACIALSPEAR": new skill_GlacialSpear(),
+            "COLDSNAP": new skill_Coldsnap(),
             "COOLINGWINDS": new skill_CoolingWinds(),
 
             // FDRAGON
@@ -93,8 +93,8 @@ module RaidNight.Engine
             "ST_HEATINGUP": () => {return new status_HeatingUp();},
             
             // EWIZARD
-            "ST_ICESHARDULTRA": () => {return new status_IceShardUltra();},
-            "ST_FROSTBITEULTRA": () => {return new status_FrostbiteUltra();},
+            "ST_GLACIALSHARD": () => {return new status_GlacialShard();},
+            "ST_COLDSNAP": () => {return new status_Coldsnap();},
             "ST_OVERHEATING": () => {return new status_Overheating();},
 
             // DRAGON
@@ -117,7 +117,7 @@ module RaidNight.Engine
             "PRIEST": ["GREATERHEAL", "FLASHHEAL", "REGEN", "HYMN", "DIVINEINTERVENTION"],
             "IWIZARD": ["ICESHARD", "ICESPEAR", "FROSTBITE", "WATERBARRIER", "DELUGE"],
             "FWIZARD": ["KINDLE", "FIREBALL", "SCORCH", "CAUTERIZE", "FIREBARRIER", "CREMATE"],
-            "EWIZARD": ["FIREBALLULTRA", "CREMATEULTRA", "ICESHARDULTRA", "ICESPEARULTRA", "FROSTBITEULTRA", "COOLINGWINDS"],
+            "EWIZARD": ["FIREBOLT", "HELLFIRE", "GLACIALSHARD", "GLACIALSPEAR", "COLDSNAP", "COOLINGWINDS"],
             "DRAGON": ["CLAW", "HEATWAVE", "FLAMETHROWER"],     
             "MOSSDRAGON": ["TAILSWIPE", "VENOMOUSBITE"],  
             "TIMEDRAGON": ["REWIND", "FASTFORWARD", "HALT", "BITE", "TIMELASER", "SANDPRISM"],

@@ -115,8 +115,8 @@ module RaidNight.Graphics
             this.load.image('assets/status/st_miasmata.png', 'assets/status/st_miasmata.png');
 
             // status round 3
-            this.load.image('assets/status/st_iceshardultra.png', 'assets/status/st_iceshardultra.png');
-            this.load.image('assets/status/st_frostbiteultra.png', 'assets/status/st_frostbiteultra.png');
+            this.load.image('assets/status/st_glacialshard.png', 'assets/status/st_glacialshard.png');
+            this.load.image('assets/status/st_coldsnap.png', 'assets/status/st_coldsnap.png');
             this.load.image('assets/status/st_overheating.png', 'assets/status/st_overheating.png');
             this.load.image('assets/status/st_halt.png', 'assets/status/st_halt.png');
 

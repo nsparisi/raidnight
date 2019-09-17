@@ -332,7 +332,7 @@ module RaidNight.Engine
     // ********** 
     // ELEMENTAL WIZARD
     // ********** 
-    export class skill_FireballUltra extends Skill
+    export class skill_Firebolt extends Skill
     {
         constructor()
         {
@@ -340,11 +340,11 @@ module RaidNight.Engine
             this.health = -50;
             this.castTime = 1;
             this.mana = 25;
-            this.name = "FireballUltra";
+            this.name = "Firebolt";
         }
     }
 
-    export class skill_CremateUltra extends Skill
+    export class skill_Hellfire extends Skill
     {
         constructor()
         {
@@ -354,11 +354,11 @@ module RaidNight.Engine
             this.mana = 50;
             this.castTime = 1;
             this.cremate = true;
-            this.name = "CremateUltra";
+            this.name = "Hellfire";
         }
     }
     
-    export class skill_IceShardUltra extends Skill
+    export class skill_GlacialShard extends Skill
     {
         constructor()
         {
@@ -366,12 +366,12 @@ module RaidNight.Engine
             this.health = -20;
             this.mana = -10;
             this.castTime = 1;
-            this.name = "IceShardUltra";
+            this.name = "GlacialShard";
             this.selfStatuses = ["ST_ICESHARD"];
         }
     }
 
-    export class skill_IceSpearUltra extends Skill
+    export class skill_GlacialSpear extends Skill
     {
         constructor()
         {
@@ -380,11 +380,11 @@ module RaidNight.Engine
             this.healthPerIceShard = -50; 
             this.castTime = 1;
             this.mana = -20;
-            this.name = "IceSpearUltra";
+            this.name = "GlacialSpear";
         }
     }
 
-    export class skill_FrostbiteUltra extends Skill
+    export class skill_Coldsnap extends Skill
     {
         constructor()
         {
@@ -393,9 +393,9 @@ module RaidNight.Engine
             this.mana = 0;
             this.castTime = 1;
             this.cooldown = 20;
-            this.name = "FrostbiteUltra";
+            this.name = "Coldsnap";
             this.selfOnly = true;
-            this.selfStatuses = ["ST_FROSTBITEULTRA"];
+            this.selfStatuses = ["ST_COLDSNAP"];
         }
     }
     

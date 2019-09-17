@@ -225,27 +225,27 @@ module RaidNight.Engine
     // ********** 
     // ELEMENTAL WIZARD
     // ********** 
-    export class status_IceShardUltra extends Status
+    export class status_GlacialShard extends Status
     {
         constructor()
         {
             super();
             
             this.type = StatusType.Good;
-            this.name = "ST_IceShardUltra";
+            this.name = "ST_GlacialShard";
             this.duration = 10;
             this.maxStacks = 3;
         }
     }
 
-    export class status_FrostbiteUltra extends Status
+    export class status_Coldsnap extends Status
     {
         constructor()
         {
             super();
             
             this.type = StatusType.Good;
-            this.name = "ST_FrostbiteUltra";
+            this.name = "ST_Coldsnap";
             this.duration = 5;
             this.power = 20;
             this.manaPerTurn = -10;

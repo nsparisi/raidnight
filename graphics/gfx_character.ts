@@ -389,19 +389,19 @@ module RaidNight.Graphics
                             effect = new SpellEffect_VenomousBite(this.scene, end);
                             break;
                             
-                            case "ICESHARDULTRA":
+                            case "GLACIALSHARD":
                             effect = new SpellEffect_IceShard(this.scene, start, end);
                             break;
 
-                            case "ICESPEARULTRA":
+                            case "GLACIALSPEAR":
                             effect = new SpellEffect_IceSpear(this.scene, start, end);
                             break;
 
-                            case "FROSTBITEULTRA":
+                            case "COLDSNAP":
                             effect = new SpellEffect_Frostbite(this.scene, end);
                             break;
 
-                            case "FIREBALLULTRA":
+                            case "FIREBOLT":
                             effect = new SpellEffect_Fireball(this.scene, start, end);
                             break;
 
@@ -460,7 +460,7 @@ module RaidNight.Graphics
                             effect = new SpellEffect_Cremate(this.scene, start, end);
                             break;
 
-                            case "CREMATEULTRA":
+                            case "HELLFIRE":
                             effect = new SpellEffect_Cremate(this.scene, start, end);
                             break;
 
