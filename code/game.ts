@@ -129,7 +129,7 @@ module RaidNight.Engine
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
-            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Move(0, 1));
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
@@ -139,7 +139,7 @@ module RaidNight.Engine
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
-            boss2.actionList.push(new action_Wait());
+            boss2.actionList.push(new action_Move(0, -1));
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
             boss2.actionList.push(new action_Wait());
             boss2.actionList.push(new action_Skill("Whip", ["knight"]));
@@ -156,7 +156,17 @@ module RaidNight.Engine
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());
             boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Move(0, -1));
             boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Skill("Miasma", ["knight", "priest", "wizard"]));
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Wait());
+            boss3.actionList.push(new action_Move(0, 1));
             boss3.actionList.push(new action_Wait());
 
             let room = new Room2("Dungeon", "💣",  20, 15);

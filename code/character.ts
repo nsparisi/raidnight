@@ -735,7 +735,7 @@ module RaidNight.Engine
             //if (!this.phase2 && GLOBAL_GAME.arena.turn == 100)
             {
                 this.phase2 = true;
-                this.actionList = [];
+                this.actionList = [];                
                 this.actionList.push(new action_Skill("Miasmata", ["knight", "priest", "wizard"]));
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Wait());
@@ -744,7 +744,17 @@ module RaidNight.Engine
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Move(0, -1));
                 this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Skill("Miasmata", ["knight", "priest", "wizard"]));
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Move(0, 1));
                 this.actionList.push(new action_Wait());
 
                 Debug.logCondensed("🌿🌿 CORPSEFLOWER grows stronger! 🌿🌿");
@@ -770,7 +780,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
-                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Move(0, 1));
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
@@ -780,7 +790,7 @@ module RaidNight.Engine
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
-                this.actionList.push(new action_Wait());
+                this.actionList.push(new action_Move(0, -1));
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
                 this.actionList.push(new action_Wait());
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
