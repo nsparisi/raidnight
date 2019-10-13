@@ -89,6 +89,9 @@ module RaidNight.Engine
                 this.state = ArenaState.Win;
 
                 GLOBAL_GAME.startText(...this.winTexts);
+                this.winTexts.forEach((text)=>{
+                    Debug.logCondensed(text);
+                });
             }
         }
         

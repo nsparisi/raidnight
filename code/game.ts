@@ -253,7 +253,9 @@ module RaidNight.Engine
             this.library = new Library();
             this.arena = new Arena();
             this.arena.room = new Room1("Dragon", "🐉", 20, 15);
-            this.arena.winTexts.push("To advance, use passcode: FIREBALL ROBERTS");
+            this.arena.winTexts = [];
+            this.arena.winTexts.push("In its dying breath the dragon bellows: BOING");
+            this.arena.winTexts.push("The dragon has been slain.");
 
             this.fightType = FightType.Fight1;
             
@@ -279,6 +281,9 @@ module RaidNight.Engine
             this.library = new Library();
             this.arena = new Arena();
             this.arena.room = new Room2("Dungeon", "💣",  20, 15);
+            this.arena.winTexts = [];
+            this.arena.winTexts.push("The vegetation combusts into flames forming smoke in the shape of a: DEER");
+            this.arena.winTexts.push("The dragon has been slain.");
             
             this.fightType = FightType.Fight2;
             
@@ -311,6 +316,12 @@ module RaidNight.Engine
             this.library = new Library();
             this.arena = new Arena();
             this.arena.room = new Room3("TimeDragon", "", 20, 15);
+            this.arena.winTexts = [];
+            this.arena.winTexts.push("The dragon vanishes leaving behind a glass shard with the inscription: THE IMPURE");
+            this.arena.winTexts.push("Lying in the sand, you discover a powerful priest robe.");
+            this.arena.winTexts.push("Also a mighty knight shield.");
+            this.arena.winTexts.push("The King and Queen's powers have been restored.");
+            this.arena.winTexts.push("And the people rejoiced.");
             
             this.fightType = FightType.Fight3;
             

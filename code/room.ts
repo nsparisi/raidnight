@@ -184,8 +184,8 @@ module RaidNight.Engine
                 this.actionList.push(new action_AreaSkill("FireStorm", new Area(2, 12, 3,  13)));
                 this.actionList.push(new action_Wait());
 
-                Debug.logCondensed("🔥🔥 DRAGON has called down a FIRESTORM! 🔥🔥");
-                GLOBAL_GAME.startText("DRAGON has called down a FIRESTORM!");
+                Debug.logCondensed("🔥🔥 The dragon has called down a firestorm! 🔥🔥");
+                GLOBAL_GAME.startText("The dragon has called down a firestorm!");
             }
             
             super.grabNewAction();
@@ -240,8 +240,11 @@ module RaidNight.Engine
                 this.growthCounter = this.growthRate-1;
                 this.growthTier = 0;
 
-                Debug.logCondensed("🌿🌿 MOSSDRAGON is consuming the dungeon in overgrowth! 🌿🌿");
-                GLOBAL_GAME.startText("MOSSDRAGON is consuming the dungeon in overgrowth!");
+                GLOBAL_GAME.startText(
+                    "The dragon is consuming the dungeon in overgrowth!",
+                    "The knight laughs \"If we make it outta' here alive, I'll treat us to a round of: BEERS\"");
+                Debug.logCondensed("🌿🌿 The dragon is consuming the dungeon in overgrowth! 🌿🌿");
+                Debug.logCondensed("The knight laughs \"If we make it outta' here alive, I'll treat us to a round of: BEERS\"");
             }
 
             if (this.phase2)

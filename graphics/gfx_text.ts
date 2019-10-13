@@ -16,12 +16,12 @@ module RaidNight.Graphics
             this.sprite.setDisplaySize(400,400);
             this.sprite.setVisible(true);
             
-            let winStyle = {fontSize: "35px", fill: "#000", align: "center", stroke: "black", fontWeight: "bold"};
+            let winStyle = {fontSize: "30px", fill: "#000", align: "center", stroke: "black", fontWeight: "bold"};
             this.text = this.scene.add.text(
                 this.scene.game.canvas.width / 2, 
                 this.scene.game.canvas.height / 2, text, winStyle).setDepth(DepthLayer.HUD);
             this.text.setOrigin(0.5);
-            this.text.setWordWrapWidth(270, true);
+            this.text.setWordWrapWidth(275, true);
         }
 
         updateText(text: string)

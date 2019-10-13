@@ -718,8 +718,11 @@ module RaidNight.Engine
                 this.phase2 = true;
                 GLOBAL_GAME.arena.allies.forEach((ally)=>ally.reverseActions());
 
-                Debug.logCondensed("⌛⌛ TIMEDRAGON is reversing time! ⌛⌛");
-                GLOBAL_GAME.startText("TIMEDRAGON is reversing time!");
+                GLOBAL_GAME.startText(
+                    "The dragon is muttering an incantation: RANIMES", 
+                    "!emit gnisrever si nogard ehT");
+                Debug.logCondensed("⌛⌛ The dragon is muttering an incantation: RANIMES ⌛⌛");
+                Debug.logCondensed("⌛⌛ !emit gnisrever si nogard ehT ⌛⌛");
             }
         }
     }
@@ -727,9 +730,42 @@ module RaidNight.Engine
     export class CorpseFlower extends Boss
     {
         phase2: boolean = false;
+        showMossdragonDeathText: boolean = true;
 
         grabNewAction ()
         {
+            // if mossdragon dies, devilvine is still alive, then never show text
+            if (this.showMossdragonDeathText 
+                && GLOBAL_GAME.arena.enemies[0].health <= 0 
+                && GLOBAL_GAME.arena.enemies[1].health > 0)
+            {
+                this.showMossdragonDeathText = false;
+            }
+
+            // if mossdragon dies and devilvine are dead, show text
+            if (this.showMossdragonDeathText 
+                && GLOBAL_GAME.arena.enemies[0].health <= 0 
+                && GLOBAL_GAME.arena.enemies[1].health <= 0)
+            {
+                this.showMossdragonDeathText = false;
+                GLOBAL_GAME.startText(
+                    "The dragon combusts into flames.",
+                    "As the dragon fades from view, you catch a glimpse of a selection of fine craft BEERS",
+                    "in the dungeon storeroom. Yes: BEERS",
+                    "You faintly remember hearing a tale of the dragon's pastime.",
+                    "Could it be, this is the home of the world-renowned \"Devil's Lager\"?",
+                    "You suddenly wake up from the poisonous hallucination.",
+                    "The corpse flower smiles menacingly.");
+
+                Debug.logCondensed("The dragon combusts into flames.");
+                Debug.logCondensed("As the dragon fades from view, you catch a glimpse of a selection of fine craft BEERS");
+                Debug.logCondensed("in the dungeon storeroom. Yes: BEERS.");
+                Debug.logCondensed("You faintly remember hearing a tale of the dragon's pastime.");
+                Debug.logCondensed("Could it be, this is the home of the world-renowned \"Devil's Lager\"?");
+                Debug.logCondensed("You suddenly wake up from the poisonous hallucination.");
+                Debug.logCondensed("The corpse flower smiles menacingly.");
+            }
+
             // when devilvine dies
             if (!this.phase2 && GLOBAL_GAME.arena.enemies[1].health <= 0)
             //if (!this.phase2 && GLOBAL_GAME.arena.turn == 100)
@@ -757,8 +793,8 @@ module RaidNight.Engine
                 this.actionList.push(new action_Move(0, 1));
                 this.actionList.push(new action_Wait());
 
-                Debug.logCondensed("🌿🌿 CORPSEFLOWER grows stronger! 🌿🌿");
-                GLOBAL_GAME.startText("CORPSEFLOWER grows stronger!");
+                Debug.logCondensed("🌿🌿 Corpseflower grows stronger! 🌿🌿");
+                GLOBAL_GAME.startText("Corpseflower grows stronger!");
             }
 
             super.grabNewAction();
@@ -768,9 +804,30 @@ module RaidNight.Engine
     export class DevilVine extends Boss
     {
         phase2: boolean = false;
+        mossdragonDeathText: boolean = false;
 
         grabNewAction ()
         {
+            // if mossdragon dies, devilvine is still alive, corpseflower is either dead or alive
+            if (!this.mossdragonDeathText && GLOBAL_GAME.arena.enemies[0].health <= 0)
+            {
+                this.mossdragonDeathText = true;
+                GLOBAL_GAME.startText(
+                    "The dragon combusts into flames.",
+                    "As the dragon fades from view, you catch a glimpse of a selection of fine craft BEERS",
+                    "in the dungeon storeroom. Yes: BEERS",
+                    "You faintly remember hearing a tale of the dragon's pastime.",
+                    "Could it be, this is the home of the world-renowned \"Devil's Lager\"?",
+                    "You suddenly wake up from the poisonous hallucination as heavy vines knock the air out of you.");
+
+                Debug.logCondensed("The dragon combusts into flames.");
+                Debug.logCondensed("As the dragon fades from view, you catch a glimpse of a selection of fine craft BEERS");
+                Debug.logCondensed("in the dungeon storeroom. Yes: BEERS.");
+                Debug.logCondensed("You faintly remember hearing a tale of the dragon's pastime.");
+                Debug.logCondensed("Could it be, this is the home of the world-renowned \"Devil's Lager\"?");
+                Debug.logCondensed("You suddenly wake up from the poisonous hallucination as heavy vines knock the air out of you.");
+            }
+
             // when corpseflower dies
             if (!this.phase2 && GLOBAL_GAME.arena.enemies[2].health <= 0)
             //if (!this.phase2 && GLOBAL_GAME.arena.turn == 5)
@@ -798,8 +855,8 @@ module RaidNight.Engine
                 this.actionList.push(new action_Skill("EnhancedWhip", ["knight"]));
                 this.actionList.push(new action_Skill("EnhancedBind", ["knight"]));
 
-                Debug.logCondensed("🌿🌿 DEVILVINE grows stronger! 🌿🌿");
-                GLOBAL_GAME.startText("DEVILVINE grows stronger!");
+                Debug.logCondensed("🌿🌿 Devilvine grows stronger! 🌿🌿");
+                GLOBAL_GAME.startText("Devilvine grows stronger!");
             }
 
             super.grabNewAction();
