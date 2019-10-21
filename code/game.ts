@@ -318,10 +318,9 @@ module RaidNight.Engine
             this.arena.room = new Room3("TimeDragon", "", 20, 15);
             this.arena.winTexts = [];
             this.arena.winTexts.push("The dragon vanishes leaving behind a glass shard with the inscription: THE IMPURE");
-            this.arena.winTexts.push("Lying in the sand, you discover a powerful priest robe.");
-            this.arena.winTexts.push("Also a mighty knight shield.");
-            this.arena.winTexts.push("The King and Queen's powers have been restored.");
-            this.arena.winTexts.push("And the people rejoiced.");
+            this.arena.winTexts.push("The dragon has been slain. The riches are yours.");
+            this.arena.winTexts.push("You return to the safari and sneak into a passing tour group.");
+            this.arena.winTexts.push("\"And over there is our very own dragon's lair...\"");
             
             this.fightType = FightType.Fight3;
             
