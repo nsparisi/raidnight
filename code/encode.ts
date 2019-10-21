@@ -6,6 +6,24 @@ module RaidNight.Engine
         wizard: Action[];
     }
 
+    // These are raw notes on encoding behavior -- saving in case it needs to be picked up in the future
+    // type: 0,1,2
+    // targets: 0,1,2,3,4,5
+    // skill: 0,1,2,3,4,5
+    // targettype: 0,1
+    // x: 0,1
+    // y: 0,1
+    //
+    // type: 0 (skill)
+    // targets: 0,1,2,3,4,5,6  (all, knight, priest, wizard, boss1, boss2, boss3)
+    // skill: 0,1,2,3,4,5
+    // targettype:0,1 (only if skill is cremate, choose 1)
+    //
+    // type:1 (move)
+    // x: 0,1
+    // y: 0,1
+    //
+    // type:2 (wait)
     export class Encode
     {
         static ENCODE_TABLE = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
