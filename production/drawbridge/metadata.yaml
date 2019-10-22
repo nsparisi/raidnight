@@ -1,8 +1,8 @@
 # only lowercase, number, _ (no spaces)
-shortname: raid_night
+shortname: dragon
 
 # Display version of title. No HTML <tags>
-title: Raid Night
+title: Dragon
 
 #  Who to call in emergency. Make sure you're in roster!
 oncall: nsparisi@gmail.com
@@ -12,5 +12,10 @@ authors: [Nick Parisi]
 puzzletron_id: 71
 
 
-answer: FIREBALL ROBERTS
+answers:
+ - BEERS
+ - BOING
+ - DEER
+ - SEMINAR
+ - THE IMPURE
 

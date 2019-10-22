@@ -20,9 +20,12 @@
                 <include name="assets/**/*.xlsx"/>
                 <include name="assets/**/*.png"/>
                 <include name="assets/**/*.jpg"/>
+                <include name="caveentrance.html"/>
+                <include name="sunkenforest.html"/>
+                <include name="ancientpalace.html"/>
             </fileset>
             <mappedresources>
-                <fileset file="one.html"/>
+                <fileset file="index.html"/>
                 <mergemapper to="puzzle.html"/>
             </mappedresources>
             <mappedresources>
