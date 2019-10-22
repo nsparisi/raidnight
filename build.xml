@@ -14,7 +14,7 @@
             <arg value="--string-array-threshold"/><arg value="1.0"/>
         </exec>
         <copy todir="out/raid_night/">
-            <fileset dir="production/drawbridge"/>
+            <fileset dir="production"/>
             <fileset dir=".">
                 <include name="phaser-arcade-physics.min.js"/>
                 <include name="assets/**/*.xlsx"/>
