@@ -125,8 +125,7 @@ module RaidNight.Graphics
         
         isFinished()
         {
-            return GLOBAL_GAME.arena.turn != this.startTurn && 
-                this.tween.totalProgress >= 1;
+            return this.tween.totalProgress >= 1;
         }
 
         update()
@@ -186,8 +185,7 @@ module RaidNight.Graphics
         
         isFinished()
         {
-            return GLOBAL_GAME.arena.turn != this.startTurn && 
-                this.tween.totalProgress >= 1;
+            return this.tween.totalProgress >= 1;
         }
 
         update()
@@ -252,8 +250,7 @@ module RaidNight.Graphics
         
         isFinished()
         {
-            return GLOBAL_GAME.arena.turn != this.startTurn && 
-                this.tween.totalProgress >= 1;
+            return this.tween.totalProgress >= 1;
         }
 
         update()
@@ -2156,8 +2153,7 @@ module RaidNight.Graphics
         
         isFinished()
         {
-            return GLOBAL_GAME.arena.turn != this.startTurn && 
-                this.tween.totalProgress >= 1;
+            return this.tween.totalProgress >= 1;
         }
 
         update()
@@ -2344,8 +2340,7 @@ module RaidNight.Graphics
         
         isFinished()
         {
-            return GLOBAL_GAME.arena.turn != this.startTurn && 
-                this.tween.totalProgress >= 1;
+            return this.tween.totalProgress >= 1;
         }
 
         update()
@@ -2411,8 +2406,7 @@ module RaidNight.Graphics
         
         isFinished()
         {
-            return GLOBAL_GAME.arena.turn != this.startTurn && 
-                this.tween.totalProgress >= 1;
+            return this.tween.totalProgress >= 1;
         }
 
         update()
