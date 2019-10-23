@@ -263,7 +263,7 @@ module RaidNight.Engine
             knight.mana = 0;
             let priest = new Character("Priest", "🙏", 200, 300, 11, 6);
             let wizard = new Character("Wizard", "❄️", 200, 200, 13, 8);
-            let boss = new Boss("Dragon", "🐉", 5000, 100, 3, 8);
+            let boss = new Boss("Dragon", "🐉", 4000, 100, 3, 8);
             boss.actionList = [];
             knight.actionList = [];
             priest.actionList = [];
@@ -294,8 +294,8 @@ module RaidNight.Engine
             wizard.mana = 0;
             wizard.addStatus("ST_HEATINGUP", "Wizard");            
             let boss1 = new Boss("MossDragon", "🐉", 5000, 100, 2, 7);
-            let boss2 = new DevilVine("DevilVine", "🟩", 1000, 100, 4, 4);
-            let boss3 = new CorpseFlower("CorpseFlower", "🟢", 1000, 100, 4, 10);
+            let boss2 = new DevilVine("DevilVine", "🟩", 1200, 100, 4, 4);
+            let boss3 = new CorpseFlower("CorpseFlower", "🟢", 1200, 100, 4, 10);
 
             boss1.actionList = [];
             boss2.actionList = [];

@@ -83,7 +83,9 @@ module RaidNight.Graphics
             this.load.image('assets/knight.png', 'assets/knight.png');
             this.load.image('assets/wizard.png', 'assets/wizard.png');
             this.load.image('assets/priest.png', 'assets/priest.png');
-            this.load.image('assets/dragon.png', 'assets/dragon.png');
+            this.load.image('assets/dragon_gold.png', 'assets/dragon_gold.png');
+            this.load.image('assets/dragon_green.png', 'assets/dragon_green.png');
+            this.load.image('assets/dragon_red.png', 'assets/dragon_red.png');
             this.load.image('assets/devil_vine.png', 'assets/devil_vine.png');
             this.load.image('assets/corpse_flower.png', 'assets/corpse_flower.png');
             this.load.image('assets/prism.png', 'assets/prism.png');
@@ -325,7 +327,7 @@ module RaidNight.Graphics
 
             if (GLOBAL_GAME.fightType == Engine.FightType.Fight1)
             {
-                this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
+                this.dragon = new Character(this, char_dragon, this.add.sprite(100, 500, 'assets/dragon_red.png'), true);
                 this.dragon.sprite.setFlipX(true);
                 this.img_background = this.add.image(0, 0, 'assets/map1.png').setOrigin(0, 0).setDepth(DepthLayer.Background);
                 this.text_cFlowerHealth.setVisible(false);
@@ -335,7 +337,7 @@ module RaidNight.Graphics
             }
             else if (GLOBAL_GAME.fightType == Engine.FightType.Fight2)
             {
-                this.mossDragon = new Character(this, char_mossdragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
+                this.mossDragon = new Character(this, char_mossdragon, this.add.sprite(100, 500, 'assets/dragon_green.png'), true);
                 this.mossDragon.sprite.setFlipX(true);
                 this.devilVine = new Character(this, char_devilVine, this.add.sprite(100, 500, 'assets/devil_vine.png'), true);
                 this.devilVine.sprite.setFlipX(true);
@@ -364,7 +366,7 @@ module RaidNight.Graphics
             }
             else if (GLOBAL_GAME.fightType == Engine.FightType.Fight3)
             {
-                this.timeDragon = new Character(this, char_timeDragon, this.add.sprite(100, 500, 'assets/dragon.png'), true);
+                this.timeDragon = new Character(this, char_timeDragon, this.add.sprite(100, 500, 'assets/dragon_gold.png'), true);
                 this.timeDragon.sprite.setFlipX(true);
                 char_prisms.forEach((char_prism) =>
                 {
