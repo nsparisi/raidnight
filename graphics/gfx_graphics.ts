@@ -44,7 +44,7 @@ module RaidNight.Graphics
         corpseFlower: Character;
         timeDragon: Character;
         room: Room;
-        prisms: Character[] = [];
+        prisms: Prism[] = [];
 
         text_TurnCount: Phaser.GameObjects.Text;
         gfx_TurnBox: Phaser.GameObjects.Graphics;
@@ -370,7 +370,7 @@ module RaidNight.Graphics
                 this.timeDragon.sprite.setFlipX(true);
                 char_prisms.forEach((char_prism) =>
                 {
-                    this.prisms.push(new Prism(this, char_prism, this.add.sprite(100, 500, 'assets/prism.png'), true));
+                    this.prisms.push(new Prism(this, char_prism, this.add.sprite(100, 500, 'assets/prism.png')));
                 })
 
                 this.img_background = this.add.image(0, 0, 'assets/map3.png').setOrigin(0, 0).setDepth(DepthLayer.Background);

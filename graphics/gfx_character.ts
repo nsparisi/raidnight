@@ -479,25 +479,72 @@ module RaidNight.Graphics
         }
     }
     
-    export class Prism extends Character
+    export class Prism
     {
-        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.SandPrism, sprite: Phaser.GameObjects.Sprite, isBoss: boolean)
-        {
-            super(scene, char_reference, sprite, isBoss);
+        sprite: Phaser.GameObjects.Sprite;
+        scene: Scene_Arena;
+        character: RaidNight.Engine.Character;
 
-            this.gfx_healthBlack.setVisible(false);
-            this.gfx_healthRed.setVisible(false);
-            this.gfx_healthGreen.setVisible(false);
-            this.gfx_manaBlack.setVisible(false);
-            this.gfx_manaBlue.setVisible(false);
-            this.buffPanel.destroy();
+        constructor (scene: Scene_Arena, char_reference: RaidNight.Engine.SandPrism, sprite: Phaser.GameObjects.Sprite)
+        {
+            this.scene = scene;
+            this.character = char_reference;
+            this.sprite = sprite;
+
+            this.sprite.setDepth(DepthLayer.Med_Priority);
         }
 
         update(newTurn: boolean)
         {
-            super.update(newTurn);
+            let centerX = this.character.x * this.scene.tileWidth + this.sprite.width / 2;
+            let centerY = this.character.y * this.scene.tileHeight + this.sprite.height / 2;
+
+            this.sprite.setPosition(
+                centerX, 
+                centerY);
 
             this.sprite.setVisible((this.character as RaidNight.Engine.SandPrism).visible);
+
+            if (newTurn)
+            {
+                if (this.character.currentAction != null && 
+                    this.character.currentAction.type == RaidNight.Engine.ActionType.Skill &&
+                    this.character.isCasting == false &&
+                    this.character.isCastSuccessful)
+                {
+                    let start = new Phaser.Math.Vector2(centerX, centerY);
+                    let stop = false;
+                    
+                    if (this.character.currentAction.targetType == RaidNight.Engine.TargetType.Area)
+                    {
+                        let start = new Phaser.Math.Vector2(
+                            this.character.currentAction.area.ul_x * this.scene.tileWidth, // upper-left anchor
+                            this.character.currentAction.area.ul_y * this.scene.tileHeight);
+                        let end = new Phaser.Math.Vector2(
+                            this.character.currentAction.area.br_x * this.scene.tileWidth + this.scene.tileWidth, // bottom-right anchor
+                            this.character.currentAction.area.br_y * this.scene.tileHeight + this.scene.tileHeight);
+
+                        let effect: SpellEffect = null;
+
+                        switch (this.character.currentAction.skill.toUpperCase())
+                        {
+                            case "TIMELASER":
+                            effect = new SpellEffect_TimeLaser(this.scene, start, end);
+                            break;
+                        }
+
+                        if(effect != null)
+                        {
+                            this.scene.addSkillEffect(effect);
+                        }
+                    }
+                }
+            }
+        }
+        
+        destroy = () =>
+        {
+            this.sprite.destroy();
         }
     }
 
@@ -516,6 +563,7 @@ module RaidNight.Graphics
         iconWidth: integer = 22;
         borderWidth: integer = 2;
         isBoss: boolean;
+        totalBuffs = 3;
         
         character: RaidNight.Engine.Character;
 
@@ -525,7 +573,6 @@ module RaidNight.Graphics
             this.character = char_reference;
             this.isBoss = isBoss;
 
-            let totalBuffs = 5;
             this.buffCount = 0;
             this.debuffCount = 0;
 
@@ -538,7 +585,7 @@ module RaidNight.Graphics
             this.debuffs = [];
             this.buff_counts = [];
             this.debuff_counts = [];
-            for (let i = 0; i < totalBuffs; i++)
+            for (let i = 0; i < this.totalBuffs; i++)
             {
                 this.buffs.push(
                     scene.add.sprite(
@@ -629,12 +676,17 @@ module RaidNight.Graphics
 
             this.buffCount = 0;
             this.debuffCount = 0;
-            for(let i = 0; i < this.character.statuses.length; i++)
+            for (let i = 0; i < this.character.statuses.length; i++)
             {
                 let name = this.character.statuses[i].name.toLowerCase();
                 let count = this.character.statuses[i].stacks > 1 ? this.character.statuses[i].stacks.toString() : "";
-                if(this.character.statuses[i].type == Engine.StatusType.Good)
+                if (this.character.statuses[i].type == Engine.StatusType.Good)
                 {
+                    if (this.buffCount >= this.totalBuffs)
+                    {
+                        continue;
+                    }
+
                     this.buffs[this.buffCount].setTexture(`assets/status/${name}.png`);
                     this.buffs[this.buffCount].setVisible(true);
                     this.buff_counts[this.buffCount].setVisible(true);
@@ -643,6 +695,11 @@ module RaidNight.Graphics
                 }
                 else
                 {
+                    if (this.debuffCount >= this.totalBuffs)
+                    {
+                        continue;
+                    }
+
                     this.debuffs[this.debuffCount].setTexture(`assets/status/${name}.png`);
                     this.debuffs[this.debuffCount].setVisible(true);
                     this.debuff_counts[this.debuffCount].setVisible(true);
