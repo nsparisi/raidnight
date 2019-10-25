@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project default="drawbridge">
-    <target name="drawbridge">
+<project default="productionize">
+    <target name="productionize">
         <delete dir="out/raid_night"/>
         <delete file="out/raidnight.js"/>
         <delete file="out/raidnight-obfuscated.js"/>
