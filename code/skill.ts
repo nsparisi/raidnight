@@ -71,7 +71,6 @@ module RaidNight.Engine
             this.health = -10;
             this.mana = -20;
             this.castTime = 1;
-            this.cooldown = 5;
             this.name = "Pierce";
             this.targetStatuses = ["ST_PIERCE"];
         }

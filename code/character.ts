@@ -207,7 +207,7 @@ module RaidNight.Engine
             }
 
             // finalize action
-            if (this.isCasting && this.castTimeRemaining == 0)
+            if (this.isCasting && this.castTimeRemaining <= 0)
             {
                 this.finishSkill();
             }
