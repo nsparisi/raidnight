@@ -231,8 +231,8 @@ module RaidNight.Engine
 
         grabNewAction ()
         {
-            // when both devilvine + corpseflower die
-            if (!this.phase2 && GLOBAL_GAME.arena.enemies[1].health <= 0 && GLOBAL_GAME.arena.enemies[2].health <= 0)
+            // when both devilvine + corpseflower die, and the dragon is still alive
+            if (!this.phase2 && GLOBAL_GAME.arena.enemies[0].health > 0 && GLOBAL_GAME.arena.enemies[1].health <= 0 && GLOBAL_GAME.arena.enemies[2].health <= 0)
             //if (!this.phase2 && GLOBAL_GAME.arena.turn == 10)
             {
                 this.phase2 = true;
